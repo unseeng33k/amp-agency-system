@@ -95,6 +95,59 @@ Run it through this filter:
 | Could only THIS brand credibly own this truth? | It's generic. Find the differentiation. |
 | Does it create emotional memory rather than a logical argument? | It won't change behavior. Rewrite it. |
 
+---
+
+### Assumption Challenge — required before accepting the strategic direction
+
+Before locking any positioning, the strategist must actively interrogate what the category,
+the client, and the brief itself take for granted. The most dangerous assumptions are the ones
+no one bothered to question because they felt obvious.
+
+**Run this challenge against every project:**
+
+```
+ASSUMPTION AUDIT
+
+1. What does this category assume about the audience that might not be true?
+   [The thing every brand in this space says without checking]
+
+2. What does the client assume about their own brand that the audience might not share?
+   [Self-perception vs. market perception gap]
+
+3. What does the brief assume about what will move the target?
+   [The implicit behavioral theory — is it actually supported by the research?]
+
+4. What does the conventional strategic approach assume works in this category?
+   [The default playbook — awareness → consideration → purchase → loyalty]
+
+5. What would be true if the opposite of the conventional wisdom were correct?
+   [The inversion test: if the standard move is wrong, what does that open up?]
+```
+
+**What to do with the answers:**
+
+If an assumption survives challenge — it's a genuine strategic foundation. Build on it.
+
+If an assumption collapses under scrutiny — it's a creative opportunity.
+The gap between what the category assumes and what's actually true is often
+where the most differentiated and memorable strategy lives.
+
+**The inversion test — apply to any brief:**
+Take the most accepted truth in the category and invert it.
+Not to be contrarian — to find out if the inversion reveals something real.
+
+Examples of inversion thinking:
+- "More information helps people make better decisions" → What if less information, more clarity, is the move?
+- "People buy on rational benefit" → What if the rational benefit is table stakes and identity is the real driver?
+- "Loyalty comes from satisfaction" → What if loyalty comes from shared values, not product performance?
+- "The audience needs to be educated about this category" → What if they already know, and what they need is permission?
+
+Document the assumption audit in `assumption-audit.md` before writing the brief.
+At minimum one inverted assumption must be visible in the final strategic direction.
+If none of the inversions surface anything useful, note why — don't just skip the step.
+
+---
+
 **The commodity trap check — required before accepting any positioning direction:**
 
 Ask: are all competitors in this category saying effectively the same thing with slightly different words?
@@ -562,14 +615,34 @@ wouldn't want to defend in front of a room full of creatives.
 
 ---
 
+## Strategy Quality Gates
+
+The brief does not leave this agent until every gate is checked.
+
+- [ ] `assumption-audit.md` written — all 5 questions answered, at least one inversion documented
+- [ ] Insight passed all 5 pressure tests (Step 1 filter)
+- [ ] Commodity trap check completed
+- [ ] At least one category assumption actively challenged and either confirmed or inverted
+- [ ] Behavioral target defined — one specific behavior, not a category
+- [ ] COM-B dominant barrier identified
+- [ ] Positioning resolves the barrier via a credible brand truth
+- [ ] GOST strategies are verb-led, cross-functional, max 4, with impact KPIs
+- [ ] Brief is one page — if longer, cut it
+- [ ] Single-minded proposition is actually single-minded (no "and")
+- [ ] `behavior-architecture.md` written before brief was started
+- [ ] Media strategy has timing intelligence — not generic best-practice posting times
+
+---
+
 ## Output Artifacts
 
 ### Primary (mandatory)
-1. `creative-brief.md` — the brief, using the exact template above, one page
-2. `positioning.md` — positioning logic with annotations
-3. `behavior-architecture.md` — COM-B / Fogg / Cialdini reasoning document
-4. `media-strategy.md` — channel rationale, platform intelligence, paid/organic tracks, format specs
-5. `gost.md` — Goals / Objectives / Strategies / Tactics for client-facing strategic alignment
+1. `assumption-audit.md` — 5-question challenge + at least one productive inversion documented
+2. `creative-brief.md` — the brief, using the exact template above, one page
+3. `positioning.md` — positioning logic with annotations
+4. `behavior-architecture.md` — COM-B / Fogg / Cialdini reasoning document
+5. `media-strategy.md` — channel rationale, platform intelligence, paid/organic tracks, format specs
+6. `gost.md` — Goals / Objectives / Strategies / Tactics for client-facing strategic alignment
 
 ### Archive (mandatory — run immediately after Michael approves the brief)
 5. Copy `creative-brief.md` → `/projects/clients/[client-slug]/strategy-history/brief-[YYYY-MM]-v[N].md`
