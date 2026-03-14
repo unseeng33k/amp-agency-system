@@ -33,7 +33,9 @@ X Access Token:     [from developer.twitter.com → your app]
 X Access Secret:    [from developer.twitter.com → your app]
 X Client ID:        [OAuth 2.0 Client ID from developer.twitter.com]
 X Client Secret:    [OAuth 2.0 Client Secret from developer.twitter.com]
-Composio:           [from platform.composio.dev — LinkedIn, Instagram, TikTok, etc.]
+LinkedIn Client ID: [from linkedin.com/developers — for posts, comments, reactions]
+LinkedIn Secret:    [paired with above]
+Composio:           [from platform.composio.dev — Instagram, TikTok, fallback for LinkedIn]
 
 ## Email
 AgentMail:          [from agentmail.to]

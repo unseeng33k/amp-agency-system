@@ -153,7 +153,8 @@ Fill in whatever keys you have — skip any you don't. Agents will flag missing 
 | X Bearer Token | Twitter API read | Campaign Mgmt |
 | X Access Token/Secret | Twitter API write | Campaign Mgmt |
 | X Client ID/Secret | OAuth 2.0 flow | Campaign Mgmt |
-| Composio | LinkedIn, Instagram, TikTok, Reddit | Campaign Mgmt |
+| LinkedIn API | Posts, comments, replies, reactions (direct) | Campaign Mgmt |
+| Composio | Instagram, TikTok, Reddit, fallback | Campaign Mgmt |
 | AgentMail | Programmatic email | Campaign Mgmt |
 | BlueBubbles | iMessage alerts — Mac only, optional | Campaign Mgmt |
 | Slack webhook | Push alerts — any platform, optional | Campaign Mgmt |

@@ -23,8 +23,9 @@ CHECK IN ORDER:
   2. Desktop Commander           → terminal + scripts available
   3. Google Calendar MCP         → calendar scheduling available
   4. Gmail MCP                   → email reporting available
-  5. Twitter/X API (tweepy)      → direct X posting available
-  6. Composio (LinkedIn/IG)      → social posting via OAuth available
+  5. Twitter/X API (tweepy)      → direct X posting + replies available
+  6. LinkedIn API (direct)       → posts, comments, reactions available
+  7. Composio (Instagram/TikTok) → social posting via OAuth available
   7. AgentMail                   → programmatic email available
   8. Alert System (optional)     → push alerts for urgent signals
      Options: BlueBubbles (iMessage/Mac), Slack webhook, email via AgentMail, SMS via Twilio
@@ -332,7 +333,88 @@ npx skills add https://github.com/jimliu/baoyu-skills --skill baoyu-post-to-x
 
 ---
 
-## LinkedIn / Instagram / TikTok — Composio Integration
+## LinkedIn — Direct API (Posts, Comments, Reactions)
+
+You have LinkedIn Client ID and Secret. Use the LinkedIn API directly.
+
+### Get OAuth access token (run once, token lasts 60 days)
+```python
+import requests, re
+
+keys = open('[API_KEYS_PATH]').read()
+client_id = re.search(r'LinkedIn Client ID[:\s]+([A-Za-z0-9]+)', keys).group(1)
+client_secret = re.search(r'LinkedIn Secret[:\s]+([A-Za-z0-9_=\-\.]+)', keys).group(1)
+
+# Exchange authorization code for access token
+# First: direct user to https://www.linkedin.com/oauth/v2/authorization?
+#   response_type=code&client_id={client_id}&redirect_uri={redirect}&
+#   scope=w_member_social,r_liteprofile
+# Then exchange the returned code:
+r = requests.post('https://www.linkedin.com/oauth/v2/accessToken', data={
+    'grant_type': 'authorization_code',
+    'code': '[code from redirect]',
+    'client_id': client_id,
+    'client_secret': client_secret,
+    'redirect_uri': '[your redirect URI]'
+})
+access_token = r.json()['access_token']
+# Store in api-keys.md as LinkedIn Access Token
+```
+
+### Post to LinkedIn
+```python
+headers = {
+    'Authorization': f'Bearer {access_token}',
+    'LinkedIn-Version': '202401',
+    'X-Restli-Protocol-Version': '2.0.0',
+    'Content-Type': 'application/json'
+}
+
+# Get your person URN first
+me = requests.get('https://api.linkedin.com/v2/userinfo', headers=headers)
+person_urn = f"urn:li:person:{me.json()['sub']}"
+
+# Create post
+payload = {
+    "author": person_urn,
+    "lifecycleState": "PUBLISHED",
+    "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+            "shareCommentary": { "text": "[copy from deployment-package.md]" },
+            "shareMediaCategory": "NONE"
+        }
+    },
+    "visibility": { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" }
+}
+r = requests.post('https://api.linkedin.com/v2/ugcPosts', headers=headers, json=payload)
+post_urn = r.headers.get('X-RestLi-Id')  # Save this to launch-log.md
+```
+
+### Comment on a post (own or another account's)
+```python
+post_urn = "[from launch-log.md or target post]"
+payload = {
+    "actor": person_urn,
+    "message": { "text": "[reply copy]" }
+}
+requests.post(
+    f'https://api.linkedin.com/rest/socialActions/{post_urn}/comments',
+    headers=headers,
+    json=payload
+)
+```
+
+### React to a post
+```python
+requests.post(
+    'https://api.linkedin.com/rest/reactions',
+    params={'actor': person_urn},
+    headers=headers,
+    json={"root": post_urn, "reactionType": "LIKE"}
+)
+```
+
+---
 
 You have a Composio key. Use it for LinkedIn, Instagram, TikTok, Reddit, YouTube.
 
@@ -509,36 +591,30 @@ at the scheduled time without Michael needing to be present.
 FOR EACH item in content queue:
 
   TYPE 1 — Original post:
-    IF platform == "X"        → client.create_tweet(text=copy)
-    IF platform == "LinkedIn" → composio LINKEDIN_CREATE_LINKEDIN_POST
-    IF platform == "Instagram" → composio INSTAGRAM_CREATE_PHOTO_POST
+    IF platform == "X"         → client.create_tweet(text=copy)
+    IF platform == "LinkedIn"  → LinkedIn API direct (Client ID + Secret from api-keys.md)
+                                  POST /rest/posts — text post or article share
+    IF platform == "Instagram" → Composio INSTAGRAM_CREATE_PHOTO_POST
 
   TYPE 2 — Thread continuation (reply to own post):
     IF platform == "X":
-      # Get the tweet ID of the root post from launch-log.md
       root_tweet_id = [from launch-log.md]
-      client.create_tweet(
-          text=reply_copy,
-          in_reply_to_tweet_id=root_tweet_id
-      )
+      client.create_tweet(text=reply_copy, in_reply_to_tweet_id=root_tweet_id)
     IF platform == "LinkedIn":
-      # Use LinkedIn Comments API with the post URN from launch-log.md
-      composio LINKEDIN_CREATE_COMMENT(post_urn=root_post_urn, text=reply_copy)
+      # LinkedIn Comments API — direct
+      POST /rest/socialActions/{postUrn}/comments
+      body: { "actor": "urn:li:person:{id}", "message": { "text": reply_copy } }
 
   TYPE 3 — Response to another account's post:
     # REQUIRES EXPLICIT APPROVAL — never auto-execute
-    # Draft it, present it to Michael, wait for "Go" before posting
     IF platform == "X":
-      client.create_tweet(
-          text=reply_copy,
-          in_reply_to_tweet_id=target_tweet_id
-      )
+      client.create_tweet(text=reply_copy, in_reply_to_tweet_id=target_tweet_id)
     IF platform == "LinkedIn":
-      composio LINKEDIN_CREATE_COMMENT(post_urn=target_post_urn, text=reply_copy)
+      POST /rest/socialActions/{targetPostUrn}/comments
+      body: { "actor": "urn:li:person:{id}", "message": { "text": reply_copy } }
 
-  TYPE 4 — Reactive content (trend/moment response):
-    # Time-sensitive — flag to Michael immediately with window closing note
-    # Michael approves, then executes same as Type 1
+  TYPE 4 — Reactive content:
+    # Time-sensitive — flag to Michael immediately, same execution as Type 1
 
   UPDATE launch-log.md: post.status = LIVE, post.live_url = [returned URL/ID]
 ```
