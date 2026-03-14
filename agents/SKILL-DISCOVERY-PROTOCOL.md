@@ -59,7 +59,7 @@ Install any skill: `npx skills add <owner/repo@skill> -g -y`
 
 | Repo | Best For |
 |------|----------|
-| `ComposioHQ/awesome-claude-skills` | Social media automation — LinkedIn, Instagram, Twitter, TikTok, Reddit, YouTube |
+| `ComposioHQ/awesome-claude-skills` | Social media automation — LinkedIn, Instagram, Twitter, TikTok, YouTube |
 | `alirezarezvani/claude-skills` | 169 skills — 42 marketing, advisory, regulatory |
 | `jimliu/baoyu-skills` | Social posting via real browser — X, anti-bot resistant |
 | `obra/superpowers` | Reasoning, planning, parallel agents, debugging, writing |
@@ -154,7 +154,7 @@ Fill in whatever keys you have — skip any you don't. Agents will flag missing 
 | X Access Token/Secret | Twitter API write | Campaign Mgmt |
 | X Client ID/Secret | OAuth 2.0 flow | Campaign Mgmt |
 | LinkedIn API | Posts, comments, replies, reactions (direct) | Campaign Mgmt |
-| Composio | Instagram, TikTok, Reddit, fallback | Campaign Mgmt |
+| Composio | Instagram, TikTok, YouTube, fallback | Campaign Mgmt |
 | AgentMail | Programmatic email | Campaign Mgmt |
 | BlueBubbles | iMessage alerts — Mac only, optional | Campaign Mgmt |
 | Slack webhook | Push alerts — any platform, optional | Campaign Mgmt |

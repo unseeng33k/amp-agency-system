@@ -416,7 +416,7 @@ requests.post(
 
 ---
 
-You have a Composio key. Use it for LinkedIn, Instagram, TikTok, Reddit, YouTube.
+You have a Composio key. Use it for LinkedIn (fallback), Instagram, TikTok, YouTube.
 
 ### Setup (run once)
 ```bash
