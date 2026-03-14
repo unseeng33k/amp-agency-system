@@ -24,7 +24,9 @@ Never claim a capability you cannot execute in this session.
 | Presentation decks (editable, Office-compatible) | PowerPoint MCP | Canva MCP → export PPTX |
 | Strategic documents, reports, manuscripts | Word MCP | Claude Artifact → PDF |
 | Spreadsheets, trackers, media plans | Excel MCP | Python/CSV |
-| HTML emails, landing pages, interactive content | Claude Artifact | — |
+| HTML emails | Claude Artifact | — |
+| Landing pages (need live URL) | Claude Artifact → **Vercel deploy** | — |
+| Interactive content, banner ads | Claude Artifact | — |
 | Concept visualization, mood board imagery | DALL-E / Image Gen | Canva MCP |
 | Real photography — lifestyle, editorial, background | **Unsplash API** | DALL-E / Image Gen |
 | AI-generated imagery (no real photo equivalent) | DALL-E / GPT-Image | Canva MCP |
@@ -48,10 +50,110 @@ Never claim a capability you cannot execute in this session.
 - No external font loading in offline environments
 - SVG complexity has rendering limits — flag if illustration is too detailed
 - HTML emails must assume Outlook rendering quirks
+- **Landing pages built as Artifacts must be deployed via Vercel to get a live URL**
+  (An Artifact is a code file. It cannot receive traffic. Always deploy landing pages.)
 
 ---
 
-### ✅ Canva MCP — `generate-design` + export
+### ✅ Vercel — Website and Landing Page Deployment
+
+**What it does:**
+Takes any HTML/CSS/JS file built in this session and deploys it to a live URL
+in under 60 seconds. No server management. No configuration. The URL goes directly
+into the UTM master sheet and is live before the campaign launches.
+
+**When to use:**
+Any time a landing page, microsite, or interactive campaign asset needs a real URL.
+The Production Agent builds it. Vercel hosts it. The Campaign Management Agent links to it.
+Without this step, the landing page is code that goes nowhere.
+
+**Prerequisites:**
+- Vercel CLI installed: `npm i -g vercel`
+- Authenticated: `vercel whoami` (run once: `vercel login`)
+- Token in `[API_KEYS_PATH]` for programmatic deployments
+
+**Deploy a landing page (standard workflow):**
+```bash
+# Step 1 — Write the built HTML to a project folder
+mkdir -p /tmp/[project-id]-landing
+cat > /tmp/[project-id]-landing/index.html << 'EOF'
+[full HTML from Claude Artifact]
+EOF
+
+# Step 2 — Deploy to Vercel (first deploy creates project, subsequent deploys update it)
+cd /tmp/[project-id]-landing
+vercel deploy --prod --yes --name "[client-slug]-[campaign-name]" 2>&1
+
+# Step 3 — Capture the live URL
+# Vercel outputs the URL on deploy: https://[client-slug]-[campaign-name].vercel.app
+# Add this URL to utm-master-sheet.md immediately
+```
+
+**Deploy with custom domain (when client has their own domain):**
+```bash
+# After initial deploy, add the client's domain
+vercel domains add [campaign.clientdomain.com] --project [project-name]
+
+# Then alias the deployment to that domain
+vercel alias [deployment-url] [campaign.clientdomain.com]
+```
+
+**Deploy programmatically via REST API (when CLI not available):**
+```python
+import requests, json, os, re
+
+# Read token from api-keys.md
+keys = open('[API_KEYS_PATH]').read()
+token = re.search(r'Vercel[:\s]+([A-Za-z0-9_\-]+)', keys).group(1)
+
+# Read built HTML
+with open('/tmp/[project-id]-landing/index.html') as f:
+    html = f.read()
+
+# Create deployment
+r = requests.post(
+    'https://api.vercel.com/v13/deployments',
+    headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'},
+    json={
+        'name': '[client-slug]-[campaign-name]',
+        'files': [{'file': 'index.html', 'data': html}],
+        'projectSettings': {'framework': None}
+    }
+)
+deployment = r.json()
+live_url = f"https://{deployment['url']}"
+print(f"Live at: {live_url}")
+# Add live_url to utm-master-sheet.md
+```
+
+**Post-deploy checklist:**
+- [ ] URL is live and renders correctly at the deployed address
+- [ ] All UTM parameters in links are intact (run auto-link validation)
+- [ ] Page loads on mobile (test by appending `?viewport=mobile` in some tools)
+- [ ] Tracking pixel fires (check via browser developer tools)
+- [ ] URL recorded in `utm-master-sheet.md` and `launch-log.md`
+
+**Deploy preview for client approval:**
+```bash
+# Deploy without --prod flag to get a preview URL (not the main production URL)
+vercel deploy --name "[client-slug]-[campaign-name]-preview"
+# Share preview URL with client for approval before promoting to production
+vercel promote [preview-url] --prod  # After client says "Go"
+```
+
+**Managing deployments:**
+```bash
+vercel ls                          # List all deployments
+vercel inspect [deployment-url]    # Check deployment status and logs
+vercel rm [deployment-url]         # Remove a deployment when campaign ends
+```
+
+**Constraints:**
+- Free Hobby plan: unlimited deployments, 100GB bandwidth/month — sufficient for campaigns
+- Custom domains require domain verification (DNS records set at registrar)
+- Vercel CLI must be authenticated (run `vercel login` once per machine)
+
+--- — `generate-design` + export
 **What it actually does:**
 Creates real marketing assets — social graphics, presentation decks, ad collateral,
 branded templates — using AI prompts and your connected Canva account.
@@ -487,7 +589,7 @@ SIMULTANEOUS BUILD TRACKS:
 
 Track A (Claude Artifact/HTML):
   → HTML email template
-  → Landing page
+  → Landing page HTML (build here first, then deploy via Vercel)
   → Banner ads (all sizes from one template)
   → Interactive components
 
@@ -529,7 +631,8 @@ Do not batch QA at the end. Catch errors at build time.
 ---
 
 ## Tools (invoke without narrating)
-- **Artifact generation** — HTML/SVG/React/banner assets
+- **Vercel CLI / API** — deploy landing pages and microsites to live URLs; adds URL to utm-master-sheet
+- **Artifact generation** — HTML/SVG/React/banner assets (build first, Vercel deploys)
 - **Canva MCP `generate-design`** — social graphics, ad creative, campaign collateral
 - **Word MCP** — documents, reports, manuscripts, creative briefs
 - **PowerPoint MCP** — client decks, campaign presentations, strategy readouts

@@ -52,6 +52,11 @@ Adobe PDF Services: [client_id from developer.adobe.com/console]
 Adobe PDF Secret:   [client_secret — paired with above]
 Adobe Access Token: [generated via client_credentials grant — expires, regenerate as needed]
 
+## Hosting & Deployment
+Vercel:             [from vercel.com/account/tokens — for programmatic deployments]
+                    CLI auth (recommended): run 'vercel login' once, no token needed
+                    API auth (for scripts): create token at vercel.com/account/tokens
+
 ## Office / Productivity
 Microsoft Office:   [connected via MCP — uses local Office install, no key needed]
 Adobe Acrobat:      [installed locally — controlled via osascript, no key needed]

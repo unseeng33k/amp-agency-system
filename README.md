@@ -309,6 +309,45 @@ Here's every connection explained in plain English, what it unlocks, and exactly
 
 ---
 
+### 🌐 Website & Landing Page Hosting — Vercel
+**What it unlocks:** Every landing page and campaign microsite the system builds gets a live URL automatically. Without this, landing pages are code files that go nowhere. With it, Production Agent builds the page and deploys it to `campaign.vercel.app` (or your client's domain) in under 60 seconds. The URL goes straight into the UTM tracking sheet.
+
+**Cost:** Free (Hobby plan is sufficient for campaigns)
+
+**Setup:**
+1. Go to [vercel.com](https://vercel.com) and create a free account
+2. Open Terminal and run:
+   ```bash
+   npm i -g vercel
+   vercel login
+   ```
+3. Follow the login prompts (opens browser for authentication)
+4. Verify it worked:
+   ```bash
+   vercel whoami
+   ```
+   Should print your Vercel username.
+
+**For programmatic deployments (optional):**
+If you want the system to deploy automatically without prompts:
+1. Go to [vercel.com/account/tokens](https://vercel.com/account/tokens)
+2. Create a token named "AMP Agency System"
+3. Add to `api-keys.md`:
+   ```
+   Vercel: your_token_here
+   ```
+
+**What it builds and deploys:**
+- Campaign landing pages
+- Product microsites
+- Event pages
+- Interactive campaign tools
+- Any HTML/CSS/JS asset that needs a real URL
+
+> Already authenticated as `pruskowskiopen-3757` on this machine. Setup complete.
+
+---
+
 ### 🖼️ Adobe PDF Services — Professional PDFs
 **What it unlocks:** Generates high-quality PDFs for campaign reports, proposals, and presentations.
 
@@ -377,6 +416,7 @@ The system will scan your keys, confirm what's active, and let you know if anyth
 | Google Search Console | Organic search analytics | ✅ Free |
 | Adobe PDF Services | Professional PDFs | ✅ Free tier |
 | Slack Webhook | Team notifications | ✅ Free |
+| Vercel | Live website/landing page hosting | ✅ Free |
 
 ---
 

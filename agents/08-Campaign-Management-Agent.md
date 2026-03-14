@@ -528,7 +528,9 @@ Assets deploy in this order unless the brief specifies otherwise:
 
 ```
 1. Tracking verification     — confirm pixels firing BEFORE content goes live
-2. Landing pages / owned     — destination must exist before traffic is sent
+2. Landing pages / owned     — Vercel deployment confirmed live before traffic is sent
+                               Verify: `vercel inspect [url]` returns status READY
+                               Verify: URL in utm-master-sheet.md returns HTTP 200
 3. Email                     — highest control, lowest risk, best for day-of timing
 4. Paid social               — LinkedIn then Meta (allows time to catch targeting errors)
 5. Organic social            — LinkedIn then Meta/Instagram
