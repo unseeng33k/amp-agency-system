@@ -26,7 +26,8 @@ Never claim a capability you cannot execute in this session.
 | Spreadsheets, trackers, media plans | Excel MCP | Python/CSV |
 | HTML emails, landing pages, interactive content | Claude Artifact | — |
 | Concept visualization, mood board imagery | DALL-E / Image Gen | Canva MCP |
-| Commercially safe product/lifestyle photography | Adobe Firefly API | DALL-E |
+| Real photography — lifestyle, editorial, background | **Unsplash API** | Adobe Firefly API |
+| Commercially safe product/lifestyle photography | Adobe Firefly API | Unsplash API |
 | High-volume image variants (batch resize/export) | Python + PIL or Photoshop batch | Adobe Firefly API |
 | PDF packaging, combining, watermarking | Adobe Acrobat DC | Desktop Commander write_pdf |
 | Journey maps, flow diagrams, architecture | Figma MCP `generate_diagram` | Claude Artifact (Mermaid) |
@@ -186,7 +187,41 @@ Brand asset with layers → Human designer in Photoshop, then agent exports
 
 ---
 
-### ✅ Code Execution (Python / Bash)
+### ✅ Unsplash API — Free Real Photography
+**What it does:**
+Searches 5M+ free, commercially licensed photos by natural language description.
+All photos are free for commercial use. Attribution required.
+
+**When to use over DALL-E or Firefly:**
+Anytime the brief calls for real photography rather than AI-generated imagery.
+Real photos carry more credibility for lifestyle, editorial, and brand contexts.
+Free — no per-generation cost. Use it first before reaching for paid image gen.
+
+**How to invoke:**
+```python
+import sys
+sys.path.append('[SKILLS_PATH]/unsplash')
+from unsplash import find_hero_image, download_photo
+
+# Find candidates from visual direction in creative brief
+candidates = find_hero_image(
+    concept_description="[visual direction verbatim from brief]",
+    orientation="landscape",
+    save_dir="[PROJECTS_ROOT]/[project-id]/assets/photos"
+)
+# Downloads top result automatically, returns all 5 for review
+```
+
+**Attribution rule (mandatory):**
+Every Unsplash photo used must have attribution recorded in `asset-manifest.md`:
+`Photo by [photographer name] on Unsplash — [photo URL]`
+
+**Constraints:**
+- 50 requests/hour on free tier — sufficient for production use
+- No model releases for recognizable people — use for environments, objects, abstract
+- Download then edit locally — no in-API editing
+
+---
 **What it can build:**
 - Batch file renaming and organization
 - Image resizing and format conversion (with PIL/Pillow)
@@ -454,8 +489,9 @@ Track C (Microsoft Office MCP):
   → Excel: UTM trackers, media plans, asset manifests, content calendars
 
 Track D (Image Generation):
-  → DALL-E: Concept visualization, mood board imagery, social imagery
-  → Adobe Firefly API: Commercially safe photography, product imagery, batch variants
+  → Unsplash API: Real photography — lifestyle, editorial, backgrounds (free, use first)
+  → DALL-E: Concept visualization, mood board imagery, social post imagery
+  → Adobe Firefly API: Commercially safe product imagery, batch variants, generated scenes
 
 Track E (Python/Code + Adobe Acrobat):
   → Batch file renaming, resize scripts, UTM injection
@@ -486,6 +522,7 @@ Do not batch QA at the end. Catch errors at build time.
 - **Word MCP** — documents, reports, manuscripts, creative briefs
 - **PowerPoint MCP** — client decks, campaign presentations, strategy readouts
 - **Excel MCP** — trackers, media plans, asset manifests, content calendars
+- **Unsplash API** — free real photography; use before DALL-E or Firefly for lifestyle/editorial imagery
 - **Adobe Firefly API** — commercially safe image generation; requires Adobe API key in `[API_KEYS_PATH]`
 - **DALL-E / Image generation** — concept visualization and social imagery (non-commercial-clearance work)
 - **Adobe Acrobat DC (via osascript)** — PDF packaging, combining, watermarking final deliverables

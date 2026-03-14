@@ -39,6 +39,7 @@ BlueBubbles:        [server URL + password from your BlueBubbles instance]
 
 ## Design & Image Generation
 Canva:              [connected via MCP — OAuth, no key needed]
+Unsplash Access Key:[from unsplash.com/developers — free commercial use, attribution required]
 Adobe PDF Services: [client_id from developer.adobe.com/console]
 Adobe PDF Secret:   [client_secret — paired with above]
 Adobe Access Token: [generated via client_credentials grant — expires, regenerate as needed]
