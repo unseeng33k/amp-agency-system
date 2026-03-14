@@ -1,129 +1,163 @@
 # AMP Agency Agent System
 
-A full-service AI marketing agency workflow built on plain markdown.
-Run it with Claude, GPT-4o, Gemini, or any AI that can read files.
+An AI-native marketing agency that runs inside any AI assistant.
+Brief in → research → strategy → creative → production → live campaign.
+
+**→ [5-minute setup below](#setup)**
 
 ---
 
-## What This Is
+## What It Does
 
-Eight specialized agents — Research, Strategy, Creative, Production, Analytics,
-Campaign Management, Account Management, Project Management — that run a complete marketing
-campaign pipeline from brief to launch. Each agent has a defined role, defined inputs,
-defined outputs, and defined handoffs.
+You give it a client and a goal. It runs the full agency workflow:
 
-The system is built on real agency methodology: the insight pyramid, What If? ideation,
-COM-B behavioral architecture, GOST planning, media strategy split by paid/organic track,
-and a learning log that feeds every campaign back into the next one.
+1. **Research** — digs into the category, competitors, culture, and audience. Surfaces the insight no one has said out loud yet.
+2. **Strategy** — turns the insight into a creative brief, positioning, media strategy, and GOST plan.
+3. **Creative** — generates concepts using What If? ideation, channel-constrained copy, and visual direction.
+4. **Production** — builds assets across Canva, Word, PowerPoint, HTML, and image generation.
+5. **Analytics** — sets up UTM tracking, KPI frameworks, and reporting structure.
+6. **Campaign Management** — launches, monitors performance, schedules content, sends alerts, writes reports.
+
+Every campaign feeds its learnings back into the next one via a client profile and learning log.
+
+---
+
+## Works With
+
+- **Claude** (claude.ai, Claude Desktop, Claude Code)
+- **ChatGPT / GPT-4o**
+- **Cursor, Windsurf, any IDE with AI**
+- **Any AI that can read a text file**
+
+---
+
+## Setup
+
+### Option A — Automated (Mac/Linux, recommended)
+
+```bash
+git clone https://github.com/unseeng33k/amp-agency-system.git
+cd amp-agency-system
+chmod +x setup.sh
+./setup.sh
+```
+
+The script asks you three questions, writes your config, and prints a ready-to-paste prompt. Done.
+
+### Option B — Manual (5 minutes, any OS)
+
+**Step 1 — Clone or download**
+```bash
+git clone https://github.com/unseeng33k/amp-agency-system.git
+```
+Or download as ZIP and unzip anywhere you like.
+
+**Step 2 — Open `agents/SYSTEM-PROMPT.md` and set your paths**
+
+Find this block near the top and fill in your actual folder path:
+```
+VAULT_ROOT:    /paste/your/path/to/amp-agency-system
+PROJECTS_ROOT: /paste/your/path/to/amp-agency-system/projects
+SKILLS_PATH:   /paste/your/path/to/amp-agency-system/resources/skills
+```
+
+Example (Mac):
+```
+VAULT_ROOT:    /Users/yourname/Documents/amp-agency-system
+PROJECTS_ROOT: /Users/yourname/Documents/amp-agency-system/projects
+SKILLS_PATH:   /Users/yourname/Documents/amp-agency-system/resources/skills
+```
+
+**Step 3 — Create your api-keys.md**
+
+Copy `resources/api-keys-template.md` to `resources/api-keys.md` and fill in
+whatever keys you have. Skip any you don't — the agents will tell you what's missing.
+
+```bash
+cp resources/api-keys-template.md resources/api-keys.md
+```
+
+**Step 4 — Load the starter prompt into your AI**
+
+Open `STARTER-PROMPT.md` (in the root of this repo).
+Copy the entire contents. Paste it as your first message to your AI.
+
+That's it. The system is running.
+
+---
+
+## Running Your First Campaign
+
+After pasting the starter prompt, say:
+
+> "I need to run a campaign for [client name]. They [what they do]. I want to [objective]."
+
+The Account Management Agent handles everything from there.
+
+---
+
+## AI-Specific Setup
+
+### Claude (claude.ai)
+Paste `STARTER-PROMPT.md` as your first message. If you have Desktop Commander connected, it will read the files automatically. If not, upload `agents/SYSTEM-PROMPT.md` directly.
+
+### ChatGPT
+Upload `agents/SYSTEM-PROMPT.md` as a file attachment. Then paste the contents of `STARTER-PROMPT.md` as your first message.
+
+### Cursor / Claude Code
+Copy `agents/SYSTEM-PROMPT.md` content into your `CLAUDE.md` or `.cursorrules` file. The agents will be available in every session automatically.
+
+### Any other AI
+Paste `STARTER-PROMPT.md` as your first message. If the AI can read files, point it at `agents/SYSTEM-PROMPT.md`. If not, paste the file contents directly.
 
 ---
 
 ## Folder Structure
 
 ```
-AMP-Agency-System/
-  agents/               ← All agent files + shared protocols
-  templates/            ← Reusable templates (client profile, etc.)
-  projects/
-    clients/            ← One folder per client, persistent across campaigns
-      [client-slug]/
-        client-profile.md
-        strategy-history/
-    [project-id]/       ← One folder per campaign
-      research/
-      strategy/
-      creative/
-      production/
+amp-agency-system/
+  STARTER-PROMPT.md       ← Paste this into your AI to start
+  README.md               ← This file
+  setup.sh                ← Automated setup script (Mac/Linux)
+  .gitignore
+  agents/                 ← The 13 agent files
+  templates/              ← Client profile template
+  projects/               ← Your work lives here (not committed)
+    clients/
+    [project-id]/
   resources/
-    skills/             ← Local skill files (optional)
-    api-keys.md         ← YOUR KEYS — never committed (see .gitignore)
+    api-keys-template.md  ← Copy this to api-keys.md and fill in
+    api-keys.md           ← YOUR KEYS — never committed
 ```
-
----
-
-## Quick Start
-
-### Step 1 — Configure your paths
-
-Open `agents/SYSTEM-PROMPT.md` and set the three path variables at the top:
-
-```
-VAULT_ROOT:    /path/to/AMP-Agency-System
-PROJECTS_ROOT: /path/to/AMP-Agency-System/projects
-SKILLS_PATH:   /path/to/AMP-Agency-System/resources/skills
-```
-
-### Step 2 — Create your api-keys.md
-
-Copy the template from `agents/SKILL-DISCOVERY-PROTOCOL.md` into:
-```
-resources/api-keys.md
-```
-Fill in the keys you have. Skip the ones you don't — agents will flag missing integrations.
-
-### Step 3 — Load SYSTEM-PROMPT into your AI
-
-At the start of every session, tell your AI:
-> "Read the file at [VAULT_ROOT]/agents/SYSTEM-PROMPT.md before we begin."
-
-Or paste SYSTEM-PROMPT.md content directly into your system prompt field.
-
-### Step 4 — Start a project
-
-Tell the Account Management Agent:
-> "I need to run a campaign for [client] to [objective]."
-
-The pipeline starts automatically.
-
----
-
-## Using With Different AIs
-
-**Claude (claude.ai or API):** Paste SYSTEM-PROMPT.md into system prompt. Load agent files via file upload or Desktop Commander.
-
-**GPT-4o / ChatGPT:** Upload SYSTEM-PROMPT.md and the relevant agent file at session start. Instruct: "Follow the instructions in these files exactly."
-
-**Cursor / Claude Code / Windsurf:** Add SYSTEM-PROMPT.md as a project-level context file (CLAUDE.md, .cursor/rules, etc.). Agents run as separate sessions with the appropriate agent file loaded.
-
-**Any other AI:** Copy and paste SYSTEM-PROMPT.md + the relevant agent file into the context. The frameworks work regardless of model — only tool-specific sections (browser automation, API posting) require compatible tools.
-
-**When switching AIs:** The hardcoded tool calls (Desktop Commander, OpenClaw, Telegram) in the original config won't work. Use generic equivalents: `read_file`, `write_file`, `web_search`. The frameworks are model-agnostic; the tooling is not.
-
----
-
-## Sharing This System
-
-**To share with a collaborator:**
-1. Fork or clone this repo
-2. They configure their own paths in SYSTEM-PROMPT.md
-3. They create their own `resources/api-keys.md` (never shared)
-4. They load the agents into their AI of choice
-
-**Their data stays separate.** The `projects/` folder is local to each user.
-The `agents/` folder is the shared, version-controlled system.
 
 ---
 
 ## Key Concepts
 
-| Concept | Where It Lives |
-|---------|---------------|
-| Insight Pyramid (Data → Information → Findings → Insight) | `02-Market-Research-Agent.md` |
-| What If? ideation | `04-Creative-Agent.md` |
-| COM-B / Fogg / Cialdini behavioral architecture | `03-Strategy-Agent.md` |
-| GOST planning framework | `03-Strategy-Agent.md` |
-| Paid vs. organic media split | `03-Strategy-Agent.md` |
-| Copy approval hard lock | `05-Production-Agent.md` |
-| Learning log | `07-Campaign-Management-Agent.md` |
-| Client profile + strategy history | `templates/CLIENT-PROFILE-TEMPLATE.md` |
+| Concept | File |
+|---------|------|
+| Insight Pyramid | `agents/02-Market-Research-Agent.md` |
+| What If? ideation | `agents/04-Creative-Agent.md` |
+| COM-B behavioral architecture | `agents/03-Strategy-Agent.md` |
+| GOST planning | `agents/03-Strategy-Agent.md` |
+| Paid vs. organic media split | `agents/03-Strategy-Agent.md` |
+| Adoption Ladder persona template | `agents/02-Market-Research-Agent.md` |
+| Competitor timing intelligence | `agents/02-Market-Research-Agent.md` |
+| Copy approval hard lock | `agents/05-Production-Agent.md` |
+| Campaign scheduling + alerts | `agents/07-Campaign-Management-Agent.md` |
+| Client profile + learning log | `templates/CLIENT-PROFILE-TEMPLATE.md` |
 | Revision classification (A/B/C/D) | `agents/REVISION-PROTOCOL.md` |
 
 ---
 
-## Contributing
+## Sharing With a Collaborator
 
-This system is designed to grow. If you improve an agent, add a framework, or build
-a new template — update the version number in the file footer and note what changed.
+1. Send them the repo link: `https://github.com/unseeng33k/amp-agency-system`
+2. They clone it, run `./setup.sh` (or do the manual steps above)
+3. They create their own `resources/api-keys.md` with their own keys
+4. Their `projects/` folder stays local — never committed to the shared repo
+
+The agents are shared. The work is private.
 
 ---
 
