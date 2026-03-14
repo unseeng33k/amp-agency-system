@@ -668,6 +668,11 @@ Domain 2 — Customer:
   web_search("[audience] frustrations complaints [category]")
   web_search("[audience] Reddit [category] experience OR advice")
   web_search("[audience] trust OR distrust [category]")
+  Reddit (via Desktop Commander curl):
+    top posts in r/[category subreddit] — last month
+    search r/[category subreddit] for "[pain point]" — last year
+    pull top 10 comments from highest-score threads
+    cross-Reddit search for category topic to find adjacent communities
 
 Domain 3 — Cultural:
   web_search("[category] community conversation betrayal OR conflict [current year]")
@@ -702,7 +707,102 @@ The insight lives in the detail, not the summary.
 
 ---
 
-## Tools (invoke without narrating)
+## Reddit Intelligence — No API Key Required
+
+Reddit is the single best source of unfiltered audience language, real complaints,
+and unguarded opinions about any category. Access it via the public JSON API
+through Desktop Commander — no credentials needed.
+
+### Core patterns
+
+**Top posts in a category subreddit (what the community cares about most):**
+```bash
+curl -s -A "AMP-Agency-Research/1.0" \
+  "https://www.reddit.com/r/[subreddit]/top.json?t=month&limit=25" | \
+  python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+for p in data['data']['children']:
+    d=p['data']
+    print(f\"{d['score']:>6} pts | {d['num_comments']:>4} comments | {d['title']}\")
+"
+```
+
+**Search a subreddit for specific topic:**
+```bash
+curl -s -A "AMP-Agency-Research/1.0" \
+  "https://www.reddit.com/r/[subreddit]/search.json?q=[topic]&sort=top&t=year&limit=25" | \
+  python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+for p in data['data']['children']:
+    d=p['data']
+    print(f\"{d['score']:>6} pts | {d['title']}\")
+    print(f\"       URL: https://reddit.com{d['permalink']}\")
+"
+```
+
+**Pull comment text from a high-scoring thread (where the insight language lives):**
+```bash
+curl -s -A "AMP-Agency-Research/1.0" \
+  "https://www.reddit.com/r/[subreddit]/comments/[post_id]/[post_slug].json?limit=20" | \
+  python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+for c in data[1]['data']['children']:
+    if c['kind']=='t1':
+        print(f\"[score:{c['data']['score']}] {c['data']['body'][:300]}\")
+        print()
+"
+```
+
+**Cross-subreddit search (find where a topic lives across Reddit):**
+```bash
+curl -s -A "AMP-Agency-Research/1.0" \
+  "https://www.reddit.com/search.json?q=[topic]&sort=top&t=year&limit=25" | \
+  python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+for p in data['data']['children']:
+    d=p['data']
+    print(f\"{d['score']:>6} pts | r/{d['subreddit']:<20} | {d['title']}\")
+"
+```
+
+### What to look for
+
+When scanning posts and comments, flag:
+- **Exact language** — the specific words people use to describe their problem or desire.
+  This is the raw material for insight candidates. Quote verbatim, don't paraphrase.
+- **High-score + high-comment combinations** — score shows resonance, comments show tension.
+  A post with 500 upvotes and 400 comments has more insight value than 500 upvotes and 5 comments.
+- **Recurring complaints** — the same frustration appearing across multiple threads
+  is a category truth, not an individual complaint.
+- **Contradictions** — someone who says they don't care about X but posts about X constantly.
+  That gap between stated and revealed behavior is where insights live.
+- **Upvote ratio below 0.75** — controversial posts. Controversy = tension = potential insight territory.
+
+### Subreddit discovery
+
+If you don't know which subreddit to search, find them first:
+```bash
+curl -s -A "AMP-Agency-Research/1.0" \
+  "https://www.reddit.com/subreddits/search.json?q=[category]&limit=10" | \
+  python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+for s in data['data']['children']:
+    d=s['data']
+    print(f\"r/{d['display_name']:<30} | {d['subscribers']:>8} subscribers | {d['public_description'][:80]}\")
+"
+```
+
+### Output target
+
+Capture the 10-15 highest-signal comments verbatim in `research-raw.md` under
+a `## Reddit — [subreddit] — [date]` header.
+Mark each with score and permalink so it can be traced back to source.
+These feed directly into the anomaly-log.md Confirmed vs New discipline.
 - `web_search` — fire all domains in parallel immediately
 - `web_fetch` — deep dive on highest-signal URLs; always fetch competitor social profiles directly
 - `pdf` / `read_file` — analyze any uploaded brand or research documents on receipt
