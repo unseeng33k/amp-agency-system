@@ -25,7 +25,7 @@ Never claim a capability you cannot execute in this session.
 | Strategic documents, reports, manuscripts | Word MCP | Claude Artifact → PDF |
 | Spreadsheets, trackers, media plans | Excel MCP | Python/CSV |
 | HTML emails | Claude Artifact | — |
-| Landing pages (need live URL) | Claude Artifact → **Vercel deploy** | — |
+| Landing pages (need live URL) | Claude Artifact → **Deploy to hosting** | — |
 | Interactive content, banner ads | Claude Artifact | — |
 | Concept visualization, mood board imagery | DALL-E / Image Gen | Canva MCP |
 | Real photography — lifestyle, editorial, background | **Unsplash API** | DALL-E / Image Gen |
@@ -50,108 +50,160 @@ Never claim a capability you cannot execute in this session.
 - No external font loading in offline environments
 - SVG complexity has rendering limits — flag if illustration is too detailed
 - HTML emails must assume Outlook rendering quirks
-- **Landing pages built as Artifacts must be deployed via Vercel to get a live URL**
-  (An Artifact is a code file. It cannot receive traffic. Always deploy landing pages.)
+- **Landing pages built as Artifacts are code files — they need a hosting platform to get a live URL**
+  Check `client-profile.md` Section 6 for the client's hosting platform before deploying.
 
 ---
 
-### ✅ Vercel — Website and Landing Page Deployment
+### ✅ Website and Landing Page Deployment
 
-**What it does:**
-Takes any HTML/CSS/JS file built in this session and deploys it to a live URL
-in under 60 seconds. No server management. No configuration. The URL goes directly
-into the UTM master sheet and is live before the campaign launches.
+**The problem this solves:**
+A landing page built as a Claude Artifact is HTML code. It has no URL.
+It cannot receive traffic. It cannot be in UTM links. It cannot be live until it is deployed.
 
-**When to use:**
-Any time a landing page, microsite, or interactive campaign asset needs a real URL.
-The Production Agent builds it. Vercel hosts it. The Campaign Management Agent links to it.
-Without this step, the landing page is code that goes nowhere.
+**Before deploying, check the client profile:**
+```
+Check: /projects/clients/[client-slug]/client-profile.md — Section 6
+Look for: "Hosting platform" or "Website hosting"
+```
 
-**Prerequisites:**
-- Vercel CLI installed: `npm i -g vercel`
-- Authenticated: `vercel whoami` (run once: `vercel login`)
-- Token in `[API_KEYS_PATH]` for programmatic deployments
+The deployment method depends entirely on what the client uses.
+Never assume Vercel or any other platform. Always check first.
 
-**Deploy a landing page (standard workflow):**
+**If the client has no existing hosting, recommend Vercel** (free, fastest setup, no infrastructure required).
+If the client has existing infrastructure, use it.
+
+---
+
+#### Deployment Options
+
+**Option A — Vercel (recommended for new campaigns without existing hosting)**
+Free, no infrastructure required, live in 60 seconds.
 ```bash
-# Step 1 — Write the built HTML to a project folder
+# Prerequisites: vercel CLI installed + authenticated
+# Install: npm i -g vercel
+# Auth: vercel login (one-time per machine)
+
 mkdir -p /tmp/[project-id]-landing
-cat > /tmp/[project-id]-landing/index.html << 'EOF'
-[full HTML from Claude Artifact]
-EOF
-
-# Step 2 — Deploy to Vercel (first deploy creates project, subsequent deploys update it)
+# Write built HTML to index.html in that folder
 cd /tmp/[project-id]-landing
-vercel deploy --prod --yes --name "[client-slug]-[campaign-name]" 2>&1
+vercel deploy --prod --yes --name "[client-slug]-[campaign-name]"
+# Returns: https://[client-slug]-[campaign-name].vercel.app
 
-# Step 3 — Capture the live URL
-# Vercel outputs the URL on deploy: https://[client-slug]-[campaign-name].vercel.app
-# Add this URL to utm-master-sheet.md immediately
-```
-
-**Deploy with custom domain (when client has their own domain):**
-```bash
-# After initial deploy, add the client's domain
+# Custom domain (if client has one):
 vercel domains add [campaign.clientdomain.com] --project [project-name]
-
-# Then alias the deployment to that domain
 vercel alias [deployment-url] [campaign.clientdomain.com]
+
+# Client approval preview (before promoting to production):
+vercel deploy --name "[client-slug]-preview"  # get preview URL
+vercel promote [preview-url] --prod           # after client approves
 ```
 
-**Deploy programmatically via REST API (when CLI not available):**
+**Option B — Netlify (client uses Netlify)**
+```bash
+# Prerequisites: netlify CLI installed + authenticated
+# Install: npm i -g netlify-cli
+# Auth: netlify login
+
+mkdir -p /tmp/[project-id]-landing
+# Write built HTML to index.html
+cd /tmp/[project-id]-landing
+netlify deploy --prod --dir . --site [client-site-id]
+# Returns: https://[site-name].netlify.app or custom domain
+
+# Draft deploy for client approval first:
+netlify deploy --dir .  # gets draft URL
+netlify deploy --dir . --prod  # after approval
+```
+
+**Option C — GitHub Pages (client uses GitHub)**
+```bash
+# Prerequisites: git + GitHub CLI (gh) installed
+gh auth login  # if not already authenticated
+
+# Create or push to client's repo
+cd /tmp/[project-id]-landing
+git init && git add . && git commit -m "Campaign landing page"
+gh repo create [client-slug]-landing --public --push --source .
+gh api repos/[owner]/[client-slug]-landing/pages \
+  -X POST -f branch=main -f path=/
+# Returns: https://[owner].github.io/[client-slug]-landing
+```
+
+**Option D — Client's existing web server / CMS (WordPress, Webflow, Squarespace, etc.)**
+```
+The Production Agent cannot deploy directly to most CMS platforms.
+What to do:
+1. Export the HTML file from the Artifact
+2. Package it as a deployment-ready ZIP
+3. Include deployment instructions in deployment-package.md
+4. Client or their developer uploads it to their platform
+5. Client provides the live URL back — add to utm-master-sheet.md
+
+Note in deployment-package.md:
+"Manual deployment required — client uses [platform].
+Upload the attached index.html to [specific location].
+Estimated time: [X minutes]."
+```
+
+**Option E — Amazon S3 + CloudFront (enterprise / AWS clients)**
 ```python
-import requests, json, os, re
+import boto3
 
-# Read token from api-keys.md
-keys = open('[API_KEYS_PATH]').read()
-token = re.search(r'Vercel[:\s]+([A-Za-z0-9_\-]+)', keys).group(1)
-
-# Read built HTML
-with open('/tmp/[project-id]-landing/index.html') as f:
-    html = f.read()
-
-# Create deployment
-r = requests.post(
-    'https://api.vercel.com/v13/deployments',
-    headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'},
-    json={
-        'name': '[client-slug]-[campaign-name]',
-        'files': [{'file': 'index.html', 'data': html}],
-        'projectSettings': {'framework': None}
-    }
-)
-deployment = r.json()
-live_url = f"https://{deployment['url']}"
-print(f"Live at: {live_url}")
-# Add live_url to utm-master-sheet.md
+s3 = boto3.client('s3')
+with open('/tmp/[project-id]-landing/index.html', 'rb') as f:
+    s3.put_object(
+        Bucket='[client-bucket-name]',
+        Key='campaigns/[campaign-name]/index.html',
+        Body=f,
+        ContentType='text/html',
+        ACL='public-read'
+    )
+# URL: https://[client-bucket-name].s3.amazonaws.com/campaigns/[campaign-name]/index.html
+# Or via CloudFront: https://[distribution-id].cloudfront.net/campaigns/[campaign-name]/
 ```
 
-**Post-deploy checklist:**
-- [ ] URL is live and renders correctly at the deployed address
-- [ ] All UTM parameters in links are intact (run auto-link validation)
-- [ ] Page loads on mobile (test by appending `?viewport=mobile` in some tools)
+**Option F — FTP / SFTP (legacy hosting)**
+```python
+import paramiko
+
+ssh = paramiko.SSHClient()
+ssh.connect('[client-host]', username='[user]', password='[pass]')
+sftp = ssh.open_sftp()
+sftp.put('/tmp/[project-id]-landing/index.html', '/public_html/[campaign-path]/index.html')
+# URL: https://[clientdomain.com]/[campaign-path]/
+```
+
+---
+
+**After any deployment, regardless of platform:**
+- [ ] URL is live and loads correctly
+- [ ] All UTM links in the page are intact
 - [ ] Tracking pixel fires (check via browser developer tools)
-- [ ] URL recorded in `utm-master-sheet.md` and `launch-log.md`
+- [ ] Page loads on mobile
+- [ ] Record live URL in `utm-master-sheet.md` and `launch-log.md`
 
-**Deploy preview for client approval:**
-```bash
-# Deploy without --prod flag to get a preview URL (not the main production URL)
-vercel deploy --name "[client-slug]-[campaign-name]-preview"
-# Share preview URL with client for approval before promoting to production
-vercel promote [preview-url] --prod  # After client says "Go"
+---
+
+**How to determine which option to use:**
+
+```
+Check client-profile.md Section 6 → "Hosting platform"
+
+Vercel     → Option A
+Netlify    → Option B
+GitHub     → Option C
+WordPress /
+Webflow /
+Squarespace/
+Other CMS  → Option D (manual)
+AWS        → Option E
+cPanel/FTP → Option F
+Nothing set → Recommend Option A (Vercel), document in client profile
 ```
 
-**Managing deployments:**
-```bash
-vercel ls                          # List all deployments
-vercel inspect [deployment-url]    # Check deployment status and logs
-vercel rm [deployment-url]         # Remove a deployment when campaign ends
-```
-
-**Constraints:**
-- Free Hobby plan: unlimited deployments, 100GB bandwidth/month — sufficient for campaigns
-- Custom domains require domain verification (DNS records set at registrar)
-- Vercel CLI must be authenticated (run `vercel login` once per machine)
+If nothing is set in the client profile, ask the AM Agent to confirm with Michael
+before choosing a platform. Never deploy to a platform the client doesn't control.
 
 --- — `generate-design` + export
 **What it actually does:**
@@ -589,7 +641,7 @@ SIMULTANEOUS BUILD TRACKS:
 
 Track A (Claude Artifact/HTML):
   → HTML email template
-  → Landing page HTML (build here first, then deploy via Vercel)
+  → Landing page HTML (build here first, then deploy per client hosting platform)
   → Banner ads (all sizes from one template)
   → Interactive components
 
@@ -631,7 +683,7 @@ Do not batch QA at the end. Catch errors at build time.
 ---
 
 ## Tools (invoke without narrating)
-- **Vercel CLI / API** — deploy landing pages and microsites to live URLs; adds URL to utm-master-sheet
+- **Hosting deployment** — Vercel (default), Netlify, GitHub Pages, S3, FTP, or manual per client platform; check client-profile.md Section 6 first
 - **Artifact generation** — HTML/SVG/React/banner assets (build first, Vercel deploys)
 - **Canva MCP `generate-design`** — social graphics, ad creative, campaign collateral
 - **Word MCP** — documents, reports, manuscripts, creative briefs

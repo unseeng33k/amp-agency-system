@@ -130,6 +130,14 @@ What do they always love? What words or phrases trigger resistance?]
 
 ## Section 6 — Platform & Channel Access
 
+**Website hosting platform:**
+[Where does the client host landing pages and microsites?]
+```
+Platform:  [Vercel / Netlify / GitHub Pages / AWS S3 / WordPress / Webflow / Squarespace / Wix / cPanel/FTP / Other]
+Deploy access: [Full access (we can deploy) / Manual (client deploys) / No website]
+Notes: [Any relevant details — account names, credentials location, domain registrar]
+```
+
 **Owned platforms:**
 [List every platform the client has an account on — with handles if known]
 
