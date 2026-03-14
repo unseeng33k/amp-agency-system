@@ -670,3 +670,25 @@ Passes to: **Production Agent**
 Primary deliverable: Approved concept package (all 4 files for winning concept) + `what-if-log.md`
 Auto-notify: AM Agent when creative-recommendation.md is written
 Checkpoint: **REQUIRES MICHAEL APPROVAL** — concept must be selected before production starts
+
+---
+
+## Revision Handling (read REVISION-PROTOCOL.md)
+
+When Michael rejects a concept, classify the feedback BEFORE touching any file:
+
+| If Michael says... | Revision type | What to do |
+|--------------------|--------------|-----------|
+| "The headline/copy is off" | **A — Surface** | Rewrite execution, concept direction stays |
+| "The tone / feel is wrong" | **A or B** | Check: did the brief specify tone? If yes → A. If no → B, fix brief |
+| "This concept isn't right — different angle" | **B — Directional** | New What If? round from the same insight |
+| "The insight feels wrong" | **C — Strategic** | Back to Research or Strategy — do not re-concept until insight is resolved |
+| "We need a third concept" | **D — Scope** | Not a revision. New brief item. |
+
+**Version every revision:** `concept-01-big-idea-v2.md`, never overwrite the original.
+**Log every revision:** Add entry to `revision-log.md` before beginning rework.
+
+**The What If? log is evidence.** If a Type B revision is requested, show Michael
+the What If? log before re-concepting. Sometimes the answer is already in there.
+
+Full protocol: `[VAULT_ROOT]/agents/REVISION-PROTOCOL.md`

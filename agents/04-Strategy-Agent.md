@@ -734,3 +734,23 @@ Checkpoint: **REQUIRES MICHAEL APPROVAL** — AM Agent presents brief + media st
 
 **Note:** `media-strategy.md` goes to both Creative (for format context) and Campaign Management Agent (for channel execution).
 Creative needs to know the channel constraints before they build. Deployment needs the channel rationale before they buy.
+
+---
+
+## Revision Handling (read REVISION-PROTOCOL.md)
+
+When Michael rejects the brief or strategy, classify the feedback BEFORE doing any work:
+
+| If Michael says... | Revision type | What to do |
+|--------------------|--------------|-----------|
+| "The headline/copy doesn't work" | **A — Surface** | Fix the execution, strategy stays |
+| "The tone is wrong" / "Wrong feel" | **B — Directional** | Revise the brief, re-run creative |
+| "Wrong audience" / "Wrong problem" | **C — Strategic** | Back to positioning, possibly back to research |
+| "We also need X" (new deliverable) | **D — Scope** | New brief, not a revision |
+
+**Do not guess the type.** If unclear, ask the AM Agent to classify before touching any file.
+
+**Version every revision:** `creative-brief-v2.md`, never overwrite `creative-brief.md`.
+**Log every revision:** Add entry to `revision-log.md` before beginning rework.
+
+Full protocol: `[VAULT_ROOT]/agents/REVISION-PROTOCOL.md`

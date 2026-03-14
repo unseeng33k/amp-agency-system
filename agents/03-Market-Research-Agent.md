@@ -313,6 +313,37 @@ What is everyone feeling but no brand has said out loud?
 Do NOT just look at competitor positioning statements. Look at what they actually post,
 what performs, what gets ignored, and what emotional territory they have abandoned.
 
+**Step 0 — Ahrefs MCP (run first if connected):**
+
+Ahrefs is the fastest source of structured competitive intelligence — traffic estimates,
+keyword rankings, backlink profiles, and top-performing content. Run these before web searching.
+
+```
+# If Ahrefs MCP is connected in this session:
+
+# Competitor organic traffic + top pages
+ahrefs site_explorer(target="[competitor-domain.com]", mode="subdomains")
+  → Pull: organic_traffic, top_pages_by_traffic
+
+# What keywords competitor ranks for that the client doesn't
+ahrefs content_gap(
+  targets=["[competitor1.com]", "[competitor2.com]"],
+  basis="[client-domain.com]"
+)
+  → Pull: keyword_gaps — topics competitors own that client should contest
+
+# Competitor's top content by backlinks (what the category cites)
+ahrefs site_explorer(target="[competitor.com]", report="top_pages")
+  → Pull: top pages by referring_domains — what the category considers authoritative
+
+# Domain authority comparison
+ahrefs batch_analysis(targets=["[client.com]", "[comp1.com]", "[comp2.com]"])
+  → Pull: domain_rating, organic_traffic — establishes competitive standing
+```
+
+**If Ahrefs is NOT connected:** skip to Step 1 and use web searches.
+Flag in `competitive-content-audit.md`: "Ahrefs not connected — traffic data estimated."
+
 **For each major competitor:**
 
 **Step 1 — Positioning audit:**

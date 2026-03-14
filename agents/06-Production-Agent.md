@@ -334,7 +334,52 @@ Each asset must pass this checklist before status changes to Complete:
 
 **Copy QA — HARD LOCK**
 - [ ] Open the approved copy file (`concept-[n]-copy.md` for the winning concept)
-- [ ] Copy every text element from that file verbatim — do not paraphrase, trim for fit, or "clean up"
+- [ ] **Run automated copy verification before anything else:**
+
+```python
+# Copy verification — run before building any asset
+# Reads approved copy from concept file and compares to asset copy
+
+import difflib
+
+def verify_copy(approved_copy_path, asset_copy):
+    """
+    Compare asset copy against approved copy file.
+    Returns: (match: bool, diff: str)
+    Any difference triggers a flag — not a silent fix.
+    """
+    with open(approved_copy_path) as f:
+        approved = f.read().strip()
+
+    asset = asset_copy.strip()
+
+    if approved == asset:
+        return True, "MATCH — copy verified"
+
+    # Generate diff to show exactly what differs
+    diff = list(difflib.unified_diff(
+        approved.splitlines(),
+        asset.splitlines(),
+        fromfile='approved-copy',
+        tofile='asset-copy',
+        lineterm=''
+    ))
+
+    return False, "\n".join(diff)
+
+# Usage — run for every text element in every asset
+match, result = verify_copy(
+    approved_copy_path="[project]/creative/concept-[n]-copy.md",
+    asset_copy="[text content extracted from built asset]"
+)
+
+if not match:
+    # DO NOT silently fix — STOP and log
+    log_to_copy_variance_log(asset_id, result)
+    raise ProductionBlocker(f"Copy mismatch on {asset_id}. Escalating to AM Agent.")
+```
+
+- [ ] Verification passed — or mismatch is logged in `copy-variance-log.md` and escalated
 - [ ] If copy does not fit the format: FLAG IT. Do not silently adapt it.
       Log in `copy-variance-log.md`: Asset ID, what the copy says, what the format allows, the conflict.
       Stop production on that asset. Escalate to AM Agent for Creative Agent resolution.

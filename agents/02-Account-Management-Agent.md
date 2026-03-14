@@ -218,9 +218,61 @@ Brief received + parsed (existing client)
   └─▶ SPAWN: PM Agent [immediate, runs in parallel]
 
 Research complete (key-insights.md exists + passes insight standard)
-  └─▶ AUTO: Present top 3 insights to Michael with 1-line summaries
+  └─▶ AUTO: Present top 3 insights to Michael using the Insight Selection Format below
   └─▶ WAIT: Michael selects preferred insight (or confirms top-ranked)
   └─▶ SPAWN: Strategy Agent [immediately after selection]
+
+---
+
+### Insight Selection Format
+
+When presenting insights for Michael to choose from, use this structure — not a list dump.
+
+```
+RESEARCH COMPLETE: [Client Name] — [Project Name]
+
+We surfaced 3 insights. Here's how to think about them:
+
+---
+
+INSIGHT 1: [Short Name]
+"[The shower thought version — one sentence, no jargon, slightly absurd, obviously true]"
+
+Why it's real: [What evidence from research backs this up — be specific]
+Why no competitor has said it: [What prevents others from owning this]
+What it makes possible: [The behavior change this insight could unlock]
+Best channel fit: [Where this insight would be most powerful]
+
+---
+
+INSIGHT 2: [Short Name]
+"[Shower thought version]"
+
+Why it's real: [Evidence]
+Why no competitor has said it: [Gap]
+What it makes possible: [Behavior change]
+Best channel fit: [Channel]
+
+---
+
+INSIGHT 3: [Short Name]
+"[Shower thought version]"
+
+Why it's real: [Evidence]
+Why no competitor has said it: [Gap]
+What it makes possible: [Behavior change]
+Best channel fit: [Channel]
+
+---
+
+MY RECOMMENDATION: Insight [N] — [one sentence rationale connecting to the business objective]
+
+TO PROCEED: Reply with the insight number, or "Insight 1 but with [adjustment]"
+```
+
+**Why this format matters:** Without an evaluation frame, insight selection becomes
+a gut-feel vote. This format gives Michael the information to choose strategically —
+which insight is most ownable, most urgent, most connected to the real behavior change needed.
 
 Strategy brief complete (creative-brief.md exists)
   └─▶ AUTO: Present brief to Michael

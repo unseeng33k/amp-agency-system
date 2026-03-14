@@ -540,6 +540,91 @@ Never send traffic somewhere that isn't ready.
 
 ---
 
+## Content Strategy Layer — Before Building the Calendar
+
+Before scheduling anything, define the editorial architecture.
+This is the step between "approved concepts" and "content calendar."
+Without it, the calendar is just a grid with random posts. With it, every slot has a reason.
+
+### Step 1 — Define Content Pillars
+
+From the approved creative brief and concept package, extract 3-5 content pillars.
+A pillar is a recurring theme — the brand has standing to speak on this topic,
+the audience cares about it, and it connects to the campaign insight.
+
+```markdown
+## Content Pillars — [Campaign Name]
+
+**Pillar 1: [Name]**
+What it is: [1-sentence description of the theme]
+Why we own it: [connection to brand positioning or insight]
+Content types that work here: [education / conviction / community / humor / reactive]
+Posting frequency: [daily / 2x/week / weekly]
+
+**Pillar 2: [Name]**
+[Same structure]
+
+**Pillar 3: [Name]**
+[Same structure]
+
+**Pillar 4 (optional): Reactive**
+What it is: Timely responses to industry news, trends, or competitor moves
+Why we own it: The brand has a unique perspective on what's happening in the category
+Content types: Type 3 replies, Type 4 reactive posts
+Posting frequency: As opportunities arise — not scheduled
+```
+
+### Step 2 — Define the Content Cadence
+
+How do the pillars rotate? What is the rhythm of the calendar?
+
+```markdown
+## Posting Cadence — [Platform]
+
+Weekly pattern:
+  Monday:    [Pillar X] — [format]
+  Wednesday: [Pillar Y] — [format]
+  Friday:    [Pillar Z] — [format]
+  Reactive:  [Pillar 4 — as opportunities arise]
+
+Monthly arc:
+  Week 1: [theme / campaign beat]
+  Week 2: [theme / campaign beat]
+  Week 3: [theme / campaign beat]
+  Week 4: [theme / campaign beat]
+
+Evergreen ratio: [% of posts that are timeless vs. timely]
+Campaign-specific ratio: [% tied to this specific campaign vs. always-on brand voice]
+```
+
+### Step 3 — Content-to-Concept Mapping
+
+Map every scheduled content slot to either:
+- A specific approved concept (from `concept-[n]-copy.md`) — exact copy, locked
+- A pillar brief (theme + format directive for new copy to be written)
+- A reactive placeholder (no copy yet — triggered by real-world events)
+
+```markdown
+| Slot | Date | Platform | Pillar | Source | Copy Status |
+|------|------|----------|--------|--------|-------------|
+| W1-Mon | [date] | X | Pillar 1 | concept-01-copy.md | ✅ Locked |
+| W1-Wed | [date] | LinkedIn | Pillar 2 | New copy needed | ⬜ To Write |
+| W1-Fri | [date] | X | Pillar 3 | concept-02-copy.md | ✅ Locked |
+| W2-Mon | [date] | X | Reactive | Placeholder | 🔍 Monitor |
+```
+
+**Copy locked** = pulled verbatim from approved concept file. Production Agent verified.
+**To Write** = pillar brief written, copy not yet drafted. Creative Agent produces it.
+**Monitor** = reactive slot. No copy until a moment surfaces.
+
+### Step 4 — Pass to Scheduling Automation
+
+Once content pillars, cadence, and content-to-concept mapping are complete,
+pass to the Content Scheduling Automation section below.
+The calendar builds itself from this architecture — not from guesswork.
+
+---
+
 ## Content Scheduling Automation
 
 For campaigns with a content cadence (organic social, email sequences, drip content),

@@ -168,6 +168,36 @@ Notes:          [e.g., "client added youremail@gmail.com as Full user 2026-01-01
 
 ---
 
+## Section 6b — API Connections Status
+
+> Created by Client Onboarding Agent. Updated as connections are established.
+> Full setup instructions live at: `/projects/clients/[client-slug]/api-connections.md`
+
+```
+Onboarding status: [complete / in-progress / not-started]
+Onboarding date:   [YYYY-MM-DD]
+Setup by:          [name]
+```
+
+| Platform | Status | Access Level | Connected Date | Notes |
+|----------|--------|-------------|----------------|-------|
+| X/Twitter | ⬜ Not Started | | | |
+| LinkedIn | ⬜ Not Started | | | |
+| Instagram | ⬜ Not Started | | | |
+| TikTok | ⬜ Not Started | | | |
+| AgentMail | ⬜ Not Started | | | |
+| Google Search Console | ⬜ Not Started | | | |
+| Google Analytics | ⬜ Not Started | | | |
+| Unsplash | ⬜ Not Started | | | |
+
+**Status key:** ⬜ Not Started | 🟡 In Progress | 🟢 Connected | 🔴 Failed/Blocked
+
+**Minimum viable connection:** At least ONE posting platform (X or LinkedIn) must be
+connected before Campaign Management Agent can auto-execute deployments.
+Without connections, system runs in documentation mode (copy-paste package only).
+
+---
+
 ## Section 7 — Budget & Constraints
 
 **Typical campaign budget range:**

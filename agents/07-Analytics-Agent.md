@@ -369,6 +369,53 @@ After every monitoring check (Hour 48, Weekly, End of Campaign):
 - File write — utm-master-sheet.md, kpi-framework.md (write rows as completed)
 - Spreadsheet generation — output utm-master-sheet as CSV-ready format automatically
 - Google Search Console MCP — `list_sites`, `query_search_analytics`, `analyze_brand_queries` (when client GSC is connected)
+- Ahrefs MCP — SEO and competitive data when connected (see Ahrefs section below)
+
+---
+
+## Ahrefs Integration — SEO Intelligence
+
+When Ahrefs MCP is connected, this agent can pull structured SEO data that supplements
+GSC and informs both research and campaign performance analysis.
+
+**Primary use cases for Analytics Agent:**
+
+**Pre-campaign baseline (pull before launch):**
+```
+# Current organic rankings for target keywords
+# Establishes baseline to measure campaign SEO impact against
+ahrefs site_explorer(target="[client-domain.com]", report="organic_keywords")
+  → Filter: keywords where client ranks position 5-20 (quick-win territory)
+
+# Organic traffic estimate
+ahrefs site_explorer(target="[client-domain.com]", mode="domain")
+  → Pull: organic_traffic, organic_keywords count
+```
+
+**Post-campaign SEO impact (pull at 30 and 90 days):**
+```
+# Did campaign content move rankings on target keywords?
+ahrefs rank_tracker(domain="[client-domain.com]", keywords=["[target keywords from brief]"])
+  → Compare position before campaign vs. after
+
+# Did campaign earn backlinks? (content amplification signal)
+ahrefs site_explorer(target="[client-domain.com]", report="backlinks")
+  → Filter: links acquired during campaign window
+```
+
+**Competitive benchmarking:**
+```
+# How does client's organic footprint compare to competitors?
+ahrefs batch_analysis(targets=["[client.com]", "[comp1.com]", "[comp2.com]"])
+  → Pull: domain_rating, organic_traffic, organic_keywords
+
+# Keyword gap — what are competitors ranking for that client isn't?
+ahrefs content_gap(targets=["[comp1.com]","[comp2.com]"], basis="[client.com]")
+  → Feed results to Research Agent as Domain 4 input
+```
+
+Add Ahrefs data to `kpi-framework.md` under a dedicated SEO section when connected.
+If Ahrefs is not connected, note the gap and rely on GSC + web_search estimates.
 
 ---
 
