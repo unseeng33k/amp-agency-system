@@ -341,6 +341,47 @@ what performs, what gets ignored, and what emotional territory they have abandon
 - What emotional territory they have completely abandoned
 - The gap between what they say they are and what they actually post
 
+**Step 2b — Competitor posting time analysis:**
+
+Most competitive audits look at WHAT competitors post. This step looks at WHEN —
+and where the gaps are. Timing is a real edge on organic social.
+
+For each competitor's top 10 performing posts, record:
+```
+Post: [content summary]
+Posted: [day of week] at [approximate time] [timezone]
+Engagement: [likes / RTs / comments]
+```
+
+Then identify:
+- **Peak windows:** When do competitor posts consistently generate the most engagement?
+- **Quiet windows:** Are there time blocks (evenings, weekends, early morning) where competitors
+  rarely post but the audience is still active? These are white space timing opportunities.
+- **Event-driven clustering:** Do competitors spike posting around specific events
+  (earnings, conferences, cultural moments, industry news)? If yes, note the pattern —
+  these are windows to either compete directly or deliberately be the counter-voice.
+- **Frequency patterns:** How often do they post? Daily, 3x/week, sporadic?
+  Consistency gaps are opportunities.
+
+```
+web_search("[competitor] posting frequency [platform] [current year]")
+web_search("best time to post [platform] [category] [audience] [current year]")
+web_search("[platform] peak engagement hours [audience type] [current year]")
+```
+
+**Output:** `timing-intelligence.md` — platform-specific timing recommendations for this
+category and audience, informed by competitor behavior and platform research.
+Format:
+```
+Platform: [X / LinkedIn / Instagram / etc.]
+Competitor peak windows: [day + time patterns]
+Audience active windows: [from platform research]
+Recommended posting windows: [where audience is active and competitors are quiet]
+Frequency recommendation: [posts per week/day]
+Events to post around: [recurring category milestones]
+Events to avoid: [competitor-dominated moments]
+```
+
 **Step 3 — Competitive landscape map:**
 - What is the collective message the category sends? (if you lined up all their posts, what's the overall voice?)
 - What does EVERY competitor say? (this is where you find the clichés to avoid)
@@ -455,12 +496,23 @@ writing copy that sounds like everyone else.
 
 ### 3. `anomaly-log.md`
 The filtered list of counterintuitive, contradictory, or emotionally charged findings.
+
+**Confirmed vs New discipline (from Sanofi brand planning methodology):**
+Before logging anomalies, separate them into two categories:
+- **Confirmed** — things you knew before this research that are still true. These anchor the strategy but should not be presented as new discoveries.
+- **New** — things that genuinely changed your understanding or contradict prior assumptions. These are the findings that could actually change strategy direction.
+
+This distinction matters because "we know patients have low trust in pharma" is confirmed knowledge. "Even patients who distrust pharma follow individual HCP voices on TikTok at 10pm" is new. Only new findings should drive insight candidates.
+
 ```
 ANOMALY: [plain description of the contradiction or hidden behavior]
+STATUS: CONFIRMED (known, still true) / NEW (genuinely changes our understanding)
 SOURCE: [where it came from — be specific: Reddit thread, competitor post, news article]
 TENSION WORDS TO TRY: [despite / even though / yet / however...]
 MOMENT-IN-TIME CONNECTION: [does any recent event amplify this anomaly?]
 ```
+
+New anomalies advance to insight candidates. Confirmed anomalies inform context only.
 
 ### 4. `insight-candidates.md`
 Minimum 5 candidate insights in "We Thought / But Really" form, sharpened with tension words.
@@ -528,7 +580,19 @@ This is the Fogg prompt. Name it precisely.]
 **DIGITAL BEHAVIORS:**
 [Where they spend time. What content they consume. What platforms.
 What they do when in consideration mode — not just passive browsing.
+What time of day are they most active and receptive?
 Source: actual research, not assumptions.]
+
+**ADOPTION LADDER — where this persona sits right now:**
+```
+Unaware     → Aware → Consideration → Decision → Receipt → Advocacy
+   ↑
+[mark current position with ↑ and describe what moves them to the next rung]
+```
+- Current rung: [Unaware / Aware / Consideration / Decision / Receipt / Advocacy]
+- What they need to move to the next rung: [specific — information? social proof? a trigger event?]
+- Primary barrier at this rung: [the one thing blocking forward movement]
+- The message that works at this rung: [not generic brand messaging — the specific thing this person needs to hear at this exact stage]
 
 **RELATIONSHIP TO THE INSIGHT:**
 [How does this persona relate to the key insight?
@@ -543,6 +607,19 @@ Never create a persona you can't trace back to actual research signals.
 ### 7. `social-landscape.md`
 Platform intelligence: what works, what doesn't, why, with actual engagement data.
 Include: format recommendations, tone recommendations, topics to avoid.
+
+### 8. `timing-intelligence.md`
+Competitor posting time patterns + platform-specific timing recommendations.
+For each channel in scope:
+- Competitor peak posting windows (when they post and when it performs)
+- Audience active windows (from platform research)
+- Recommended posting windows (audience active + competitor quiet = white space)
+- Frequency recommendation
+- Event anchors worth posting around
+
+This file is consumed directly by the Strategy Agent when building the media strategy
+and by the Campaign Management Agent when scheduling content. If it doesn't exist,
+both agents will use generic defaults instead of competitive intelligence.
 
 
 ---
@@ -601,6 +678,8 @@ Domain 4 — Competitive:
   web_search("[competitor] X Twitter top posts [current year]")
   web_search("[competitor] brand messaging positioning [current year]")
   web_search("site:x.com [competitor handle]")
+  web_search("best time to post [platform] [category audience] [current year]")
+  web_search("[competitor handle] posting frequency schedule [platform]")
 
 Domain 5 — Social:
   web_search("[category] X Twitter what performs [current year]")
@@ -633,7 +712,7 @@ The insight lives in the detail, not the summary.
 
 ## Handoff
 Passes to: **Strategy Agent**
-Primary deliverable: `key-insights.md` + `competitive-content-audit.md` + `anomaly-log.md`
+Primary deliverable: `key-insights.md` + `competitive-content-audit.md` + `anomaly-log.md` + `timing-intelligence.md`
 Handoff summary: 3-sentence brief covering: (1) the key insight, (2) what the competition misses, (3) the cultural moment that makes this urgent right now
 Auto-trigger: AM Agent is notified immediately when key-insights.md is written
 Checkpoint: Strategy Agent must confirm insight quality before building strategy

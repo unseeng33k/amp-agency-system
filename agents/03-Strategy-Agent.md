@@ -204,12 +204,22 @@ GOAL:       [What are we generally trying to achieve? Business-level ambition.]
 OBJECTIVE:  [Specific, measurable outcome with a timeframe.]
             Example: "Increase X follower engagement rate by 30% in 90 days"
 
-STRATEGY:   [The plan — how we will achieve the goal. 2-3 strategic imperatives.]
+STRATEGY:   [2-3 strategic imperatives — the plan for achieving the goal.]
             Example: "Own the conviction territory. Speak to identity, not economics."
 
-TACTICS:    [The specific activities that execute the strategy.]
+TACTICS:    [The specific activities that execute each strategy.]
             Example: "Weekly text-only X posts / Community reply strategy / No promotional content"
 ```
+
+**Strategic Imperative discipline (apply before writing GOST):**
+Strategies in the GOST must pass these quality checks before being presented:
+- **Verb-led:** Each SI starts with an action verb (Build, Own, Establish, Shift, Drive)
+- **Cross-functional:** Not a single-department tactic — something that touches multiple workstreams
+- **Linked to a quantified opportunity:** Must connect to a specific audience segment or behavior gap
+- **Trackable:** Has at most 2 impact KPIs (not activity metrics — not "number of posts," but "engagement rate" or "follower growth rate")
+- **3-4 maximum:** If you have more than 4, you have tactics, not strategy. Collapse them.
+
+If a proposed SI fails any of these checks, rewrite it before it goes into `gost.md`.
 
 GOST output goes into `gost.md` and is presented at the strategy approval checkpoint
 alongside the brief. It is the answer to "why are we doing this?" that clients need
@@ -475,6 +485,27 @@ Not because it has reach. Because the insight lives there.]
 [What actually performs on each recommended channel right now.
 Source: research from current-year searches — not assumptions.]
 
+## Timing Intelligence
+[Pull from Research Agent's timing-intelligence.md if it exists.
+If not, run these searches now:]
+
+```
+web_search("best time to post [platform] [audience type] [current year]")
+web_search("[competitor handle] posting schedule [platform] [current year]")
+web_search("[platform] peak engagement hours [category] [current year]")
+```
+
+For each channel in scope, specify:
+- **Recommended posting days:** [which days of the week, based on competitor gaps + audience activity]
+- **Recommended posting times:** [specific time windows — not vague "morning" but "7-9am ET"]
+- **Recommended frequency:** [posts per day/week — informed by competitor cadence + platform norms]
+- **Windows to own:** [times competitors are quiet but audience is active]
+- **Windows to avoid:** [competitor-dominated time blocks, or low-engagement periods]
+- **Event anchors:** [recurring industry events, cultural moments, or seasonal windows worth posting around]
+
+This section feeds directly into the Campaign Management Agent's scheduling automation.
+Without it, the content calendar uses generic defaults instead of competitive timing intelligence.
+
 ## Content Sequence
 [If this is a multi-touch campaign: what does the target see first, second, third?
 What is the narrative arc across touchpoints?
@@ -484,6 +515,22 @@ How does each piece set up the next?]
 [Specific creative formats Creative needs to produce for each channel.
 Include: dimensions, duration limits, copy length limits, any platform-specific constraints.
 This is the technical brief Creative needs to execute correctly.]
+
+## Organic Track
+Channels: [list]
+Content cadence: [posting frequency per channel — informed by timing intelligence above]
+Content themes: [3-5 themes that rotate — never sell, always add value]
+Voice/format per channel: [specific to each platform]
+Measurement: [engagement metrics, not conversion metrics]
+
+## Paid Track (if budget defined)
+Channels: [list]
+Campaign objective: [awareness / consideration / conversion]
+Targeting approach: [audience definition — behavioral, not just demographic]
+Creative rotation: [how many variants, how often to refresh]
+Budget allocation: [by channel and phase]
+Landing page requirement: [URL or "TBD — flag to client"]
+Measurement: [conversion metrics, CPA target if known]
 
 ## Budget Allocation (if budget is known)
 [Phase 1 / Phase 2 / Phase 3 split recommendation with rationale]

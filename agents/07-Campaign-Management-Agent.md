@@ -465,10 +465,25 @@ the agent builds and executes a scheduled posting plan — not just a calendar d
 
 ### Building the Schedule
 
-From `media-strategy.md` (organic track cadence) and `content-calendar.md`:
-1. Extract every post, its platform, its approved copy, and its target date/time
-2. Map to the correct posting method per platform (API / Composio / browser)
-3. Create Google Calendar events for every scheduled post
+From `media-strategy.md` (organic track cadence + timing intelligence section) and `content-calendar.md`:
+1. Read `timing-intelligence.md` from the research package — this contains competitor posting patterns and recommended windows. If it doesn't exist, run the timing searches now before scheduling anything.
+2. Extract every post, its platform, its approved copy, and its target date/time
+3. Schedule posts in the timing windows identified in `timing-intelligence.md` — not arbitrary times
+4. Map to the correct posting method per platform (API / Composio / browser)
+5. Create Google Calendar events for every scheduled post
+
+**Timing schedule logic:**
+```
+FOR EACH post to schedule:
+  1. Read timing-intelligence.md → get recommended window for this platform
+  2. Check: does any competitor have a major post in this window? (from competitive-content-audit.md)
+     YES → shift 30-60 min earlier or later to avoid being buried
+     NO  → use the recommended window
+  3. Check: is there a relevant industry event or cultural moment this week?
+     YES → anchor the post 30-60 min before peak conversation starts
+  4. Schedule the post at the optimized time
+  5. Note the timing rationale in the content calendar
+```
 
 ```python
 # Auto-create calendar events for every scheduled post
