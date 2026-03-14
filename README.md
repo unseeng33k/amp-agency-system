@@ -146,6 +146,240 @@ You review and approve before anything gets sent. The AI drafts, you send.
 
 ---
 
+## 🔌 Connecting Apps and APIs (Optional — Unlocks Automation)
+
+The system works without any of these. But connecting them turns it from
+"AI that helps you write" into "AI that actually posts, monitors, and reports for you."
+
+Here's every connection explained in plain English, what it unlocks, and exactly how to set it up.
+
+---
+
+### 📨 Email Alerts and Reports — AgentMail
+**What it unlocks:** The system emails you campaign updates, performance reports, and alerts when something needs attention. You review and approve before anything sends.
+
+**Cost:** Free tier available
+
+**Setup:**
+1. Go to [agentmail.to](https://agentmail.to) and create a free account
+2. Copy your API key from the dashboard
+3. Open your `api-keys.md` file and add it:
+   ```
+   AgentMail: am_us_your_key_here
+   ```
+
+---
+
+### 🐦 Post to X / Twitter — X Developer Account
+**What it unlocks:** The system can post tweets, reply to tweets, and continue threads automatically on your behalf.
+
+**Cost:** Free (Basic tier is sufficient)
+
+**Setup:**
+1. Go to [developer.twitter.com](https://developer.twitter.com)
+2. Sign in with your X account and click **"Sign up for Free Account"**
+3. Create a new app — name it anything
+4. Go to **"Keys and Tokens"** tab inside your app
+5. Copy all five values into your `api-keys.md`:
+   ```
+   X Consumer Key:    (labeled "API Key")
+   X Consumer Secret: (labeled "API Key Secret")
+   X Bearer Token:    (labeled "Bearer Token")
+   X Access Token:    (click "Generate" under Access Token)
+   X Access Secret:   (shown alongside the Access Token)
+   ```
+6. Under **"App Settings"** → **"User authentication settings"** → enable **Read and Write** permissions
+
+> ⚠️ Important: Set permissions to **Read and Write** BEFORE generating your Access Token. If you generate the token first, it won't have write access and posting will fail.
+
+---
+
+### 💼 Post to LinkedIn — LinkedIn Developer App
+**What it unlocks:** Post original content, reply to comments, react to posts, and monitor your LinkedIn presence automatically.
+
+**Cost:** Free
+
+**Setup:**
+1. Go to [linkedin.com/developers](https://www.linkedin.com/developers/) and click **"Create app"**
+2. Fill in:
+   - App name: anything (e.g., "My Agency System")
+   - LinkedIn Page: select your personal profile or company page
+   - App logo: upload anything
+3. Click **"Create app"**
+4. Go to the **"Auth"** tab and copy:
+   ```
+   LinkedIn Client ID:  (labeled "Client ID")
+   LinkedIn Secret:     (labeled "Client Secret")
+   ```
+5. Under **"Products"** tab, request access to **"Share on LinkedIn"** and **"Sign In with LinkedIn"**
+6. Add these to your `api-keys.md`
+
+> Note: LinkedIn reviews app requests within a few hours. You'll get an email when approved.
+
+---
+
+### 📸 Instagram and 🎵 TikTok — Composio
+**What it unlocks:** Post to Instagram and TikTok without needing to set up separate developer accounts for each.
+
+**Cost:** Free tier available at [composio.dev](https://composio.dev)
+
+**Setup:**
+1. Create a free account at [composio.dev](https://composio.dev)
+2. Copy your API key from the dashboard
+3. Add it to `api-keys.md`:
+   ```
+   Composio: pg-your_key_here
+   ```
+4. Open Terminal and run:
+   ```bash
+   pip install composio-core
+   export COMPOSIO_API_KEY="your_key_here"
+   composio add instagram
+   composio add tiktok
+   ```
+5. Each `add` command opens a browser window — log in with your account and authorize
+
+---
+
+### 🔍 Free Stock Photos — Unsplash
+**What it unlocks:** The system can search and download free, commercially licensed photos for your campaigns automatically.
+
+**Cost:** Free
+
+**Setup:**
+1. Go to [unsplash.com/developers](https://unsplash.com/developers) and click **"New Application"**
+2. Accept the terms, fill in the app name and description (anything is fine)
+3. Scroll down to find your **"Access Key"**
+4. Add it to `api-keys.md`:
+   ```
+   Unsplash Access Key: your_access_key_here
+   ```
+
+---
+
+### 🌐 Web Search — Brave Search API
+**What it unlocks:** Gives the Research Agent access to real web search results (instead of relying only on the AI's built-in knowledge). Makes research significantly more accurate.
+
+**Cost:** Free tier (2,000 searches/month)
+
+**Setup:**
+1. Go to [api.search.brave.com](https://api.search.brave.com) and sign up
+2. Create a new subscription (Free Data tier is fine to start)
+3. Copy your API key
+4. Add it to `api-keys.md`:
+   ```
+   Brave Search: BSAy_your_key_here
+   ```
+
+---
+
+### 📍 Location Data — Google Places API
+**What it unlocks:** Lets the system find locations, businesses, and geographic data for research and targeting.
+
+**Cost:** Free for low volume (Google gives $200/month free credit)
+
+**Setup:**
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Create a new project (or use an existing one)
+3. Click **"Enable APIs and Services"** → search for **"Places API"** → enable it
+4. Go to **"Credentials"** → **"Create Credentials"** → **"API Key"**
+5. Add it to `api-keys.md`:
+   ```
+   Google Places: AIzaSy_your_key_here
+   ```
+
+---
+
+### 📊 Google Search Console — See How Your Site Ranks
+**What it unlocks:** The Analytics Agent can pull real organic search data — which keywords bring traffic, which pages rank, what's trending. Essential for SEO-linked campaigns.
+
+**Cost:** Free
+
+**Setup:**
+1. Make sure your website is verified in [Google Search Console](https://search.google.com/search-console)
+2. Open Terminal and run:
+   ```bash
+   npx -y google-searchconsole-mcp
+   ```
+3. A browser window will open — log in with the Google account that owns your Search Console
+4. Grant read access when prompted
+5. Restart your AI (Claude Desktop) — it will appear as a connected tool automatically
+
+> Note: Only works with Claude Desktop. For other AIs, export data from Search Console as CSV and upload it manually.
+
+---
+
+### 🖼️ Adobe PDF Services — Professional PDFs
+**What it unlocks:** Generates high-quality PDFs for campaign reports, proposals, and presentations.
+
+**Cost:** Free tier (500 document transactions/month)
+
+**Setup:**
+1. Go to [developer.adobe.com/console](https://developer.adobe.com/console)
+2. Sign in with your Adobe account (or create one free)
+3. Click **"Create new project"** → **"Add API"** → select **"PDF Services API"**
+4. Choose **"OAuth Server-to-Server"** and follow the prompts
+5. Copy the **Client ID** and **Client Secret**
+6. Add to `api-keys.md`:
+   ```
+   Adobe PDF Services: your_client_id
+   Adobe PDF Secret:   your_client_secret
+   ```
+
+---
+
+### 💬 Push Alerts — Pick One
+**What it unlocks:** Get instant notifications on your phone or desktop when something urgent happens — an ad gets flagged, a post goes viral, a link breaks.
+
+Pick whichever fits your setup:
+
+**Option A — Slack (easiest, works for teams)**
+1. In Slack, go to [api.slack.com/apps](https://api.slack.com/apps) → **"Create New App"**
+2. Choose **"From scratch"**, name it, select your workspace
+3. Click **"Incoming Webhooks"** → toggle on → **"Add New Webhook to Workspace"**
+4. Select a channel to post to → copy the webhook URL
+5. Add to `api-keys.md`:
+   ```
+   Slack Webhook: https://hooks.slack.com/services/your/webhook/url
+   ```
+
+**Option B — iMessage / BlueBubbles (Mac only)**
+1. Download [BlueBubbles](https://bluebubbles.app) on your Mac
+2. Follow their setup guide to connect your iMessage account
+3. Add the server URL and password to `api-keys.md`:
+   ```
+   BlueBubbles: https://your-server.trycloudflare.com
+   ```
+
+---
+
+### 🔑 After Adding Keys — Tell the AI
+
+Once you've added keys to `api-keys.md`, start a new chat with your AI and say:
+
+> *"I've updated my api-keys.md. Please check what's connected and confirm which features are now available."*
+
+The system will scan your keys, confirm what's active, and let you know if anything needs additional setup.
+
+---
+
+### Quick Reference — What Each Key Unlocks
+
+| Service | What it enables | Free? |
+|---------|----------------|-------|
+| AgentMail | Email reports and alerts | ✅ Free tier |
+| X / Twitter | Post, reply, read threads | ✅ Free |
+| LinkedIn | Post, comment, react | ✅ Free |
+| Composio | Instagram, TikTok posting | ✅ Free tier |
+| Unsplash | Free stock photography | ✅ Free |
+| Brave Search | Web research | ✅ Free tier |
+| Google Places | Location data | ✅ Free ($200/mo credit) |
+| Google Search Console | Organic search analytics | ✅ Free |
+| Adobe PDF Services | Professional PDFs | ✅ Free tier |
+| Slack Webhook | Team notifications | ✅ Free |
+
+---
+
 ## Running Your First Campaign
 
 After pasting the starter prompt, say:
