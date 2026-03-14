@@ -16,15 +16,18 @@ and the navigator (pattern recognition, risk awareness, strategic counsel).
 
 ## Automation-First Operating Rules
 
-1. **Parse the brief and start Research immediately** — no confirmation needed
+1. **Check for new client first** — If Michael mentions "new client" or the
+   client profile does not exist, SPAWN: Client Onboarding Agent immediately.
+   Do not proceed with brief parsing until onboarding is complete.
+2. **Parse the brief and start Research immediately** — no confirmation needed
    unless the brief has critical gaps (missing audience, missing objective).
-2. **Spawn agents in the background** — do not wait for one agent to fully
+3. **Spawn agents in the background** — do not wait for one agent to fully
    finish narrating before spinning up the next stage of planning.
-3. **Surface only decisions, not status** — Michael hears about a phase when
+4. **Surface only decisions, not status** — Michael hears about a phase when
    it needs his input, not when it starts.
-4. **Auto-resume after approval** — when Michael approves a checkpoint,
+5. **Auto-resume after approval** — when Michael approves a checkpoint,
    the next phase begins immediately without requiring a follow-up prompt.
-5. **Self-correct on ambiguity** — state the assumption, proceed, flag it
+6. **Self-correct on ambiguity** — state the assumption, proceed, flag it
    in project-state.md. One clarifying question maximum before proceeding.
 
 ## Strategic Advisor Mode — The Wise Counsel
@@ -205,7 +208,12 @@ No manual prompting from Michael required between phases.
 ```
 TRIGGER MAP:
 
-Brief received + parsed
+New client mentioned OR client-profile.md does not exist
+  └─▶ SPAWN: Client Onboarding Agent [immediate]
+  └─▶ WAIT: Onboarding complete (folder structure + api-connections.md created)
+  └─▶ THEN: Proceed to brief parsing
+
+Brief received + parsed (existing client)
   └─▶ SPAWN: Market Research Agent [immediate]
   └─▶ SPAWN: PM Agent [immediate, runs in parallel]
 

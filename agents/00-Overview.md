@@ -8,8 +8,15 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                              MICHAEL (Client)                                 │
-│                    Brief in → Approvals → Go signals                          │
+│         New client / Brief in → Approvals → Go signals                        │
 └──────────────────────────────────┬───────────────────────────────────────────┘
+                                   │
+                    ┌──────────────▼──────────────┐
+                    │   CLIENT ONBOARDING         │  ← New client setup
+                    │   Create folder structure   │    API connections
+                    │   Platform access survey    │    client-profile.md
+                    └──────────────┬──────────────┘
+                                   │ onboarding complete
                                    │
                     ┌──────────────▼──────────────┐
                     │    ACCOUNT MANAGEMENT       │  ← Orchestrator
@@ -172,14 +179,15 @@ after every campaign closes.
 
 | Order | Agent | Purpose | Auto-start? | Checkpoint |
 |-------|-------|---------|-------------|------------|
-| 0 | Account Management | Intake, client profile check, orchestration | On brief receipt | — |
+| 0 | Client Onboarding | New client setup, folder structure, API connections | On "new client" mention | — |
+| 1 | Account Management | Intake, client profile check, orchestration | On brief receipt | — |
 | ∥ | Project Management | Timeline + blockers, always running | On project create | — |
-| 1 | Market Research | 6-domain research, insight excavation | After intake | — |
-| 2 | Strategy | Brief + positioning + media strategy | After insight selected | **YES** |
-| 3 | Creative | 2+ concepts, channel-constrained | After strategy approval | **YES** |
-| 4a | Production | Assets built, copy hard-locked | After creative approval | Optional |
-| 4b | Analytics | UTMs + KPI framework | After creative approval | — |
-| 5 | Campaign Management | Launch — organic + paid tracks | After 4a + 4b complete | **YES** |
+| 2 | Market Research | 6-domain research, insight excavation | After intake | — |
+| 3 | Strategy | Brief + positioning + media strategy | After insight selected | **YES** |
+| 4 | Creative | 2+ concepts, channel-constrained | After strategy approval | **YES** |
+| 5a | Production | Assets built, copy hard-locked | After creative approval | Optional |
+| 5b | Analytics | UTMs + KPI framework | After creative approval | — |
+| 6 | Campaign Management | Launch — organic + paid tracks | After 5a + 5b complete | **YES** |
 | — | Learning Log | Client profile updated | After deployment | — |
 
 ---
@@ -227,13 +235,14 @@ last_updated_at: 2026-03-14
 | `SKILL-DISCOVERY-PROTOCOL.md` | `agents/` | Skill locations, API key template, install commands |
 | `REVISION-PROTOCOL.md` | `agents/` | How to classify, route, and log revisions |
 | `CLIENT-PROFILE-TEMPLATE.md` | `templates/` | Template for per-client persistent memory |
-| `01-Account-Management-Agent.md` | `agents/` | Orchestrator — intake, handoffs, checkpoints |
-| `02-Market-Research-Agent.md` | `agents/` | 6-domain research, insight excavation, content audit |
-| `03-Strategy-Agent.md` | `agents/` | Brief + positioning + media strategy (paid/organic split) |
-| `04-Creative-Agent.md` | `agents/` | Concept development — What If? ideation, channel-constrained |
-| `05-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time |
-| `06-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, platform tracking |
-| `07-Campaign-Management-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
-| `08-Project-Management-Agent.md` | `agents/` | Timeline, blockers, SLA monitoring — always on |
+| `01-Client-Onboarding-Agent.md` | `agents/` | New client setup — folder structure, API connections, platform survey |
+| `02-Account-Management-Agent.md` | `agents/` | Orchestrator — intake, handoffs, checkpoints |
+| `03-Market-Research-Agent.md` | `agents/` | 6-domain research, insight excavation, content audit |
+| `04-Strategy-Agent.md` | `agents/` | Brief + positioning + media strategy (paid/organic split) |
+| `05-Creative-Agent.md` | `agents/` | Concept development — What If? ideation, channel-constrained |
+| `06-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time |
+| `07-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, platform tracking |
+| `08-Campaign-Management-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
+| `09-Project-Management-Agent.md` | `agents/` | Timeline, blockers, SLA monitoring — always on |
 | `api-keys.md` | `resources/` | **Your keys — never committed. See SKILL-DISCOVERY-PROTOCOL.** |
 | `00-Overview.md` | `agents/` | This file |
