@@ -249,10 +249,126 @@ Flag to Michael only if a project-specific target supersedes these.
 
 ---
 
+## Google Search Console Integration
+
+When a client has GSC access connected, this agent can pull organic search
+performance directly — no dashboard login, no CSV export, no manual work.
+
+### What GSC unlocks for each phase
+
+**During Research (feed to Research Agent):**
+- Top queries driving organic traffic to the client's site
+- Pages with high impressions but low CTR — content gaps and title/meta opportunities
+- Branded vs non-branded query split — how much traffic is earned vs owned
+- Current average ranking positions by keyword and page
+
+**During Campaign Reporting (feed to monitoring-log.md):**
+- Whether campaign content moved organic rankings for target keywords
+- New queries appearing after campaign launch — topic authority signals
+- Landing page performance in organic search vs paid/social (full-funnel view)
+
+**Standalone SEO audit (when requested):**
+- Queries ranking position 5-20 with high impressions — quick-win ranking opportunities
+- Pages losing clicks or impressions over time — content needing refresh
+- Device split (mobile vs desktop) for audience behavior intelligence
+
+### Client onboarding — GSC setup
+
+When a new client is added, check `client-profile.md` Section 6 for GSC access status.
+
+If the client has a GSC-verified property:
+```
+Step 1 — Client adds your Google account as a GSC user:
+  Google Search Console → Settings → Users and permissions
+  → Add user: [your Google account email]
+  → Permission level: Full
+
+Step 2 — Authenticate the account:
+  node ~/.npm/_npx/[hash]/node_modules/google-searchconsole-mcp/dist/authenticate.js
+  --account [client-slug]
+  (opens browser → log in → token saved to ~/.gsc-mcp/tokens/[client-slug].json)
+
+Step 3 — Verify connection:
+  list_sites(account="[client-slug]")
+  → Should return the client's verified property URL
+
+Step 4 — Update client-profile.md Section 6:
+  GSC: connected | account alias: [client-slug] | property: [URL]
+```
+
+**If client has no GSC property yet:**
+Flag to AM Agent: "Client has no GSC property. Recommend setup before campaign launch
+to establish organic search baseline."
+Setup takes 5 minutes: search.google.com/search-console → Add property → Verify via
+Google Analytics (if GA is already on the site, this is one click).
+
+### GSC query patterns (invoke without narrating)
+
+```
+# List connected accounts and properties
+list_accounts()
+list_sites(account="[client-slug]")
+
+# Top queries — last 28 days
+query_search_analytics(
+  siteUrl="https://[client-domain]",
+  startDate="[28 days ago]",
+  endDate="[today]",
+  dimensions=["query"],
+  rowLimit=50
+)
+
+# High impression / low CTR opportunities (CTR < 3%, impressions > 100)
+query_search_analytics(
+  siteUrl="https://[client-domain]",
+  startDate="[28 days ago]",
+  endDate="[today]",
+  dimensions=["query", "page"],
+  rowLimit=100
+)
+# Then filter results: impressions > 100 AND ctr < 0.03
+
+# Page-level performance
+query_search_analytics(
+  siteUrl="https://[client-domain]",
+  startDate="[28 days ago]",
+  endDate="[today]",
+  dimensions=["page"],
+  rowLimit=50
+)
+
+# Brand vs non-brand split
+analyze_brand_queries(
+  siteUrl="https://[client-domain]",
+  brandTerms=["[client name]", "[product name]"],
+  startDate="[28 days ago]",
+  endDate="[today]"
+)
+
+# Campaign impact — compare pre/post launch organic performance
+query_search_analytics(
+  siteUrl="https://[client-domain]",
+  startDate="[campaign launch date]",
+  endDate="[today]",
+  dimensions=["query", "date"]
+)
+```
+
+### GSC data → reporting flow
+
+After every monitoring check (Hour 48, Weekly, End of Campaign):
+1. Pull GSC data for the campaign window
+2. Compare organic impressions/clicks vs pre-campaign baseline (28 days prior)
+3. Surface in monitoring-log.md under "Organic Search Signals"
+4. If organic traffic moved on campaign keywords → note in learning log as insight validation
+
+---
+
 ## Tools (invoke without narrating)
 - File read — production-package.md, tracking-placeholders.md, project-state.md (all on receipt)
 - File write — utm-master-sheet.md, kpi-framework.md (write rows as completed)
 - Spreadsheet generation — output utm-master-sheet as CSV-ready format automatically
+- Google Search Console MCP — `list_sites`, `query_search_analytics`, `analyze_brand_queries` (when client GSC is connected)
 
 ---
 

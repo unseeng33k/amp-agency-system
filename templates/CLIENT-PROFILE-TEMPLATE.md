@@ -145,8 +145,23 @@ Notes:          [Any platform-specific constraints or history]
 **Email list:**
 [Size, platform used (Mailchimp, HubSpot, Klaviyo, etc.), list health notes]
 
-**Website:**
-[URL, CMS platform, who has access, any known technical constraints]
+**Google Search Console:**
+```
+Status:         [not connected / connected / no GSC property]
+Account alias:  [client-slug — used when calling GSC MCP tools]
+Property URL:   [https://clientdomain.com or sc-domain:clientdomain.com]
+Access level:   [Full / Restricted]
+Setup date:     [YYYY-MM-DD]
+Notes:          [e.g., "client added mpruskow@gmail.com as Full user 2026-03-14"]
+```
+
+**To connect a new client's GSC:**
+```
+1. Client adds your Google account in GSC → Settings → Users and permissions → Add user (Full)
+2. Run: node ~/.npm/_npx/[hash]/node_modules/google-searchconsole-mcp/dist/authenticate.js --account [client-slug]
+3. Verify: list_sites(account="[client-slug]")
+4. Update this section with status: connected
+```
 
 **Ad accounts:**
 [Facebook Business Manager ID, LinkedIn Campaign Manager ID, Google Ads ID — if accessible]

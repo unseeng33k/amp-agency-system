@@ -17,6 +17,9 @@ Brave Search:       [from brave.com/search/api]
 Google Places:      [from console.cloud.google.com]
 Google Analytics:   [Account ID from analytics.google.com]
 Google Cloud OAuth: [client_id + client_secret from console.cloud.google.com]
+Google Search Console: [no key needed — OAuth tokens stored at ~/.gsc-mcp/tokens/]
+                       [one token file per client: ~/.gsc-mcp/tokens/[client-slug].json]
+                       [authenticate: node [path-to]/authenticate.js --account [client-slug]]
 
 ## Social / Campaign Management
 X Consumer Key:     [from developer.twitter.com → your app]
