@@ -497,7 +497,7 @@ writing copy that sounds like everyone else.
 ### 3. `anomaly-log.md`
 The filtered list of counterintuitive, contradictory, or emotionally charged findings.
 
-**Confirmed vs New discipline (from Sanofi brand planning methodology):**
+**Confirmed vs New discipline:**
 Before logging anomalies, separate them into two categories:
 - **Confirmed** — things you knew before this research that are still true. These anchor the strategy but should not be presented as new discoveries.
 - **New** — things that genuinely changed your understanding or contradict prior assumptions. These are the findings that could actually change strategy direction.

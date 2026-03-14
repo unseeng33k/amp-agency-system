@@ -272,7 +272,7 @@ Examples:
 ```
 /projects/clients/modern-mining/client-profile.md
 /projects/clients/acme-pharma/client-profile.md
-/projects/clients/sanofi-vaccines/client-profile.md
+/projects/clients/acme-corp/client-profile.md
 ```
 
 This file is never inside a project folder. It lives at the client level,
