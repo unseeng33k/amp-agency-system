@@ -514,6 +514,67 @@ MOMENT-IN-TIME CONNECTION: [does any recent event amplify this anomaly?]
 
 New anomalies advance to insight candidates. Confirmed anomalies inform context only.
 
+---
+
+### The Shower Thought Exercise — Required Before Writing Insight Candidates
+
+Before formalizing any insight candidate, run the Shower Thought Exercise.
+
+A shower thought is a tiny, accidental philosophy bomb that hits you when your brain
+is bored and your guard is down. It's that oddly profound, slightly absurd realization
+that makes you go "Wait... huh." It sounds obvious the moment you hear it — but nobody
+said it before you did.
+
+That's exactly the quality a real insight should have.
+
+**The exercise:**
+
+Take your top 3 anomalies from the anomaly log. For each one, ask:
+
+```
+ANOMALY: [plain statement of the contradiction or hidden behavior]
+
+SHOWER THOUGHT PROMPT:
+"If I had to explain this to someone in the shower —
+ no jargon, no decks, no marketing language —
+ what's the slightly weird thing I'd realize is actually true?"
+
+RULES:
+- You are bored. Your guard is down.
+- No industry language. None.
+- Must sound slightly absurd at first — then obviously true.
+- Must make someone go "wait... huh."
+- Must be completable in one breath.
+
+SHOWER THOUGHT: "[The absurd-but-true version]"
+
+TEST: Read it out loud. Does it land like a small explosion?
+      YES → it's insight territory. Formalize it.
+      NO  → it's still a finding. Dig deeper.
+```
+
+**What good looks like:**
+
+Bad (still a finding): "Patients skip doses because the schedule is inconvenient."
+Good (shower thought): "Nobody wants a pill that proves they're sick."
+
+Bad (still a finding): "Solo Bitcoin miners know their odds are terrible."
+Good (shower thought): "They're not trying to get rich. They're buying a lottery ticket
+                        that comes with bragging rights either way."
+
+Bad (still a finding): "People distrust pharma companies but trust their doctors."
+Good (shower thought): "We trust the person, not the pill —
+                        even when the person is just reading from the pill's manual."
+
+**The point:** A shower thought strips the category language off an anomaly and reveals
+the human truth underneath. If you can't say it in the shower, it's not an insight yet.
+
+Run this exercise on every anomaly before advancing anything to `insight-candidates.md`.
+At least one shower thought must survive into the final `key-insights.md` — visible,
+not buried, in the insight statement itself.
+
+---
+
 ### 4. `insight-candidates.md`
 Minimum 5 candidate insights in "We Thought / But Really" form, sharpened with tension words.
 Each includes:
@@ -530,6 +591,9 @@ The top 3 insights that passed all five tests.
 
 **The Insight:**
 [Full insight statement — sharpened with tension word, 2-4 sentences max]
+
+**The Shower Thought Version:**
+[One sentence. No jargon. Slightly absurd. Obviously true. The thing that makes someone go "wait... huh."]
 
 **Why it's hidden:**
 [Why has no one said this out loud? What prevents the category from seeing it?]

@@ -94,6 +94,7 @@ Run it through this filter:
 | Does it point to a specific human tension that a brand can resolve? | It's too vague. Sharpen it. |
 | Could only THIS brand credibly own this truth? | It's generic. Find the differentiation. |
 | Does it create emotional memory rather than a logical argument? | It won't change behavior. Rewrite it. |
+| Can you say it as a shower thought — stripped of all jargon, slightly absurd, obviously true? | Still a finding. Send back to Research for the Shower Thought Exercise. |
 
 ---
 

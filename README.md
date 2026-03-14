@@ -1,93 +1,148 @@
-# AMP Agency Agent System
+# AMP Agency System
 
-An AI-native marketing agency that runs inside any AI assistant.
+**An AI that runs a full marketing agency. You give it a client and a goal. It does the rest.**
+
 Brief in → research → strategy → creative → production → live campaign.
 
-**→ [5-minute setup below](#setup)**
+---
+
+## What does it actually do?
+
+Think of it like hiring a whole agency team, except it's AI:
+
+- 🔍 **Research** — reads Reddit, searches the web, digs through competitors. Finds the hidden truth nobody in your category has said out loud yet.
+- 🧠 **Strategy** — turns that truth into a plan. What to say, who to say it to, where to say it.
+- ✏️ **Creative** — writes the actual words and concepts for your campaign.
+- 🎨 **Production** — builds the assets. Social graphics, emails, decks, documents.
+- 📊 **Analytics** — sets up tracking so you know if it's working.
+- 🚀 **Campaign Management** — launches everything, watches the numbers, sends you updates.
+
+Every campaign remembers what worked and what didn't, so the next one is smarter.
 
 ---
 
-## What It Does
+## What do I need?
 
-You give it a client and a goal. It runs the full agency workflow:
+Just an AI assistant. That's it to start.
 
-1. **Research** — digs into the category, competitors, culture, and audience. Surfaces the insight no one has said out loud yet.
-2. **Strategy** — turns the insight into a creative brief, positioning, media strategy, and GOST plan.
-3. **Creative** — generates concepts using What If? ideation, channel-constrained copy, and visual direction.
-4. **Production** — builds assets across Canva, Word, PowerPoint, HTML, and image generation.
-5. **Analytics** — sets up UTM tracking, KPI frameworks, and reporting structure.
-6. **Campaign Management** — launches, monitors performance, schedules content, sends alerts, writes reports.
+- **Claude** (claude.ai) — works best, recommended
+- **ChatGPT** (chat.openai.com) — works great
+- **Gemini** (gemini.google.com) — works great
+- **Any other AI** — if it can read text, it works
 
-Every campaign feeds its learnings back into the next one via a client profile and learning log.
-
----
-
-## Works With
-
-- **Claude** (claude.ai, Claude Desktop, Claude Code) — recommended
-- **ChatGPT / GPT-4o** — paste STARTER-PROMPT.md as first message
-- **Gemini** — paste STARTER-PROMPT.md as first message
-- **Cursor, Windsurf, any IDE with AI**
-- **Any AI that can read a text file**
-
-> **API vs. web:** Claude.ai and ChatGPT web interfaces work via copy-paste.
-> Programmatic agent execution (Campaign Management auto-posting, Research Agent
-> batch searches) requires API keys for each service used.
+You don't need to pay for anything extra to get started. Some advanced features
+(like auto-posting to social media) need API keys, but the core agency workflow
+works with just your free AI account.
 
 ---
 
-## Setup
+## Setup — Pick Your Path
 
-### Option A — Automated (Mac/Linux, recommended)
+### 🟢 Option A — Mac or Linux (30 seconds, automated)
+
+Open Terminal and paste these three lines:
 
 ```bash
 git clone https://github.com/unseeng33k/amp-agency-system.git
 cd amp-agency-system
-chmod +x setup.sh
 ./setup.sh
 ```
 
-The script asks you three questions, writes your config, and prints a ready-to-paste prompt. Done.
+The script will ask where you put the folder, set everything up, and tell you exactly what to do next.
 
-### Option B — Manual (5 minutes, any OS)
+> **Don't have git?** [Download it here](https://git-scm.com/downloads) — takes 2 minutes to install.
 
-**Step 1 — Clone or download**
-```bash
-git clone https://github.com/unseeng33k/amp-agency-system.git
+---
+
+### 🔵 Option B — Windows or "I don't like terminals" (5 minutes, no coding)
+
+**Step 1 — Download the files**
+
+Go to: `https://github.com/unseeng33k/amp-agency-system`
+
+Click the green **Code** button → **Download ZIP** → unzip it somewhere easy to find
+(like your Desktop or Documents folder).
+
+---
+
+**Step 2 — Tell it where you put the folder**
+
+Open the folder you just unzipped. Go into the `agents` subfolder.
+Open the file called `SYSTEM-PROMPT.md` in any text editor (Notepad, TextEdit, VS Code — anything).
+
+Near the top you'll see this:
+
 ```
-Or download as ZIP and unzip anywhere you like.
-
-**Step 2 — Open `agents/SYSTEM-PROMPT.md` and set your paths**
-
-Find this block near the top and fill in your actual folder path:
-```
-VAULT_ROOT:    /paste/your/path/to/amp-agency-system
-PROJECTS_ROOT: /paste/your/path/to/amp-agency-system/projects
-SKILLS_PATH:   /paste/your/path/to/amp-agency-system/resources/skills
+VAULT_ROOT:    [path to the AMP-Agency-System folder]
+PROJECTS_ROOT: [path to the projects folder]
+SKILLS_PATH:   [path to local skills folder]
+API_KEYS_PATH: [path to your api-keys.md file]
 ```
 
-Example (Mac):
+Replace each `[path to...]` with the actual location of your folder.
+
+**On Mac it looks like:**
 ```
 VAULT_ROOT:    /Users/yourname/Documents/amp-agency-system
 PROJECTS_ROOT: /Users/yourname/Documents/amp-agency-system/projects
 SKILLS_PATH:   /Users/yourname/Documents/amp-agency-system/resources/skills
+API_KEYS_PATH: /Users/yourname/Documents/amp-agency-system/resources/api-keys.md
 ```
 
-**Step 3 — Create your api-keys.md**
-
-Copy `resources/api-keys-template.md` to `resources/api-keys.md` and fill in
-whatever keys you have. Skip any you don't — the agents will tell you what's missing.
-
-```bash
-cp resources/api-keys-template.md resources/api-keys.md
+**On Windows it looks like:**
+```
+VAULT_ROOT:    C:\Users\yourname\Documents\amp-agency-system
+PROJECTS_ROOT: C:\Users\yourname\Documents\amp-agency-system\projects
+SKILLS_PATH:   C:\Users\yourname\Documents\amp-agency-system\resources\skills
+API_KEYS_PATH: C:\Users\yourname\Documents\amp-agency-system\resources\api-keys.md
 ```
 
-**Step 4 — Load the starter prompt into your AI**
+Save the file.
 
-Open `STARTER-PROMPT.md` (in the root of this repo).
-Copy the entire contents. Paste it as your first message to your AI.
+---
 
-That's it. The system is running.
+**Step 3 — Add your API keys (optional but recommended)**
+
+Inside the `resources` folder, find `api-keys-template.md`.
+Copy that file and rename the copy to `api-keys.md`.
+Open it and fill in whatever keys you have. Leave blank anything you don't have yet.
+
+> **You don't need any keys to start.** The system will tell you what's missing
+> when you need a specific feature.
+
+---
+
+**Step 4 — Start using it**
+
+Open the file called `STARTER-PROMPT.md` in the main folder.
+Select all the text. Copy it. Paste it as your **first message** in Claude, ChatGPT, or Gemini.
+
+Then say something like:
+
+> *"I need to run a campaign for [your client]. They sell [what they sell]. I want to [your goal]."*
+
+That's it. The system takes over from there.
+
+---
+
+## 📧 Getting Updates and Alerts by Email
+
+Email is the easiest way to get campaign updates, performance reports, and alerts —
+no extra apps needed. To set it up:
+
+1. Sign up for a free account at [agentmail.to](https://agentmail.to)
+2. Copy your API key from their dashboard
+3. Add it to your `api-keys.md` file under `AgentMail:`
+
+Once connected, the Campaign Management Agent will:
+- Draft weekly performance reports to your inbox
+- Alert you if an ad gets flagged or a link breaks
+- Send campaign summaries when launches complete
+
+You review and approve before anything gets sent. The AI drafts, you send.
+
+> **Other alert options:** Slack webhook (if your team uses Slack) or BlueBubbles (iMessage, Mac only).
+> But email works everywhere and needs nothing extra installed.
 
 ---
 
@@ -95,77 +150,61 @@ That's it. The system is running.
 
 After pasting the starter prompt, say:
 
-> "I need to run a campaign for [client name]. They [what they do]. I want to [objective]."
+> *"I need to run a campaign for [client name]. They [what they do]. I want to [goal]."*
 
-The Account Management Agent handles everything from there.
+The system will ask you a few quick questions, then run the full workflow automatically.
+You'll get checkpoints for approval at three moments:
+1. After research — before strategy is written
+2. After strategy — before creative starts
+3. Before launch — before anything goes live
 
----
-
-## AI-Specific Setup
-
-### Claude (claude.ai)
-Paste `STARTER-PROMPT.md` as your first message. If you have Desktop Commander connected, it will read the files automatically. If not, upload `agents/SYSTEM-PROMPT.md` directly.
-
-### ChatGPT
-Upload `agents/SYSTEM-PROMPT.md` as a file attachment. Then paste the contents of `STARTER-PROMPT.md` as your first message.
-
-### Cursor / Claude Code
-Copy `agents/SYSTEM-PROMPT.md` content into your `CLAUDE.md` or `.cursorrules` file. The agents will be available in every session automatically.
-
-### Any other AI
-Paste `STARTER-PROMPT.md` as your first message. If the AI can read files, point it at `agents/SYSTEM-PROMPT.md`. If not, paste the file contents directly.
+Nothing publishes without your "go."
 
 ---
 
-## Folder Structure
+## What's in the box
 
 ```
 amp-agency-system/
-  STARTER-PROMPT.md       ← Paste this into your AI to start
-  README.md               ← This file
-  setup.sh                ← Automated setup script (Mac/Linux)
-  .gitignore
-  agents/                 ← The 13 agent files
-  templates/              ← Client profile template
-  projects/               ← Your work lives here (not committed)
-    clients/
-    [project-id]/
+  STARTER-PROMPT.md     ← The one file you paste into your AI
+  README.md             ← This file
+  setup.sh              ← Automated setup (Mac/Linux)
+  agents/               ← The 13 instruction files that run the agency
+  templates/            ← Client profile template
+  projects/             ← Your work goes here (private, not shared)
   resources/
-    api-keys-template.md  ← Copy this to api-keys.md and fill in
-    api-keys.md           ← YOUR KEYS — never committed
+    api-keys-template.md  ← Copy this, rename to api-keys.md, fill in
+    api-keys.md           ← Your private keys — never shared online
 ```
 
 ---
 
-## Key Concepts
+## Frequently Asked Questions
 
-| Concept | File |
-|---------|------|
-| Insight Pyramid | `agents/02-Market-Research-Agent.md` |
-| What If? ideation | `agents/04-Creative-Agent.md` |
-| COM-B behavioral architecture | `agents/03-Strategy-Agent.md` |
-| GOST planning | `agents/03-Strategy-Agent.md` |
-| Paid vs. organic media split | `agents/03-Strategy-Agent.md` |
-| Adoption Ladder persona template | `agents/02-Market-Research-Agent.md` |
-| Competitor timing intelligence | `agents/02-Market-Research-Agent.md` |
-| Copy approval hard lock | `agents/05-Production-Agent.md` |
-| Campaign scheduling + alerts | `agents/07-Campaign-Management-Agent.md` |
-| Client profile + learning log | `templates/CLIENT-PROFILE-TEMPLATE.md` |
-| Revision classification (A/B/C/D) | `agents/REVISION-PROTOCOL.md` |
+**Do I need to pay for anything?**
+No. The core system works with free AI accounts (Claude, ChatGPT, Gemini).
+Some features like auto-posting to social media or email campaigns need API keys
+from those platforms, but most are free tiers.
 
----
+**Do I need to know how to code?**
+No. You edit two text files and paste one thing into your AI. That's the whole setup.
 
-## Sharing With a Collaborator
+**What if I mess something up?**
+Just re-download the ZIP from GitHub and start over. Nothing is permanent.
 
-1. Send them the repo link: `https://github.com/unseeng33k/amp-agency-system`
-2. They clone it, run `./setup.sh` (or do the manual steps above)
-3. They create their own `resources/api-keys.md` with their own keys
-4. Their `projects/` folder stays local — never committed to the shared repo
+**Can I use this for multiple clients?**
+Yes. Each client gets their own folder in `projects/clients/`. The system keeps them separate.
 
-The agents are shared. The work is private.
+**Can I share this with my team?**
+Yes. Everyone clones the repo and runs `./setup.sh`. Each person has their own `api-keys.md`
+that stays on their computer and never gets shared. The agent files are shared. The work is private.
+
+**What if I don't have all the API keys?**
+Skip them. The agents will tell you when a feature needs a key you don't have yet.
+The core research and strategy workflow needs nothing except your AI account.
 
 ---
 
 ## License
 
-MIT. Use it, fork it, build on it.
+MIT. Free to use, fork, and build on.
