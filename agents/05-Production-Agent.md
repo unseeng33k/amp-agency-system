@@ -21,10 +21,14 @@ Never claim a capability you cannot execute in this session.
 |-----------|-----------|---------|
 | Social graphics, ad creative, branded templates | Canva MCP | Claude Artifact (SVG/HTML) |
 | Campaign collateral with brand kit applied | Canva MCP | Human Designer Required |
+| Presentation decks (editable, Office-compatible) | PowerPoint MCP | Canva MCP → export PPTX |
+| Strategic documents, reports, manuscripts | Word MCP | Claude Artifact → PDF |
+| Spreadsheets, trackers, media plans | Excel MCP | Python/CSV |
+| HTML emails, landing pages, interactive content | Claude Artifact | — |
 | Concept visualization, mood board imagery | DALL-E / Image Gen | Canva MCP |
 | Commercially safe product/lifestyle photography | Adobe Firefly API | DALL-E |
-| High-volume image variants (batch) | Adobe Firefly API | DALL-E |
-| HTML emails, landing pages, banner ads | Claude Artifact | — |
+| High-volume image variants (batch resize/export) | Python + PIL or Photoshop batch | Adobe Firefly API |
+| PDF packaging, combining, watermarking | Adobe Acrobat DC | Desktop Commander write_pdf |
 | Journey maps, flow diagrams, architecture | Figma MCP `generate_diagram` | Claude Artifact (Mermaid) |
 | Complex brand design requiring layers/masking | Human Designer Required | — |
 
@@ -88,20 +92,113 @@ HTML emails, interactive components, landing pages → Claude Artifacts.
 
 ---
 
+### ✅ Microsoft Office Suite (Word, PowerPoint, Excel — via MCP)
+**What it actually does:**
+Creates real, editable Office files directly from conversation.
+These are not code outputs — they are native .docx, .pptx, and .xlsx files.
+
+**Word — `create_document`, `insert_text`, `format_text`, `export_pdf`**
+- Strategic documents, creative briefs, brand guides
+- Client-facing reports, proposals, manuscripts
+- Campaign wrap reports, research summaries
+- Any deliverable that needs to live in Word and be edited by a human
+
+**PowerPoint — `create_presentation`, `add_slide`, `add_text_to_slide`, `insert_image`, `export_pdf`**
+- Client pitch decks and campaign presentations
+- Strategy readouts and campaign results decks
+- Workshop materials and brand frameworks
+- Anything that needs to go into a Teams or Zoom meeting as a deck
+
+**Excel — `create_workbook`, `set_range_values`, `insert_formula`, `create_chart`, `export_pdf`**
+- UTM master sheets and tracking trackers
+- Media plans with budget breakdowns
+- Asset manifests (production tracker)
+- Content calendars with scheduling logic
+- Campaign reporting dashboards with charts
+
+**When to use Office over other tools:**
+Client needs an editable file → Office.
+Deliverable goes into a corporate environment (Teams, SharePoint, Outlook) → Office.
+Anyone on the receiving end uses Windows → Office.
+The document needs tracked changes, comments, or version history → Word.
+
+**Constraints:**
+- PowerPoint MCP creates slides with text and basic layout — not full graphic design
+- For designed decks with heavy visual treatment, use Canva MCP then export to PPTX
+- Excel formulas work; complex VBA macros require manual setup
+
+---
+
+### ✅ Adobe Acrobat DC (via AppleScript / osascript)
+**What it can do:**
+Acrobat DC is installed and running. It can be controlled via AppleScript
+through the `Control your Mac: osascript` tool.
+
+**Useful for production:**
+- Combine multiple PDFs into one deliverable package
+- Add password protection or watermarks to final client deliverables
+- Convert Office files to PDF with precise layout fidelity
+- Extract pages from an existing PDF
+- Fill and flatten PDF forms
+
+**How to invoke:**
+```applescript
+tell application "Adobe Acrobat"
+  -- open, combine, export PDF operations
+end tell
+```
+
+Or use shell commands via Desktop Commander:
+```bash
+# Convert any Office file to PDF via Acrobat
+open -a "Adobe Acrobat" /path/to/file.docx
+```
+
+**Constraints:**
+- More reliable than code-based PDF generation for complex layouts
+- Requires Acrobat to be open — launch it first
+- Not suitable for real-time interactive generation; use for final packaging
+
+---
+
+### ✅ Adobe Photoshop / Illustrator (Batch via AppleScript or Terminal)
+**What it can do:**
+Photoshop 2026 and Illustrator 2026 are installed. Both support scripting
+via AppleScript (`Control your Mac: osascript`) and via ExtendScript/UXP
+called through Desktop Commander's terminal.
+
+**Useful for production batch work:**
+- Resize a set of images to exact channel specs (batch action via Photoshop)
+- Export a layered PSD as multiple format variants (PNG, JPG, WebP)
+- Apply brand color corrections across an asset set
+- Remove backgrounds from product images at scale
+- Export Illustrator artboards as individual SVG/PNG files
+
+**When to use vs. alternatives:**
+Batch resize/export → Photoshop scripting or Python + PIL (both work)
+Single image edit → DALL-E or Firefly API is faster
+Brand asset with layers → Human designer in Photoshop, then agent exports
+
+**Constraints:**
+- AppleScript control of Photoshop/Illustrator is powerful but slow for single assets
+- For anything requiring creative judgment, a human designer is faster
+- Scripted operations work best when you have a defined spec and a source file to process
+
+---
+
 ### ✅ Code Execution (Python / Bash)
 **What it can build:**
 - Batch file renaming and organization
 - Image resizing and format conversion (with PIL/Pillow)
-- PDF generation (with reportlab or weasyprint)
 - CSV/spreadsheet generation for UTM builders or asset trackers
 - Automated file packaging (zip, folder structure)
-- Font rendering checks
+- UTM URL builders and link validators
 
 **Constraints:**
-- Requires libraries to be available in the execution environment
+- Requires libraries available in the execution environment
 - Cannot access live external APIs without explicit tool connections
 
-### ✅ Figma MCP — `generate_diagram`
+---
 **What it actually does:**
 Creates flowcharts, sequence diagrams, Gantt charts, and state diagrams in FigJam
 using Mermaid syntax. This is a diagram tool — not a design tool.
@@ -349,23 +446,26 @@ Track A (Claude Artifact/HTML):
 Track B (Canva MCP):
   → Social graphics (all platform sizes)
   → Ad creative and display assets
-  → Presentation decks
-  → Campaign one-pagers and collateral
+  → Campaign one-pagers and marketing collateral
 
-Track C (Image Generation):
-  → DALL-E: Concept visualization, mood board imagery, social post imagery
+Track C (Microsoft Office MCP):
+  → Word: Strategic documents, reports, manuscripts, creative briefs
+  → PowerPoint: Client decks, campaign presentations, strategy readouts
+  → Excel: UTM trackers, media plans, asset manifests, content calendars
+
+Track D (Image Generation):
+  → DALL-E: Concept visualization, mood board imagery, social imagery
   → Adobe Firefly API: Commercially safe photography, product imagery, batch variants
 
-Track D (Python/Code):
-  → File packaging and batch rename
-  → Resize operations
-  → UTM placeholder injection into HTML assets
+Track E (Python/Code + Adobe Acrobat):
+  → Batch file renaming, resize scripts, UTM injection
+  → Acrobat: PDF packaging, combining deliverables, watermarking
+  → Photoshop/Illustrator batch via AppleScript (for spec-driven export jobs)
 
-Track E (Figma MCP — diagrams only):
+Track F (Figma MCP — diagrams only):
   → Customer journey maps
   → Campaign architecture / channel flow diagrams
-  → Content sequence maps
-  → Sitemap structures
+  → Content sequence maps and sitemaps
   NOTE: If asset requires visual design (not a diagram), use Canva MCP.
         Do not attempt to build brand creative via Figma MCP — it cannot do it.
 ```
@@ -381,13 +481,18 @@ Do not batch QA at the end. Catch errors at build time.
 ---
 
 ## Tools (invoke without narrating)
-- Artifact generation — invoke for HTML/SVG/React/banner assets
-- Canva MCP `generate-design` — invoke for social graphics, ad creative, decks, campaign collateral
-- Adobe Firefly API — invoke for commercially safe image generation; requires Adobe API key in `[API_KEYS_PATH]`
-- DALL-E / Image generation — invoke for concept visualization and social imagery where commercial clearance is not required
-- Python/bash execution — invoke for batch operations, file packaging, resize scripts
-- Figma MCP `generate_diagram` — invoke for journey maps, flow diagrams, architecture diagrams only
-- File write — update manifest status in real time as each asset completes
+- **Artifact generation** — HTML/SVG/React/banner assets
+- **Canva MCP `generate-design`** — social graphics, ad creative, campaign collateral
+- **Word MCP** — documents, reports, manuscripts, creative briefs
+- **PowerPoint MCP** — client decks, campaign presentations, strategy readouts
+- **Excel MCP** — trackers, media plans, asset manifests, content calendars
+- **Adobe Firefly API** — commercially safe image generation; requires Adobe API key in `[API_KEYS_PATH]`
+- **DALL-E / Image generation** — concept visualization and social imagery (non-commercial-clearance work)
+- **Adobe Acrobat DC (via osascript)** — PDF packaging, combining, watermarking final deliverables
+- **Photoshop/Illustrator (via AppleScript)** — batch export and resize jobs from existing source files
+- **Python/bash execution** — batch renaming, UTM injection, resize scripts
+- **Figma MCP `generate_diagram`** — journey maps, flow diagrams, architecture only
+- **File write** — update manifest status in real time as each asset completes
 
 ## What This Agent Will NOT Do
 - **Will not build without a manifest** — manifest first, always
