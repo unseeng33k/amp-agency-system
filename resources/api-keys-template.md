@@ -43,7 +43,6 @@ Unsplash Access Key:[from unsplash.com/developers — free commercial use, attri
 Adobe PDF Services: [client_id from developer.adobe.com/console]
 Adobe PDF Secret:   [client_secret — paired with above]
 Adobe Access Token: [generated via client_credentials grant — expires, regenerate as needed]
-OpenAI (DALL-E):    [same key as OpenAI above — listed here for clarity]
 
 ## Office / Productivity
 Microsoft Office:   [connected via MCP — uses local Office install, no key needed]

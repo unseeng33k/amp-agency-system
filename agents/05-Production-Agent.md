@@ -26,9 +26,9 @@ Never claim a capability you cannot execute in this session.
 | Spreadsheets, trackers, media plans | Excel MCP | Python/CSV |
 | HTML emails, landing pages, interactive content | Claude Artifact | — |
 | Concept visualization, mood board imagery | DALL-E / Image Gen | Canva MCP |
-| Real photography — lifestyle, editorial, background | **Unsplash API** | Adobe Firefly API |
-| Commercially safe product/lifestyle photography | Adobe Firefly API | Unsplash API |
-| High-volume image variants (batch resize/export) | Python + PIL or Photoshop batch | Adobe Firefly API |
+| Real photography — lifestyle, editorial, background | **Unsplash API** | DALL-E / Image Gen |
+| AI-generated imagery (no real photo equivalent) | DALL-E / GPT-Image | Canva MCP |
+| High-volume image variants (batch resize/export) | Python + PIL or Photoshop batch | DALL-E |
 | PDF packaging, combining, watermarking | Adobe Acrobat DC | Desktop Commander write_pdf |
 | Journey maps, flow diagrams, architecture | Figma MCP `generate_diagram` | Claude Artifact (Mermaid) |
 | Complex brand design requiring layers/masking | Human Designer Required | — |
@@ -177,7 +177,7 @@ called through Desktop Commander's terminal.
 
 **When to use vs. alternatives:**
 Batch resize/export → Photoshop scripting or Python + PIL (both work)
-Single image edit → DALL-E or Firefly API is faster
+Single image edit → DALL-E or Unsplash is faster
 Brand asset with layers → Human designer in Photoshop, then agent exports
 
 **Constraints:**
@@ -192,7 +192,7 @@ Brand asset with layers → Human designer in Photoshop, then agent exports
 Searches 5M+ free, commercially licensed photos by natural language description.
 All photos are free for commercial use. Attribution required.
 
-**When to use over DALL-E or Firefly:**
+**When to use over DALL-E:**
 Anytime the brief calls for real photography rather than AI-generated imagery.
 Real photos carry more credibility for lifestyle, editorial, and brand contexts.
 Free — no per-generation cost. Use it first before reaching for paid image gen.
@@ -285,46 +285,9 @@ before attempting to build:
 - Text rendering in generated images is unreliable — never use for headlines
 - Style consistency across a set requires careful prompt engineering
 - Use as creative direction reference or social content, not as final ad creative
-- **Copyright note:** DALL-E outputs may not be commercially cleared — use Adobe Firefly for work requiring commercial safety
+- **Copyright note:** DALL-E outputs may not be commercially cleared — use Unsplash for real photography when provenance matters
 
 ---
-
-### ✅ Adobe Firefly API — Commercially Safe Image Generation
-**What it does:**
-REST API for generating images that are safe for commercial use.
-Firefly is trained on Adobe Stock, licensed content, and public domain material —
-not scraped web data. The critical differentiator when client work requires
-commercial clearance or brand safety.
-
-**What it can build:**
-- Product photography backgrounds and composite scenes
-- Lifestyle imagery for campaigns
-- High-volume image variants (same scene, multiple variations)
-- Background removal and replacement on existing assets
-- Image expansion (extend a photo beyond its original edges)
-- Batch resizing to standard marketing specs via the Firefly Services API
-
-**How to invoke:**
-Requires an Adobe Firefly API key in `[API_KEYS_PATH]`.
-```
-POST https://firefly-api.adobe.io/v3/images/generate
-Authorization: Bearer [token from api-keys.md]
-Body: { "prompt": "[description]", "size": { "width": 1200, "height": 628 } }
-```
-
-**When to use Firefly over DALL-E:**
-- Client has brand safety or commercial licensing requirements
-- High-volume batch generation (Firefly Services API scales more cleanly)
-- Product photography replacement or extension
-- Work going to paid media where image provenance matters
-
-**Constraints:**
-- Requires paid Adobe API key — not available without Creative Cloud credentials
-- Per-generation billing — flag to AM Agent before running high-volume batches
-- No free tier for API access
-
----
-
 
 ---
 
@@ -490,8 +453,7 @@ Track C (Microsoft Office MCP):
 
 Track D (Image Generation):
   → Unsplash API: Real photography — lifestyle, editorial, backgrounds (free, use first)
-  → DALL-E: Concept visualization, mood board imagery, social post imagery
-  → Adobe Firefly API: Commercially safe product imagery, batch variants, generated scenes
+  → DALL-E / GPT-Image: Concept visualization, mood board imagery, AI-generated scenes
 
 Track E (Python/Code + Adobe Acrobat):
   → Batch file renaming, resize scripts, UTM injection
@@ -522,9 +484,8 @@ Do not batch QA at the end. Catch errors at build time.
 - **Word MCP** — documents, reports, manuscripts, creative briefs
 - **PowerPoint MCP** — client decks, campaign presentations, strategy readouts
 - **Excel MCP** — trackers, media plans, asset manifests, content calendars
-- **Unsplash API** — free real photography; use before DALL-E or Firefly for lifestyle/editorial imagery
-- **Adobe Firefly API** — commercially safe image generation; requires Adobe API key in `[API_KEYS_PATH]`
-- **DALL-E / Image generation** — concept visualization and social imagery (non-commercial-clearance work)
+- **Unsplash API** — free real photography; use before DALL-E for lifestyle/editorial imagery
+- **DALL-E / GPT-Image** — AI-generated imagery, concept visualization, social post imagery
 - **Adobe Acrobat DC (via osascript)** — PDF packaging, combining, watermarking final deliverables
 - **Photoshop/Illustrator (via AppleScript)** — batch export and resize jobs from existing source files
 - **Python/bash execution** — batch renaming, UTM injection, resize scripts
@@ -536,7 +497,7 @@ Do not batch QA at the end. Catch errors at build time.
 - **Will not produce final regulated/legal creative** — AI-built assets require human review in regulated contexts
 - **Will not skip QA** — every asset checked at build time, not at end
 - **Will not hardcode tracking URLs** — all links use `[TRACKING_URL]` placeholders
-- **Will not use DALL-E for commercially sensitive work** — use Adobe Firefly API when image provenance matters
+- **Will not use DALL-E when real photography is available** — check Unsplash first
 - **Will not attempt brand design in Figma MCP** — Figma MCP is diagrams only; brand creative goes to Canva MCP or flags as Human Designer Required
 
 ---
