@@ -56,8 +56,8 @@ EVERY TIME project-state.md is updated:
 | Creative Approval | Michael | 1–2 days | — | — | ⬜ Not Started |
 | Production | Production | 1–3 days | — | — | ⬜ Not Started |
 | Analytics | Analytics | 0.5 days | — | — | ⬜ Not Started |
-| Deployment | Deployment | 0.5 days | — | — | ⬜ Not Started |
-| Deployment Approval | Michael | 0.5 days | — | — | ⬜ Not Started |
+| Campaign Management | Deployment | 0.5 days | — | — | ⬜ Not Started |
+| Campaign Management Approval | Michael | 0.5 days | — | — | ⬜ Not Started |
 ```
 
 Update start/end dates automatically as phases transition.
@@ -137,11 +137,11 @@ Update start/end dates automatically as phases transition.
 | Creative Approval | Client | 1–3 days | — | — | ⬜ Not Started |
 | Production | Production Agent | 2–5 days | — | — | ⬜ Not Started |
 | Analytics Setup | Analytics Agent | 1–2 days | — | — | ⬜ Not Started |
-| Deployment | Deployment Agent | 1–2 days | — | — | ⬜ Not Started |
-| Deployment Approval | Client | 1 day | — | — | ⬜ Not Started |
+| Campaign Management | Campaign Management Agent | 1–2 days | — | — | ⬜ Not Started |
+| Campaign Management Approval | Client | 1 day | — | — | ⬜ Not Started |
 
 **Total Estimated Timeline:** 16–28 business days
-**Client-Gated Checkpoints:** Strategy, Creative, Deployment
+**Client-Gated Checkpoints:** Strategy, Creative, Campaign Management
 ```
 
 
@@ -219,7 +219,7 @@ The PM Agent operates as a **background monitor** — it does not produce client
 | Creative | Tracks concept count; flags if fewer concepts than briefed |
 | Production | Monitors asset delivery against spec list |
 | Analytics | Confirms tagging is complete before deployment clears |
-| Deployment | Final QA gate — does not approve until PM confirms all upstream tasks done |
+| Campaign Management | Final QA gate — does not approve until PM confirms all upstream tasks done |
 
 ---
 

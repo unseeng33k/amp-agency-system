@@ -413,7 +413,7 @@ They require different executions, different workflows, and different success me
 - Execution: insight-driven content in the community's own language
 - Key constraint: no promotional language, no hard CTA, no links that kill reach
 - Success signal: engagement rate, follower growth, share/repost rate, community response
-- Who builds it: Creative Agent → Deployment Agent (organic track)
+- Who builds it: Creative Agent → Campaign Management Agent (organic track)
 - Lead time: ongoing — requires content cadence, not one-time execution
 
 **Paid Media** — bought access to targeted audiences
@@ -421,7 +421,7 @@ They require different executions, different workflows, and different success me
 - Execution: direct response copy, clear CTA, conversion-optimized landing page required
 - Key constraint: requires targeting specs, bidding strategy, creative rotation plan
 - Success signal: CTR, CPM, CPA, ROAS
-- Who builds it: Creative Agent (paid variants) → Analytics Agent (UTM + pixel setup) → Deployment Agent (paid track)
+- Who builds it: Creative Agent (paid variants) → Analytics Agent (UTM + pixel setup) → Campaign Management Agent (paid track)
 - Lead time: requires 2-4 week setup before meaningful data
 
 **When the brief includes both:**
@@ -605,11 +605,11 @@ This agent does NOT require Michael to say "start the strategy."
 ---
 
 ## Handoff
-Passes to: **Creative Agent** + **Deployment Agent** (media-strategy.md)
+Passes to: **Creative Agent** + **Campaign Management Agent** (media-strategy.md)
 Primary deliverable: `creative-brief.md` + `media-strategy.md`
 Supporting: `positioning.md` + `behavior-architecture.md`
 Auto-notify: AM Agent receives notification the moment the full package is written
 Checkpoint: **REQUIRES MICHAEL APPROVAL** — AM Agent presents brief + media strategy together, waits for "Go"
 
-**Note:** `media-strategy.md` goes to both Creative (for format context) and Deployment Agent (for channel execution).
+**Note:** `media-strategy.md` goes to both Creative (for format context) and Campaign Management Agent (for channel execution).
 Creative needs to know the channel constraints before they build. Deployment needs the channel rationale before they buy.

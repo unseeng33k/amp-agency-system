@@ -8,7 +8,7 @@ Run it with Claude, GPT-4o, Gemini, or any AI that can read files.
 ## What This Is
 
 Eight specialized agents — Research, Strategy, Creative, Production, Analytics,
-Deployment, Account Management, Project Management — that run a complete marketing
+Campaign Management, Account Management, Project Management — that run a complete marketing
 campaign pipeline from brief to launch. Each agent has a defined role, defined inputs,
 defined outputs, and defined handoffs.
 
@@ -114,7 +114,7 @@ The `agents/` folder is the shared, version-controlled system.
 | GOST planning framework | `03-Strategy-Agent.md` |
 | Paid vs. organic media split | `03-Strategy-Agent.md` |
 | Copy approval hard lock | `05-Production-Agent.md` |
-| Learning log | `07-Deployment-Agent.md` |
+| Learning log | `07-Campaign-Management-Agent.md` |
 | Client profile + strategy history | `templates/CLIENT-PROFILE-TEMPLATE.md` |
 | Revision classification (A/B/C/D) | `agents/REVISION-PROTOCOL.md` |
 

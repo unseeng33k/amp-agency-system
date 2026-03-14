@@ -107,7 +107,7 @@ Install any skill: `npx skills add <owner/repo@skill> -g -y`
 | `analytics-tracking` | `npx skills add coreyhaines31/marketingskills@analytics-tracking -g -y` | Tracking best practices |
 | `programmatic-seo` | `npx skills add coreyhaines31/marketingskills@programmatic-seo -g -y` | SEO measurement |
 
-### Deployment Agent — Social Media
+### Campaign Management Agent — Social Media
 | Skill | Install | What It Does |
 |-------|---------|-------------|
 | `connect` | `npx skills add composiohq/awesome-claude-skills@connect -g -y` | 1,000+ platform integrations via OAuth |

@@ -38,7 +38,7 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
            │           ▼                          ▼
            │  ┌──────────────────┐    (held until creative
            │  │    CREATIVE      │     approval, then sent
-           │  │  2 concepts min  │     to DEPLOYMENT)
+           │  │  2 concepts min  │     to CAMPAIGN MANAGEMENT)
            │  │  per channel     │
            │  └────────┬─────────┘ ← ✅ CHECKPOINT
            │           │ approved concept
@@ -56,7 +56,7 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
            │                  │ both complete
            │                  ▼
            │       ┌──────────────────────┐
-           │       │     DEPLOYMENT       │ ← ✅ CHECKPOINT
+           │       │     CAMPAIGN MANAGEMENT       │ ← ✅ CHECKPOINT
            │       │  organic track       │
            │       │  paid track (if any) │
            │       │  launch-log.md       │
@@ -81,11 +81,11 @@ Monitors all phases. Surfaces blockers. Tracks SLAs. Never produces creative wor
 
 **Production + Analytics** — run simultaneously after creative approval.
 Production builds assets. Analytics builds UTM/tracking. Neither waits for the other.
-Deployment cannot start until both are complete.
+Campaign Management cannot start until both are complete.
 
 **media-strategy.md fork** — produced by Strategy, consumed by two agents:
 - Creative Agent reads it for channel constraints before concepting
-- Deployment Agent receives it at launch for channel execution plan
+- Campaign Management Agent receives it at launch for channel execution plan
 
 ---
 
@@ -128,7 +128,7 @@ CREATE     Bring the strategy to life in a compelling, channel-constrained way.
 MEASURE    Optimize based on what the data shows — and feed learning forward.
            KPI tracking, performance signals, learning log update.
            Output: monitoring-log.md, launch-log.md, client-profile.md updated
-           Agent: Deployment → Learning Log
+           Agent: Campaign Management → Learning Log
 ```
 
 **The cadence is circular, not linear.** MEASURE feeds back into LEARN for the next project.
@@ -144,7 +144,7 @@ Three phases require **explicit Michael approval** before the pipeline advances:
 |------------|----------------|-----------------|
 | **Strategy** | creative-brief.md + media-strategy.md | Strategy Agent completes both |
 | **Creative** | Winning concept package | Michael selects concept |
-| **Deployment** | Final assets + launch plan | Production + Analytics both complete |
+| **Campaign Management** | Final assets + launch plan | Production + Analytics both complete |
 
 No agent advances past a checkpoint without a "Go" in the chat.
 "Looks good" counts. Silence does not.
@@ -179,7 +179,7 @@ after every campaign closes.
 | 3 | Creative | 2+ concepts, channel-constrained | After strategy approval | **YES** |
 | 4a | Production | Assets built, copy hard-locked | After creative approval | Optional |
 | 4b | Analytics | UTMs + KPI framework | After creative approval | — |
-| 5 | Deployment | Launch — organic + paid tracks | After 4a + 4b complete | **YES** |
+| 5 | Campaign Management | Launch — organic + paid tracks | After 4a + 4b complete | **YES** |
 | — | Learning Log | Client profile updated | After deployment | — |
 
 ---
@@ -233,7 +233,7 @@ last_updated_at: 2026-03-14
 | `04-Creative-Agent.md` | `agents/` | Concept development — What If? ideation, channel-constrained |
 | `05-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time |
 | `06-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, platform tracking |
-| `07-Deployment-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
+| `07-Campaign-Management-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
 | `08-Project-Management-Agent.md` | `agents/` | Timeline, blockers, SLA monitoring — always on |
 | `api-keys.md` | `resources/` | **Your keys — never committed. See SKILL-DISCOVERY-PROTOCOL.** |
 | `00-Overview.md` | `agents/` | This file |

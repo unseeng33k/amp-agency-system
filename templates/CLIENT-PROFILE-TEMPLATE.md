@@ -176,7 +176,7 @@ What slows them down?]
 
 ## Section 8 — Learning Log
 
-> Updated after every project closes. The Deployment Agent populates initial
+> Updated after every project closes. The Campaign Management Agent populates initial
 > performance data. The AM Agent translates it into strategic learning.
 
 ```markdown
@@ -256,7 +256,7 @@ web_search("[client name] site:x.com OR linkedin.com")
 - Appends to Section 5 (What Works / Doesn't Work) if new performance data emerges
 
 **After every project closes:**
-- Deployment Agent adds performance data to Section 8 (Learning Log)
+- Campaign Management Agent adds performance data to Section 8 (Learning Log)
 - AM Agent reviews and updates Section 5 with strategic interpretation
 - Profile version number increments
 

@@ -126,9 +126,9 @@ Creative concepts complete
 
 Production complete (asset-manifest.md all statuses = Complete)
   └─▶ AUTO: Analytics Agent fills UTM placeholders
-  └─▶ AUTO: Deployment package generated
+  └─▶ AUTO: Campaign Management package generated
   └─▶ WAIT: Final "Go" from Michael
-  └─▶ SPAWN: Deployment Agent [immediately after Go]
+  └─▶ SPAWN: Campaign Management Agent [immediately after Go]
 ```
 
 ---

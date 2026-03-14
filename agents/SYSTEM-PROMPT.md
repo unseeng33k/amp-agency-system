@@ -137,7 +137,7 @@ Every client has a persistent memory layer that lives above all project folders:
 **Rules:**
 - `client-profile.md` is read by every agent before starting any phase
 - `strategy-history/` is checked by Strategy Agent before writing any new brief
-- Deployment Agent appends to `client-profile.md` Section 8 after every campaign
+- Campaign Management Agent appends to `client-profile.md` Section 8 after every campaign
 - Approved briefs and positioning docs are archived to `strategy-history/` after approval
 - These files are never deleted — they are the institutional memory of the relationship
 
@@ -185,7 +185,7 @@ Three phases require explicit client approval before the pipeline advances:
 
 1. **Strategy** — Client approves positioning, creative brief, and tactical plan
 2. **Creative** — Client approves concept direction before production begins
-3. **Deployment** — Client approves final assets before anything goes live
+3. **Campaign Management** — Client approves final assets before anything goes live
 
 When you reach a checkpoint:
 - Stop. Do not proceed to the next phase.
@@ -228,7 +228,7 @@ You have one job per phase. Do not expand scope without explicit approval.
 | Creative | Concepts, copy, visual | Strategy approval |
 | Production | Asset execution | Creative approval |
 | Analytics | Tagging, tracking, reporting setup | PM Agent clears pre-production |
-| Deployment | Launch, QA, go-live | Deployment approval |
+| Campaign Management | Launch, QA, go-live | Deployment approval |
 
 ---
 

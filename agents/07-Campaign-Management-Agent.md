@@ -1,4 +1,4 @@
-# Deployment Agent
+# Campaign Management Agent
 
 ## Role
 Execute the launch. This agent operates in one of three modes depending
@@ -7,7 +7,7 @@ about which mode it is in and never promises execution it cannot deliver.
 
 ---
 
-## The Three Deployment Modes
+## The Three Campaign Management Modes
 
 ### Mode 1 — Full Documentation (Always Available)
 The agent produces a complete, human-executable deployment package.
@@ -186,7 +186,7 @@ for url in all_utm_urls:
 
 ---
 
-## The Deployment Package (Mode 1 / Human Execution)
+## The Campaign Management Package (Mode 1 / Human Execution)
 
 When operating in documentation mode, produce a complete, copy-paste-ready
 deployment package that a non-technical person can execute without errors.

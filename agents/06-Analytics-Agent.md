@@ -257,7 +257,7 @@ Flag to Michael only if a project-specific target supersedes these.
 ---
 
 ## Handoff
-Passes to: **Deployment Agent**
+Passes to: **Campaign Management Agent**
 Primary deliverable: `utm-master-sheet.md` + `kpi-framework.md`
-Auto-notify: AM Agent + Deployment Agent simultaneously when UTMs are complete
+Auto-notify: AM Agent + Campaign Management Agent simultaneously when UTMs are complete
 No checkpoint — analytics setup is non-gated, flows directly to deployment prep
