@@ -133,34 +133,32 @@ Store your keys at: `[API_KEYS_PATH]` (default: `[VAULT_ROOT]/resources/api-keys
 
 **This file is listed in .gitignore. Never commit it.**
 
-Create your api-keys.md using this template:
+Create your api-keys.md using `resources/api-keys-template.md` as the base.
+Fill in whatever keys you have — skip any you don't. Agents will flag missing integrations.
 
-```markdown
-# API Keys — [Your Name]
-# DO NOT COMMIT THIS FILE
+| Service | Use | Agent |
+|---------|-----|-------|
+| Anthropic | Primary LLM | All |
+| OpenAI | DALL-E image gen + GPT-Image | Production |
+| OpenRouter | Multi-model routing/fallback | All |
+| xAI/Grok | Real-time web data | Research |
+| Moonshot/Kimi | Long-context research | Research |
+| Brave Search | Web search | Research |
+| Google Places | Location data | Research |
+| Google Analytics | Campaign reporting | Analytics |
+| Google Cloud OAuth | Google services auth | Various |
+| X Consumer Key/Secret | Twitter API posting | Campaign Mgmt |
+| X Bearer Token | Twitter API read | Campaign Mgmt |
+| X Access Token/Secret | Twitter API write | Campaign Mgmt |
+| X Client ID/Secret | OAuth 2.0 flow | Campaign Mgmt |
+| Composio | LinkedIn, Instagram, TikTok, Reddit | Campaign Mgmt |
+| AgentMail | Programmatic email | Campaign Mgmt |
+| BlueBubbles | iMessage alerts | Campaign Mgmt |
+| Adobe PDF Services | PDF generation, Acrobat API | Production |
+| Canva | MCP — OAuth, no key needed | Production |
+| Microsoft Office | MCP — local install, no key needed | Production |
 
-## Social / Deployment
-Composio:         [your key from platform.composio.dev]
-X Consumer Key:   [from developer.twitter.com]
-X Consumer Secret:[from developer.twitter.com]
-X Access Token:   [from developer.twitter.com]
-X Access Secret:  [from developer.twitter.com]
-X Bearer Token:   [from developer.twitter.com]
-
-## Email
-AgentMail:        [your key]
-
-## AI / LLM
-Anthropic:        [your key]
-OpenAI:           [your key — for DALL-E image generation]
-OpenRouter:       [your key]
-xAI/Grok:         [your key]
-
-## Search
-Brave Search:     [your key]
-```
-
-**Security rule:** Agents read keys from `[API_KEYS_PATH]` at runtime. Values are never embedded in agent files. Never displayed in output.
+**Security rule:** Read keys from `[API_KEYS_PATH]` at runtime. Values are never embedded in agent files. Never displayed in output.
 
 ---
 
