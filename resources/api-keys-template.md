@@ -6,11 +6,15 @@
 # =========================================
 
 ## AI / LLM
-Anthropic:          [from console.anthropic.com]
-OpenAI:             [from platform.openai.com — DALL-E image gen + GPT-Image]
-OpenRouter:         [from openrouter.ai — multi-model routing/fallback]
-xAI/Grok:           [from console.x.ai — real-time web data]
-Moonshot/Kimi:      [from platform.moonshot.cn — long-context research]
+# KEY: ✅ = paid API access  ⚠️ = account only (no programmatic access)
+#
+Anthropic:          [from console.anthropic.com]                    ✅ API key
+OpenAI:             [from platform.openai.com — DALL-E + GPT-Image] ✅ API key
+OpenRouter:         [from openrouter.ai — multi-model fallback]      ✅ API key
+xAI/Grok:           [from console.x.ai — real-time web data]         ✅ API key
+Moonshot/Kimi:      [from platform.moonshot.cn — long-context]       ✅ PAID API key
+Gemini:             [account only — no API key]                      ⚠️ web only
+ChatGPT:            [account only — no API key]                      ⚠️ web only
 
 ## Search
 Brave Search:       [from brave.com/search/api]

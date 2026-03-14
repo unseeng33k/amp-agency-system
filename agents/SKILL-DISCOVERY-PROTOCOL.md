@@ -136,13 +136,15 @@ Store your keys at: `[API_KEYS_PATH]` (default: `[VAULT_ROOT]/resources/api-keys
 Create your api-keys.md using `resources/api-keys-template.md` as the base.
 Fill in whatever keys you have — skip any you don't. Agents will flag missing integrations.
 
-| Service | Use | Agent |
-|---------|-----|-------|
-| Anthropic | Primary LLM | All |
-| OpenAI | DALL-E image gen + GPT-Image | Production |
-| OpenRouter | Multi-model routing/fallback | All |
-| xAI/Grok | Real-time web data | Research |
-| Moonshot/Kimi | Long-context research | Research |
+| Service | Use | Agent | API Access |
+|---------|-----|-------|-----------|
+| Moonshot/Kimi | Primary LLM — long-context research, deep analysis | Research | ✅ Paid API |
+| Anthropic/Claude | Strategy, creative, structured output | All | ✅ API key |
+| OpenAI | DALL-E image gen, GPT-Image, fallback LLM | Production | ✅ API key |
+| OpenRouter | Multi-model routing and fallback chain | All | ✅ API key |
+| xAI/Grok | Real-time web data, current events | Research | ✅ API key |
+| Gemini | Web interface only — no API access | — | ⚠️ Account only |
+| ChatGPT | Web interface only — no API access | — | ⚠️ Account only |
 | Brave Search | Web search | Research |
 | Google Places | Location data | Research |
 | Google Analytics | Campaign reporting | Analytics |

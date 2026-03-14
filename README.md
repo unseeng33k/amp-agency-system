@@ -24,10 +24,15 @@ Every campaign feeds its learnings back into the next one via a client profile a
 
 ## Works With
 
-- **Claude** (claude.ai, Claude Desktop, Claude Code)
-- **ChatGPT / GPT-4o**
+- **Claude** (claude.ai, Claude Desktop, Claude Code) — recommended
+- **ChatGPT / GPT-4o** — paste STARTER-PROMPT.md as first message
+- **Gemini** — paste STARTER-PROMPT.md as first message
 - **Cursor, Windsurf, any IDE with AI**
 - **Any AI that can read a text file**
+
+> **API vs. web:** Claude.ai and ChatGPT web interfaces work via copy-paste.
+> Programmatic agent execution (Campaign Management auto-posting, Research Agent
+> batch searches) requires API keys for each service used.
 
 ---
 
