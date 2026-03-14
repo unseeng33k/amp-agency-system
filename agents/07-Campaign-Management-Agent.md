@@ -504,21 +504,106 @@ for post in content_calendar:
 For platforms with API access, posts can be queued and executed automatically
 at the scheduled time without Michael needing to be present.
 
-**Queue execution logic:**
+**Queue execution logic — four content types:**
 ```
-FOR EACH post in schedule WHERE post.datetime <= now:
-  IF platform == "X" → post via Twitter API (tweepy)
-  IF platform == "LinkedIn" → post via Composio
-  IF platform == "Instagram" → post via Composio
-  IF platform == "Email" → send via AgentMail (draft-first for review)
-  UPDATE launch-log.md: post.status = LIVE, post.live_url = [returned URL]
-  UPDATE Google Calendar event: color = green
+FOR EACH item in content queue:
+
+  TYPE 1 — Original post:
+    IF platform == "X"        → client.create_tweet(text=copy)
+    IF platform == "LinkedIn" → composio LINKEDIN_CREATE_LINKEDIN_POST
+    IF platform == "Instagram" → composio INSTAGRAM_CREATE_PHOTO_POST
+
+  TYPE 2 — Thread continuation (reply to own post):
+    IF platform == "X":
+      # Get the tweet ID of the root post from launch-log.md
+      root_tweet_id = [from launch-log.md]
+      client.create_tweet(
+          text=reply_copy,
+          in_reply_to_tweet_id=root_tweet_id
+      )
+    IF platform == "LinkedIn":
+      # Use LinkedIn Comments API with the post URN from launch-log.md
+      composio LINKEDIN_CREATE_COMMENT(post_urn=root_post_urn, text=reply_copy)
+
+  TYPE 3 — Response to another account's post:
+    # REQUIRES EXPLICIT APPROVAL — never auto-execute
+    # Draft it, present it to Michael, wait for "Go" before posting
+    IF platform == "X":
+      client.create_tweet(
+          text=reply_copy,
+          in_reply_to_tweet_id=target_tweet_id
+      )
+    IF platform == "LinkedIn":
+      composio LINKEDIN_CREATE_COMMENT(post_urn=target_post_urn, text=reply_copy)
+
+  TYPE 4 — Reactive content (trend/moment response):
+    # Time-sensitive — flag to Michael immediately with window closing note
+    # Michael approves, then executes same as Type 1
+
+  UPDATE launch-log.md: post.status = LIVE, post.live_url = [returned URL/ID]
 ```
 
-**For email:** Always use draft-first protocol regardless of automation level.
-Draft → notify Michael → wait for explicit "Send" before executing.
+**Type 3 hard rule: never auto-post responses to other accounts.**
+Always draft, present, wait for explicit approval. The reputational risk of
+a misfire in someone else's conversation is too high to automate without review.
 
-### Content Gap Detection
+**Type 4 time rule: surface immediately when the moment is identified.**
+Alert via email (AgentMail) or preferred notification method with:
+- The moment/trend being responded to
+- The draft reactive post
+- The time window for relevance
+- A clear "Reply 'Go' to post" instruction
+
+### Reactive Monitoring — Spotting Moments Worth Engaging
+
+During an active campaign, the agent monitors for two types of reactive opportunities:
+
+**Type 3 opportunities — other accounts' posts worth responding to:**
+```python
+# Search for posts from relevant accounts in the category
+# Pull via Twitter API
+relevant_accounts = [read from client-profile.md — competitor handles, KOLs, category voices]
+
+for account in relevant_accounts:
+    recent_posts = client.get_users_tweets(
+        id=account_id,
+        max_results=10,
+        tweet_fields=["public_metrics", "created_at"]
+    )
+    # Flag posts with high engagement (above 500 likes or 50 replies)
+    # that relate to the campaign's core category or insight territory
+    high_signal = [p for p in recent_posts if p.public_metrics['like_count'] > 500]
+```
+
+When a high-signal post is found that the brand has standing to respond to:
+1. Pull the post text and engagement metrics
+2. Send to Creative Agent with a Type 3 brief
+3. Draft 3 reply options
+4. Alert Michael: "[Account] posted something worth responding to. 3 reply options attached. Window: ~4 hours."
+5. Wait for "Go" — never auto-post
+
+**Type 4 opportunities — trending moments in the category:**
+```python
+# Monitor category keywords and trending topics
+trending_searches = web_search("[category] trending [platform] today")
+# OR via Twitter API
+trending = client.get_trending_topics(woeid=1)  # 1 = worldwide
+
+# Cross-reference trending topics against:
+# - Campaign insight territory
+# - Client's positioning
+# - Cultural tension map from strategy phase
+```
+
+When a relevant trending moment surfaces:
+1. Check: does the brand have standing to speak on this?
+2. Check: what's the obvious take? Can the brand say something more interesting?
+3. If yes to both: generate Type 4 reactive post, alert Michael immediately
+4. Include the time window clearly: "This is relevant for ~[X] hours"
+
+**Reactive monitoring runs at:** Hour 1 check, Hour 24 check, and daily during ongoing campaigns.
+
+---
 
 After building the schedule, scan for gaps:
 ```
@@ -806,9 +891,12 @@ Flag any gaps (dates with no content) as intentional or as needs-to-be-filled.
 ### Launch Phase
 1. `deployment-package.md` — complete copy-paste-ready post instructions per asset
 2. `pre-launch-qa.md` — completed QA checklist, signed off before go-live
-3. `launch-log.md` — real-time record of what went live, when, confirmed by whom
+3. `launch-log.md` — real-time record of what went live, when, and confirmed by whom
 4. `content-calendar.md` — 4-week rolling schedule with post times, platforms, copy previews
 5. `ab-tracker.md` — (if variants running) side-by-side performance comparison
+6. `thread-[n].md` — Type 2 thread continuations, root + reply pairs
+7. `reactive-reply-[n].md` — Type 3 responses to other accounts (pending Michael approval)
+8. `reactive-post-[n].md` — Type 4 reactive content for trending moments
 
 ### In-Flight
 6. `monitoring-log.md` — running performance log updated at every check interval

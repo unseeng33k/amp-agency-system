@@ -372,10 +372,149 @@ these are brief failures, not stylistic choices. Fix them before handoff.
 
 ---
 
-## What a Concept Must Contain
+## Deliverable Types
 
-Each concept package consists of four files plus three pre-concepting documents
-that are written once and apply to both concepts:
+The Creative Agent produces four categories of content. Each has a different
+strategic posture and requires different concepting logic.
+
+---
+
+### Type 1 — Original Posts (Owned Content)
+Brand-initiated content. The brand starts the conversation.
+Standard What If? ideation process applies.
+Evaluated against the brief, insight, and behavioral target.
+
+---
+
+### Type 2 — Thread Continuations (Own Post Replies)
+A reply to the brand's own post — adding a second thought, a provocation,
+a piece of evidence, or a punchline that completes the original idea.
+
+**The concepting logic is different:**
+The first post plants the seed. The reply is the payoff.
+The combination of both is the idea — neither works fully alone.
+
+```
+THREAD CONTINUATION BRIEF:
+
+Root post: [the original post — verbatim]
+What the root post does: [sets up a tension / asks a question / makes a claim]
+What the reply must do: [resolve / invert / escalate / reveal / land the point]
+
+The reply must NOT: restate the original. If it explains what the first post meant,
+delete it and start over. A good thread continuation surprises even when expected.
+```
+
+**Format:**
+```markdown
+## Thread: [Post Name]
+
+**Root post:**
+[verbatim copy of the original]
+
+**Reply (continuation):**
+[the follow-up — must work as a standalone thought AND complete the thread]
+
+**Why they work together:**
+[one sentence — the tension the pair creates or resolves]
+```
+
+---
+
+### Type 3 — Responses to Other Accounts' Posts (Reactive Engagement)
+The brand enters someone else's conversation. This is the highest-risk,
+highest-reward creative territory. Done right it creates cultural moments.
+Done wrong it looks desperate or automated.
+
+**The concepting logic:**
+
+The brand is a guest in someone else's thread. There are only three valid reasons to show up:
+
+```
+REASON 1 — You add something nobody else can say.
+  The brand has a unique perspective, credential, or stake in this conversation.
+  Not "we agree!" — something only this brand could credibly contribute.
+
+REASON 2 — You flip the frame.
+  The original post is making a claim. The brand's reply reframes it in a way
+  that is surprising, generous, and impossible to dismiss.
+
+REASON 3 — You're in the category and the conversation is yours to own.
+  The post is directly in your space. Silence is also a choice — and often wrong.
+```
+
+**If none of these three apply — do not reply. Silence is better than noise.**
+
+**The voice rules for reactive engagement:**
+- Never sound like you have something to sell
+- Never reply to negative content about a competitor (looks petty, always backfires)
+- Never use brand language or messaging — this is conversation, not copy
+- The best reactive posts read like they came from a smart person, not a brand
+
+```
+REACTIVE ENGAGEMENT BRIEF:
+
+Target post: [URL or verbatim text of the post being responded to]
+Target account: [who posted it — are they a competitor, category voice, audience member?]
+Why this post is worth engaging: [REASON 1, 2, or 3 from above — if none, stop here]
+What only this brand can say here: [the specific angle nobody else has]
+Voice constraint: [human, smart, no marketing language — passes the "smart person" test]
+
+REPLY OPTIONS (generate 3, present all, recommend 1):
+Option 1: [reply text]
+Option 2: [reply text]
+Option 3: [reply text]
+
+Recommended: Option [N] — [one sentence rationale]
+```
+
+**Three options always.** Reactive content benefits from choice more than any
+other format — tone calibration is the whole game here, and a small word change
+can shift it from sharp to sycophantic.
+
+---
+
+### Type 4 — Reactive Content (Trend / Moment Response)
+A standalone post responding to something happening in culture, the category,
+or the news — not replying to a specific post, but entering a broader conversation.
+
+**The concepting logic:**
+Speed and perspective are everything. A reactive post that arrives 48 hours late
+is an archive document. The window is usually 2-4 hours for X, 12-24 for LinkedIn.
+
+```
+REACTIVE CONTENT BRIEF:
+
+The moment: [what is happening — specific, dated]
+Why this brand has standing to speak: [what gives this brand the right to comment]
+The angle nobody else is taking: [what the obvious take is, and what we're doing instead]
+Time constraint: [when this needs to be live to be relevant]
+
+FORMAT: [usually short — the moment carries the weight, not the words]
+```
+
+**The "obvious take" test is mandatory.**
+Before writing anything, name the obvious take every other brand is going to make.
+Then do not make it. The opposite of reactive mediocrity is not silence — it's the
+take that makes people say "I didn't expect that from them."
+
+---
+
+## Deliverable Summary — What Gets Produced Per Request
+
+| Type | Outputs | Files |
+|------|---------|-------|
+| Type 1 — Original post | 2 concepts, full channel copy, rationale | Standard 4-file concept package |
+| Type 2 — Thread continuation | Root + reply pair, 2 options | `thread-[n].md` |
+| Type 3 — Response to other account | 3 reply options, recommendation | `reactive-reply-[n].md` |
+| Type 4 — Reactive content | 2 takes (obvious avoided), recommendation | `reactive-post-[n].md` |
+
+All Types 3 and 4 outputs include:
+- The "obvious take" named and explicitly avoided
+- The reason only this brand can say this
+- A voice check: "does this read like a smart person or a brand?"
+
+---
 
 ### Pre-Concepting Documents (write once, reference throughout)
 
