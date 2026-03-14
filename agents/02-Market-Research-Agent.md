@@ -668,6 +668,31 @@ Domain 2 — Customer:
   web_search("[audience] frustrations complaints [category]")
   web_search("[audience] Reddit [category] experience OR advice")
   web_search("[audience] trust OR distrust [category]")
+
+  **Reddit deep dive (run after web searches):**
+  ```python
+  # Import from skills path
+  import sys
+  sys.path.append('[SKILLS_PATH]/reddit-research')
+  from reddit_research import insight_mine, get_comments
+
+  # Mine audience language across relevant communities
+  results = insight_mine(
+      query="[core audience behavior or pain point]",
+      subreddits=["[primary community]", "[adjacent community]", "[category community]"]
+  )
+
+  # For top posts: read titles and text for exact language
+  # For top comment posts: drill into comments for emotional truth
+  top_post = results['top_by_comments'][0]
+  comments = get_comments(top_post['id'], top_post['subreddit'])
+  ```
+
+  What to extract:
+  - Exact phrases the audience uses (not marketing language — their words)
+  - High-score posts with emotional titles = insight territory
+  - Most-commented posts = what generates the most feeling
+  - Confessional posts ("I can't do this anymore", "I finally...") = barrier/breakthrough moments
   Reddit (via Desktop Commander curl):
     top posts in r/[category subreddit] — last month
     search r/[category subreddit] for "[pain point]" — last year
