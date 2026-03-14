@@ -26,7 +26,8 @@ CHECK IN ORDER:
   5. Twitter/X API (tweepy)      → direct X posting available
   6. Composio (LinkedIn/IG)      → social posting via OAuth available
   7. AgentMail                   → programmatic email available
-  8. BlueBubbles (iMessage)      → push alerts available
+  8. Alert System (optional)     → push alerts for urgent signals
+     Options: BlueBubbles (iMessage/Mac), Slack webhook, email via AgentMail, SMS via Twilio
   9. Playwright / Puppeteer      → headless browser available
 ```
 
@@ -338,12 +339,11 @@ You have a Composio key. Use it for LinkedIn, Instagram, TikTok, Reddit, YouTube
 ### Setup (run once)
 ```bash
 pip install composio
-export COMPOSIO_API_KEY="pg-test-136ae307-2090-47df-abad-ece0dc103c4e"
+# Read your Composio API key from api-keys.md at runtime — never hardcode
+export COMPOSIO_API_KEY="$(grep -A1 'Composio' [API_KEYS_PATH] | tail -1 | tr -d ' ')"
 composio add linkedin    # OAuth — opens browser once, persists forever
 composio add instagram
 composio add tiktok
-npx skills add composiohq/awesome-claude-skills@linkedin-automation -g -y
-npx skills add composiohq/awesome-claude-skills@instagram-automation -g -y
 ```
 
 ### Post to LinkedIn
@@ -408,7 +408,7 @@ draft = client.inboxes.drafts.create(
 # Wait for explicit Go before calling drafts.send()
 ```
 
-Full reference: `/Users/mpruskowski/Documents/AMP/_Resources/skills/agentmail/SKILL.md`
+Full reference: `[SKILLS_PATH]/agentmail/SKILL.md`
 
 ---
 
@@ -583,16 +583,32 @@ client.inboxes.messages.get_metrics(
 
 When a signal crosses a threshold, alert immediately — don't wait for the next check.
 
-**Alert via iMessage (BlueBubbles) for urgent signals:**
+**Alert via push notification (choose one based on what you have):**
+
 ```python
-# Requires BlueBubbles running locally
+# Option A — BlueBubbles (iMessage, Mac only)
+# Requires BlueBubbles server running locally — see [API_KEYS_PATH] for server URL
 import requests
-requests.post("http://localhost:[port]/api/v1/message",
-    json={
-        "chatGuid": "[Michael's chat GUID from api-keys.md]",
-        "message": f"⚠️ Campaign alert: {alert_message}"
-    }
+bluebubbles_url = "[read BLUEBUBBLES_SERVER from api-keys.md]"
+requests.post(f"{bluebubbles_url}/api/v1/message",
+    json={"chatGuid": "[your chat GUID]", "message": f"⚠️ {alert_message}"}
 )
+
+# Option B — Slack webhook (any platform)
+# Add SLACK_WEBHOOK_URL to api-keys.md
+requests.post("[SLACK_WEBHOOK_URL from api-keys.md]",
+    json={"text": f"⚠️ Campaign alert: {alert_message}"}
+)
+
+# Option C — Email via AgentMail (any platform)
+# Uses existing AgentMail setup
+client.inboxes.messages.send(
+    inbox_id="[configured inbox]",
+    to="[your email]",
+    subject=f"⚠️ Campaign Alert",
+    text=alert_message
+)
+```
 ```
 
 **Alert triggers (send immediately, don't batch):**

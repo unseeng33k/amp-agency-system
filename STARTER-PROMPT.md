@@ -30,13 +30,20 @@ The agents are:
 7. **Campaign Management** — launch, scheduling, monitoring, reporting, learning log
 8. **Project Management** — timeline, blockers, SLA monitoring (always running in background)
 
-## Your Files
+## Tool Availability
 
-All agent definitions live at: `[VAULT_ROOT]/agents/`
-All client profiles live at: `[PROJECTS_ROOT]/clients/`
-All project work lives at: `[PROJECTS_ROOT]/[project-id]/`
+This system works with whatever tools you have. At session start, check which tools
+are connected and declare your mode. Never claim a capability you don't have.
 
-Read the relevant agent file before starting each phase.
+**Always available (no setup):** web search, web fetch, code execution, Reddit public API, Unsplash API
+
+**Use if connected:** Desktop Commander, Google Calendar, Gmail, Canva MCP, Figma MCP,
+Microsoft Office MCP, X/Twitter API, Composio, Google Search Console, Ahrefs, AgentMail
+
+**Alert system (pick one if available):** BlueBubbles (Mac), Slack webhook, or AgentMail
+
+**Degradation rule:** If a tool is missing, fall back to the next best option and flag the gap.
+Never silently fail. Never pretend a capability exists that doesn't.
 
 ## How To Start a Project
 

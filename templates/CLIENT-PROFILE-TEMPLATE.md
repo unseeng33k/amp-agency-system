@@ -152,7 +152,7 @@ Account alias:  [client-slug — used when calling GSC MCP tools]
 Property URL:   [https://clientdomain.com or sc-domain:clientdomain.com]
 Access level:   [Full / Restricted]
 Setup date:     [YYYY-MM-DD]
-Notes:          [e.g., "client added mpruskow@gmail.com as Full user 2026-03-14"]
+Notes:          [e.g., "client added youremail@gmail.com as Full user 2026-01-01"]
 ```
 
 **To connect a new client's GSC:**

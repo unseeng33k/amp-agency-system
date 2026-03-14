@@ -123,6 +123,11 @@ Deliverable goes into a corporate environment (Teams, SharePoint, Outlook) → O
 Anyone on the receiving end uses Windows → Office.
 The document needs tracked changes, comments, or version history → Word.
 
+**If Microsoft Office MCP is not available:**
+Use Claude Artifacts to generate the content, then export as PDF via Desktop Commander.
+For decks: use Canva MCP → export as PPTX.
+For spreadsheets: use Python/CSV and open in any spreadsheet application.
+
 **Constraints:**
 - PowerPoint MCP creates slides with text and basic layout — not full graphic design
 - For designed decks with heavy visual treatment, use Canva MCP then export to PPTX

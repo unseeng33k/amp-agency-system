@@ -38,8 +38,10 @@ Composio:           [from platform.composio.dev — LinkedIn, Instagram, TikTok,
 ## Email
 AgentMail:          [from agentmail.to]
 
-## Messaging / Alerts
-BlueBubbles:        [server URL + password from your BlueBubbles instance]
+## Messaging / Alerts (pick at least one for campaign alerts)
+BlueBubbles:        [server URL + password — Mac only, requires BlueBubbles app]
+Slack Webhook:      [from api.slack.com/apps — any platform, easiest option]
+Twilio:             [from twilio.com — SMS alerts, optional]
 
 ## Design & Image Generation
 Canva:              [connected via MCP — OAuth, no key needed]

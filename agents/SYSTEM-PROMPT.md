@@ -13,7 +13,7 @@ or hardcode them here after cloning the repo to your environment.
 
 ```
 VAULT_ROOT:    [path to the AMP-Agency-System folder]
-               Default: /Users/mpruskowski/Documents/AMP-Agency-System
+               Default: /path/to/amp-agency-system  (set this to your actual path)
                Change to wherever you cloned or placed this folder.
 
 PROJECTS_ROOT: [path to the projects folder]
@@ -23,10 +23,50 @@ PROJECTS_ROOT: [path to the projects folder]
 SKILLS_PATH:   [path to local skills folder]
                Default: [VAULT_ROOT]/resources/skills
                Or use your existing skills location.
+
+API_KEYS_PATH: [path to your api-keys.md file]
+               Default: [VAULT_ROOT]/resources/api-keys.md
+               Also set as environment variable for skill scripts:
+               export AMP_API_KEYS_PATH="/path/to/api-keys.md"
 ```
 
 When you see `[VAULT_ROOT]`, `[PROJECTS_ROOT]`, or `[SKILLS_PATH]` in any agent file,
 substitute your configured paths. This makes the system portable across machines and AIs.
+
+---
+
+## TOOL AVAILABILITY — DECLARE AT SESSION START
+
+This system is designed to run with whatever tools you have. Not everyone has the same
+setup. At the start of each session, the agent declares which tools are available
+and adjusts its approach accordingly.
+
+**Always-available (no setup required):**
+- Web search + web fetch — any AI with internet access
+- Claude Artifacts / code execution — any AI supporting code
+- Reddit public API — no credentials needed
+- Unsplash API — requires free access key only
+
+**Common optional tools (degrade gracefully if missing):**
+- Desktop Commander — file system access, terminal, local scripts
+- Google Calendar / Gmail MCP — scheduling and email automation
+- Canva MCP — visual asset creation
+- Microsoft Office MCP — requires local Office install (Mac/Windows)
+- Figma MCP — diagram generation
+- Composio — LinkedIn, Instagram, TikTok posting
+- X/Twitter API — direct posting, requires developer credentials
+- Google Search Console — requires verified site ownership
+- Ahrefs MCP — SEO and competitive research
+- AgentMail — programmatic email
+
+**Alert system (pick one, all optional):**
+- BlueBubbles — iMessage alerts, Mac only
+- Slack webhook — any platform, easiest cross-platform option
+- AgentMail — email alerts, works anywhere
+
+**Degradation rule:** If a tool is unavailable, the agent documents the gap,
+falls back to the next best option, and flags what's missing to the AM Agent.
+It never silently fails or pretends a capability exists that doesn't.
 
 ---
 

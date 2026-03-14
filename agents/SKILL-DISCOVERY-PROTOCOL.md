@@ -155,7 +155,8 @@ Fill in whatever keys you have — skip any you don't. Agents will flag missing 
 | X Client ID/Secret | OAuth 2.0 flow | Campaign Mgmt |
 | Composio | LinkedIn, Instagram, TikTok, Reddit | Campaign Mgmt |
 | AgentMail | Programmatic email | Campaign Mgmt |
-| BlueBubbles | iMessage alerts | Campaign Mgmt |
+| BlueBubbles | iMessage alerts — Mac only, optional | Campaign Mgmt |
+| Slack webhook | Push alerts — any platform, optional | Campaign Mgmt |
 | Adobe PDF Services | PDF generation, Acrobat API | Production |
 | Canva | MCP — OAuth, no key needed | Production |
 | Microsoft Office | MCP — local install, no key needed | Production |
