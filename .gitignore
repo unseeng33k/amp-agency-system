@@ -1,0 +1,33 @@
+# Git ignore rules for AMP Agency Agent System
+
+# API keys — NEVER commit
+resources/api-keys.md
+**/api-keys.md
+**/.env
+**/.env.local
+
+# Project folders — local work, not shared
+projects/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.obsidian/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+npm-debug.log
+
+# Local skill installs (install via npx, don't commit)
+resources/skills/
+
+# Logs
+*.log
+logs/
