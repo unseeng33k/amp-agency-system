@@ -344,7 +344,7 @@ If you want the system to deploy automatically without prompts:
 - Interactive campaign tools
 - Any HTML/CSS/JS asset that needs a real URL
 
-> Already authenticated as `pruskowskiopen-3757` on this machine. Setup complete.
+> **Already done this?** Run `vercel whoami` in Terminal to confirm you're still authenticated.
 
 ---
 
@@ -443,7 +443,8 @@ amp-agency-system/
   STARTER-PROMPT.md     ← The one file you paste into your AI
   README.md             ← This file
   setup.sh              ← Automated setup (Mac/Linux)
-  agents/               ← The 13 instruction files that run the agency
+  agents/               ← The 12 instruction files that run the agency
+                           (8 agents + SYSTEM-PROMPT + SKILL-DISCOVERY-PROTOCOL + REVISION-PROTOCOL + Overview)
   templates/            ← Client profile template
   projects/             ← Your work goes here (private, not shared)
   resources/
