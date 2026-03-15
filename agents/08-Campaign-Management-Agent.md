@@ -401,9 +401,13 @@ thread continuation, boosting, or using the topic as the next brief anchor.
   │
   ├─▶ Step 2: Pre-launch QA [hard gate — nothing deploys until this passes]
   │     Link validation: fetch every URL, confirm 200 status
-  │     UTM check: confirm parameters present in each URL
+  │     UTM check: confirm parameters present in each URL AND survive redirects
   │     File check: confirm asset files exist at named paths
-  │     Pixel check: confirm tracking pixels live on landing pages
+  │     Pixel/tag check: Analytics Agent runs tracking-verification-pre.md
+  │       → GA4, Meta Pixel, LinkedIn Insight Tag each confirmed firing
+  │       → Conversion events manually tested end-to-end
+  │       → Verdict must be ✅ CLEAR or ⚠️ CONDITIONAL before launch
+  │       → ❌ BLOCKED verdict = do not launch affected assets
   │     Flag any failures → block deployment of affected assets
   │
   ├─▶ Step 3: Generate deployment-package.md [< 10 min]
@@ -425,10 +429,15 @@ thread continuation, boosting, or using the topic as the next brief anchor.
   │     Update Google Calendar events: blue → green as each goes live
   │
   ├─▶ Step 6: Hour 1 check [60 min after last asset goes live]
-  │     Pull live status from all platforms
-  │     Confirm pixel firing
-  │     Confirm no policy flags
-  │     Alert via iMessage if any failure detected
+  │     Analytics Agent runs tracking-verification-post.md:
+  │       → GA4 Realtime: active users > 0, UTM source correct (not "(direct)")
+  │       → Meta/LinkedIn: impressions registering (allow platform delay)
+  │       → X/Twitter API: impression count > 0 via tweet_metrics
+  │       → Email: delivery rate > 95%, no bounce spike
+  │       → Conversion events: firing with live traffic (not just test)
+  │     Confirm no platform policy flags or disapproved ads
+  │     If verdict = ❌ CRITICAL and paid campaign: flag to pause spend immediately
+  │     Alert via Level 1 notification if any critical tracking failure detected
   │
   ├─▶ Step 7: Hour 24 check [automated]
   │     Pull performance signals from all platforms
@@ -756,9 +765,15 @@ Full reference: `[SKILLS_PATH]/agentmail/SKILL.md`
 
 ### Links & Tracking
 - [ ] Every link resolves to the correct destination (test each one)
-- [ ] UTM parameters are present and correctly formatted
-- [ ] Tracking pixel is firing on landing pages (use browser developer tools or Tag Assistant)
-- [ ] Conversion events are registering in the analytics platform
+- [ ] UTM parameters are present AND survive all redirects to the final URL
+- [ ] GA4 tag confirmed firing on all landing pages (Tag Assistant or Realtime)
+- [ ] Meta Pixel confirmed firing (Facebook Pixel Helper or Events Manager test)
+- [ ] LinkedIn Insight Tag confirmed firing (Campaign Manager → Insight Tag status: Active)
+- [ ] Conversion events manually tested end-to-end:
+      Fill form → submit → confirm thank-you page loads → confirm event fires in platform
+- [ ] No duplicate tag firing (check for doubled pageview or conversion counts)
+- [ ] tracking-verification-pre.md written — verdict is ✅ CLEAR or ⚠️ CONDITIONAL
+- [ ] If verdict is ❌ BLOCKED: affected assets do NOT launch until resolved
 
 ### Visual & Technical
 - [ ] Images render correctly on desktop and mobile
@@ -1674,16 +1689,24 @@ Update event colors automatically as statuses change.
 The deployment agent monitors the following immediately after launch:
 
 ### Hour 1
-- [ ] Confirm all assets are live and rendering correctly
-- [ ] Confirm tracking is firing (check real-time analytics view)
-- [ ] Confirm no platform policy flags or disapproved ads
-- [ ] Confirm email delivery rate is normal (no bounce spike)
+- [ ] All assets live and rendering correctly at published URLs
+- [ ] GA4 Realtime showing active users with correct UTM source (not "(direct)")
+- [ ] Meta Pixel firing confirmed via Events Manager (allow up to 3hr for data)
+- [ ] LinkedIn Insight Tag firing (note: 24hr reporting delay is normal)
+- [ ] X/Twitter: impression_count > 0 via API for posted tweets
+- [ ] Email: delivery rate confirmed > 95%, no bounce spike
+- [ ] No platform policy flags or disapproved ads
+- [ ] tracking-verification-post.md written — verdict logged
 
 ### Hour 24
-- [ ] Check CTR against benchmark — flag if >50% below target
-- [ ] Check for any negative engagement signals (excessive hide/report on social)
-- [ ] Confirm conversion events are registering correctly
-- [ ] Flag any technical errors to PM Agent for logging
+- [ ] UTM source attribution is correct — not predominantly "(direct)" or "(none)"
+  If mostly "(direct)": UTMs being stripped — diagnose redirect chain immediately
+- [ ] Conversion events registering in GA4 and platform native tools
+  Zero conversions after 24hrs with traffic: check event tag firing on conversion pages
+- [ ] CTR against benchmark — flag if >50% below target
+- [ ] Check for negative engagement signals (excessive hide/report on social)
+- [ ] Cross-platform discrepancy check: GA4 vs Meta vs LinkedIn click counts
+  >20% variance is normal; >50% variance may indicate double-counting or tag issue
 
 ### Hour 48
 - [ ] First performance pulse: are early indicators tracking toward KPI targets?
@@ -1714,8 +1737,10 @@ Flag any gaps (dates with no content) as intentional or as needs-to-be-filled.
 ### Launch Phase
 1. `deployment-package.md` — complete copy-paste-ready post instructions per asset
 2. `pre-launch-qa.md` — completed QA checklist, signed off before go-live
-3. `launch-log.md` — real-time record of what went live, when, and confirmed by whom
-4. `content-calendar.md` — 4-week rolling schedule with post times, platforms, copy previews
+3. `tracking-verification-pre.md` — tag/pixel/UTM/conversion pre-launch verdict (Analytics Agent)
+4. `launch-log.md` — real-time record of what went live, when, and confirmed by whom
+5. `tracking-verification-post.md` — Hour 1 live tracking confirmation (Analytics Agent)
+6. `content-calendar.md` — 4-week rolling schedule with post times, platforms, copy previews
 5. `ab-tracker.md` — (if variants running) side-by-side performance comparison
 6. `thread-[n].md` — Type 2 thread continuations, root + reply pairs
 7. `reactive-reply-[n].md` — Type 3 responses to other accounts (pending Michael approval)

@@ -96,7 +96,293 @@ production package. No asset goes live with a placeholder URL.
 
 ---
 
-## Step 4 — Define the KPI Framework
+## Step 3b — Tracking Verification
+
+**This step runs twice: once before launch (pre-flight) and once after launch (post-flight).**
+
+Building UTMs and setting up KPIs means nothing if the tracking infrastructure
+isn't actually recording. Tags can be installed but misfiring. Conversion events
+can be configured but never triggered. Pixels can be present but blocked by
+browser settings or cookie consent logic. This step catches all of that.
+
+**The pre-flight check happens before anything goes live.**
+**The post-flight check happens at Hour 1 after launch.**
+
+---
+
+### Pre-Flight Tracking Verification (before launch)
+
+Run against every landing page and conversion endpoint in the campaign.
+
+#### 1. UTM Parameter Verification
+
+```python
+import requests
+
+def verify_utms(utm_master_sheet):
+    """
+    For each URL in utm-master-sheet.md:
+    - Fetch the URL and confirm it returns 200
+    - Confirm UTM parameters survive any redirects
+    - Confirm parameters are present in the final landing URL
+    """
+    failures = []
+    for row in utm_master_sheet:
+        url = row['full_url']
+        r = requests.get(url, allow_redirects=True)
+
+        if r.status_code != 200:
+            failures.append(f"DEAD LINK: {url} → {r.status_code}")
+            continue
+
+        final_url = r.url
+        for param in ['utm_source', 'utm_medium', 'utm_campaign']:
+            if param not in final_url:
+                failures.append(f"UTM LOST IN REDIRECT: {param} missing from {final_url}")
+
+    return failures  # Empty = all clear. Non-empty = flag before launch.
+```
+
+**If UTMs are being stripped by redirects:** The redirect chain is swallowing parameters.
+Fix: pass UTMs to the final destination URL, not the redirect URL.
+Or: use a URL shortener that preserves query strings.
+
+#### 2. Google Tag Manager / GA4 Verification
+
+**Before launch — use Tag Assistant (browser-based):**
+1. Install Google Tag Assistant Legacy (Chrome extension)
+2. Navigate to each landing page in the campaign
+3. Activate Tag Assistant — it shows all detected tags and their status:
+   - Green = firing correctly
+   - Yellow = firing with warnings (usually OK)
+   - Red = not firing or misconfigured
+   - Grey = detected but not triggered
+
+**Check specifically:**
+- GA4 configuration tag present and green
+- Any custom event tags present (form_submit, cta_click, etc.)
+- No duplicate firing (same tag firing 2-3x per pageview = inflated data)
+
+**Programmatic check (if GTM API access available):**
+```python
+# Check GTM container for published tags
+# Use GTM API: https://www.googleapis.com/tagmanager/v2/accounts/{account}/containers/{container}/versions
+
+# Simpler: check dataLayer firing via browser console
+# Open DevTools → Console → paste:
+# window.dataLayer
+# Should return array with at least one 'gtm.js' event
+```
+
+**What to flag:**
+- GA4 tag not detected on landing page → tracking is completely broken
+- Custom event tags missing → conversions won't record
+- DataLayer missing → GTM cannot fire event tags
+
+#### 3. Meta Pixel Verification
+
+```bash
+# Install Facebook Pixel Helper (Chrome extension)
+# Navigate to landing page
+# Extension shows:
+#   Green = pixel found and firing
+#   Yellow = pixel found, events may be missing
+#   Red = pixel not detected
+
+# Pixel ID to verify: [from client-profile.md or api-keys.md]
+```
+
+**Check specifically:**
+- PageView event fires on page load
+- Custom conversion events (Lead, Purchase, etc.) are configured
+- Events appear in Meta Events Manager within 20 minutes of a test visit
+- Pixel is NOT firing twice (check for duplicate installations)
+
+**In Meta Events Manager:**
+Events Manager → Data Sources → [Pixel name] → Test Events
+Enter your landing page URL → Open Website
+Events should appear in real-time in the right panel.
+
+#### 4. LinkedIn Insight Tag Verification
+
+```bash
+# LinkedIn Insight Tag helper in Chrome DevTools:
+# Network tab → filter by "linkedin" or "px"
+# Should see requests to: https://px.ads.linkedin.com/...
+# Status 200 = tag firing
+
+# Or: LinkedIn Campaign Manager → Account Assets → Insight Tag
+# Status should show "Active" with recent activity date
+```
+
+#### 5. Conversion Event Verification (the most important check)
+
+Pixel present ≠ conversion tracking working.
+The pixel must fire AND the conversion event must trigger on the right action.
+
+**Test each conversion path manually before launch:**
+
+```
+FOR EACH conversion point in the campaign:
+
+  FORM SUBMISSION:
+  1. Fill out and submit the actual form (use test data)
+  2. Check: does the thank-you page load?
+  3. Check: does the conversion event fire? (verify in:)
+     - GA4 Realtime → Events → should see the event name
+     - Meta Events Manager → Test Events → should see Lead/Submit event
+     - LinkedIn Campaign Manager → conversion confirmation
+  4. Check: is the UTM source recorded in the conversion? (GA4: Realtime → User)
+
+  CLICK-THROUGH (if CTA leads to external destination):
+  1. Click the CTA
+  2. Verify UTMs survive to the destination
+  3. Verify any outbound click event fired (if configured)
+
+  EMAIL OPEN/CLICK:
+  1. Send a test email to yourself
+  2. Open it and click all links
+  3. Verify open rate registers in email platform
+  4. Verify click-through registers and UTMs are present in destination URL
+```
+
+**What a broken conversion looks like:**
+- Traffic reaches the landing page (impressions show) but 0 conversions record
+- Conversions record but UTM source shows as `(direct)` or `(none)` — UTMs lost
+- Conversion count is wildly inflated — tag firing multiple times per action
+- Conversions record in GA4 but not in Meta/LinkedIn — cross-platform discrepancy
+
+#### 6. Produce `tracking-verification-pre.md`
+
+```markdown
+# Tracking Verification — Pre-Launch
+> Analytics Agent | [date] | [campaign name]
+
+## UTM Verification
+| Asset | URL | Status | Notes |
+|-------|-----|--------|-------|
+| [Asset] | [URL] | ✅ Live / ❌ Dead | [note] |
+| [Asset] | [URL] | ✅ UTMs intact / ❌ UTMs stripped | [note] |
+
+## Tag Verification
+| Tag | Platform | Page | Status | Notes |
+|-----|----------|------|--------|-------|
+| GA4 | Google | Landing page | ✅ Firing / ❌ Missing | [note] |
+| Pixel | Meta | Landing page | ✅ Firing / ❌ Missing | [note] |
+| Insight Tag | LinkedIn | Landing page | ✅ Firing / ❌ Missing | [note] |
+
+## Conversion Event Verification
+| Conversion | Platform | Trigger | Tested? | Recording? |
+|------------|----------|---------|---------|-----------|
+| Form submit | GA4 | Thank-you page | ✅ Yes | ✅ Yes / ❌ No |
+| Lead | Meta | Thank-you page | ✅ Yes | ✅ Yes / ❌ No |
+
+## VERDICT
+✅ CLEAR — all tracking verified, safe to launch
+⚠️ CONDITIONAL — [specific issue, not blocking but note it]
+❌ BLOCKED — [specific failure, fix before launch]
+```
+
+**If verdict is BLOCKED:** Do not launch the affected assets.
+Fix the tracking issue first. Traffic without tracking = unattributed spend.
+It is better to delay launch by hours than to run a campaign blind.
+
+---
+
+### Post-Flight Tracking Verification (Hour 1 after launch)
+
+After launch, confirm that live traffic is actually being recorded — not just that
+the tags are present, but that real sessions are generating real data.
+
+#### 1. GA4 Realtime Confirmation
+
+```
+GA4 → Reports → Realtime
+
+Confirm:
+  - Active users > 0 (if traffic is running)
+  - Events per minute showing
+  - Top events include: page_view, session_start
+  - If conversion events configured: they appear as traffic arrives
+  - Traffic source shows correct utm_source (NOT all showing as "direct")
+
+If utm_source shows mostly "direct" despite tagged traffic:
+  → UTMs are being stripped — check for redirect issues
+  → Or: https → http redirect stripping parameters
+  → Or: server-side redirect not preserving query strings
+```
+
+#### 2. Platform Native Analytics Confirmation
+
+```
+Meta Ads Manager → Ads Manager → Campaigns → [campaign]
+  - Impressions > 0
+  - Clicks > 0
+  - Events column showing (if pixel configured)
+  - Wait: up to 3 hours for first data to appear
+
+LinkedIn Campaign Manager → [campaign]
+  - Impressions > 0
+  - Clicks > 0
+  - Wait: up to 24 hours for LinkedIn reporting delay
+
+X/Twitter (via API):
+  tweet_metrics = client.get_tweet(id=tweet_id, tweet_fields=["public_metrics"])
+  - impressions_count > 0 within 1 hour of posting
+  - If 0 impressions after 2 hours: tweet may be shadow-limited or failed to post
+```
+
+#### 3. Email Delivery Confirmation (if email deployed)
+
+```
+AgentMail / email platform:
+  - Delivery rate > 95% (bounce rate < 5%)
+  - Open rate activity within first 2 hours (if large list)
+  - No spam folder delivery flags
+  - Click tracking registering on link clicks
+```
+
+#### 4. Produce `tracking-verification-post.md`
+
+```markdown
+# Tracking Verification — Post-Launch (Hour 1)
+> Campaign Management Agent | [date and time] | [campaign name]
+
+## Live Data Confirmation
+| Platform | Metric | Status | Value | Notes |
+|----------|--------|--------|-------|-------|
+| GA4 Realtime | Active users | ✅ Recording / ❌ Zero | [N] | |
+| GA4 | UTM source | ✅ Correct / ❌ Stripped | [top source] | |
+| Meta | Impressions | ✅ Recording / ❌ Zero | [N] | |
+| LinkedIn | Impressions | ✅ Recording / ⏳ Delayed | [N] | |
+| X/Twitter | API impressions | ✅ Recording / ❌ Zero | [N] | |
+| Email | Delivery rate | ✅ >95% / ❌ Issues | [%] | |
+
+## Conversion Tracking
+| Conversion | Platform | Status | Count (Hour 1) |
+|------------|----------|--------|----------------|
+| [event] | GA4 | ✅ Recording / ❌ Silent | [N] |
+| [event] | Meta | ✅ Recording / ❌ Silent | [N] |
+
+## Issues Found
+[List any tracking failures found in live data — with diagnosis and fix]
+[Or: "None — all tracking confirmed recording correctly."]
+
+## VERDICT
+✅ CONFIRMED — all platforms recording, UTMs intact, conversions firing
+⚠️ DEGRADED — [specific platform/tag issue, campaign can continue but note it]
+❌ CRITICAL — [tracking broken in a way that affects optimization — pause if paid]
+```
+
+**If verdict is CRITICAL (paid campaign):** Consider pausing paid spend until
+tracking is restored. Running paid media without conversion tracking means
+the platform's optimization algorithm has no signal to work with — it will
+optimize toward nothing and waste budget.
+
+**If verdict is DEGRADED:** Log it, note which platform is affected, continue
+running but flag for resolution within 24 hours.
+
+---
 
 ### KPI Hierarchy
 
