@@ -172,50 +172,433 @@ and request a revision from the Market Research Agent before continuing.
 
 Before writing positioning, define what behavior change you are engineering.
 
-You operate from three behavioral frameworks. Apply all three:
+This is not a theoretical exercise. Every word in the brief, every creative choice,
+every channel selection flows from this step. A brief built on the wrong behavioral
+diagnosis will never change behavior — no matter how good the creative is.
 
-### Framework 1: COM-B (Capability, Opportunity, Motivation → Behavior)
-Ask: Why is the target NOT doing the desired behavior right now?
+**The question you are answering:** Why is the target NOT doing the desired behavior right now?
+Name the barrier precisely. Then name the intervention that addresses it.
 
-```
-Capability barriers:  What don't they know or know how to do?
-Opportunity barriers: What in their environment prevents the behavior?
-Motivation barriers:  What psychological forces work against change?
-```
+Apply all three frameworks. They are not alternatives — they are lenses on the same problem.
+COM-B diagnoses the barrier. Fogg identifies the moment. Cialdini selects the lever.
 
-The brief must address the dominant barrier. A brief that addresses the
-wrong barrier will never produce behavior change — no matter how good the creative is.
+---
 
-### Framework 2: Fogg Behavior Model (Motivation × Ability × Prompt)
-Ask: At the moment of decision, what is low — motivation, ability, or the right trigger?
+### Framework 1 — COM-B: Diagnose the Barrier
 
-```
-If motivation is low:    Creative must make the desired behavior feel personally meaningful
-If ability is low:       Creative must make the desired behavior feel easy and achievable
-If prompt is missing:    Creative must interrupt the right moment with the right signal
-```
-
-### Framework 3: Cialdini's Influence Levers
-Ask: Which social and psychological levers are most powerful for this target in this context?
+COM-B has six sub-components. Each one requires a different intervention.
+Naming "motivation barrier" is not enough — you must name which *type* of motivation barrier.
 
 ```
-Reciprocity:      Give something of value first
-Commitment:       Get a small yes that leads to a bigger yes
-Social proof:     Show that people like them are already doing it
-Authority:        Anchor to credibility the target respects
-Liking:           Create genuine warmth and identification
-Scarcity:         Create urgency without manipulation
-Unity:            Invoke shared identity — "we are the same kind of person"
+CAPABILITY (what the target lacks)
+├── Physical Capability
+│   Definition: Lacks the physical skill or stamina to perform the behavior
+│   Example: Patient cannot self-inject without training
+│   Intervention: Skill-building content, demonstration, how-to creative
+│   ← This is rare in marketing contexts. Usually rules out fast.
+│
+└── Psychological Capability
+    Definition: Lacks the knowledge, understanding, or cognitive ability to perform it
+    Example: HCP doesn't understand when to switch patients to second-line therapy
+    Example: Investor doesn't understand what a hash rate dashboard means
+    Intervention: Education, simplification, analogies, visual explanation
+    Brief implication: Lead with clarity. The barrier is confusion, not resistance.
+
+OPPORTUNITY (what the environment prevents)
+├── Physical Opportunity
+│   Definition: Environment lacks the resources, time, location, or tools
+│   Example: Patient can't afford the drug; formulary doesn't cover it
+│   Example: Small miner lacks capital to scale without borrowing
+│   Intervention: Access program, friction removal, partnership, subsidy content
+│   Brief implication: Don't advertise around a structural barrier — address the structure.
+│
+└── Social Opportunity
+    Definition: Social norms, peer pressure, or culture works against the behavior
+    Example: Patients embarrassed to discuss condition → don't bring it up with HCP
+    Example: Mining community stigmatizes asking for help → solo miners struggle silently
+    Intervention: Normalization, social proof from respected peers, permission-giving
+    Brief implication: Don't sell the behavior. Sell the social permission to do it.
+
+MOTIVATION (what the target feels about the behavior)
+├── Reflective Motivation
+│   Definition: Conscious deliberation works against the behavior
+│   The target KNOWS about the behavior and has reasons not to do it.
+│   They've weighed it. They've decided against it. Or they're ambivalent.
+│   Example: Miner knows the economics are hard and is consciously questioning continuing
+│   Example: HCP knows drug exists but consciously prefers to stay with familiar SOC
+│   Intervention: Reframe the decision. Attack the stated rational resistance.
+│                 Show the cost of NOT doing the behavior. Shift the weighing.
+│   Brief implication: Argue. Don't just inspire. The target has counter-arguments
+│                      and they need to be addressed, not ignored.
+│
+└── Automatic Motivation
+    Definition: Habitual, emotional, or unconscious forces work against the behavior
+    The target is not consciously resisting — they're just not thinking about it.
+    Habit, emotion, impulse, or identity is running the show below the surface.
+    Example: Patient takes medication for a few days, then slips back into old routine
+    Example: Prescriber habitually reaches for familiar brand without consciously deciding
+    Intervention: Interrupt the habit loop. Create emotional resonance strong enough
+                  to surface the decision from below consciousness.
+                  Identity-based messaging ("people like you do this") is powerful here.
+    Brief implication: Don't reason with automatic behavior. Trigger it differently.
+                       Emotion, identity, and habit cues outperform rational argument.
 ```
 
-**Output of Step 2:** A single paragraph, max 5 sentences, that names:
-- The specific behavior you want to change or create
-- The dominant barrier (COM-B)
-- The lever with most traction (Fogg)
-- The primary influence mechanic (Cialdini)
+**How to identify the dominant barrier:**
 
-This paragraph is NOT in the brief. It is your strategic architecture document —
-the reasoning behind every choice in the brief. Save it as `behavior-architecture.md`.
+Run through all six. Most projects have one dominant barrier and one or two secondary ones.
+The dominant barrier determines the *primary strategy*. Secondary barriers inform the *execution*.
+
+```
+BARRIER IDENTIFICATION QUESTIONS:
+1. If the target had more information, would they do the behavior? → Psychological Capability
+2. If the target had more resources or access, would they? → Physical Opportunity
+3. If their peer group did it too, would they? → Social Opportunity
+4. Have they consciously decided not to do it? → Reflective Motivation
+5. Are they just not thinking about it — on autopilot? → Automatic Motivation
+6. Are they literally unable to perform it physically? → Physical Capability
+```
+
+**Dominant barrier → primary intervention mapping:**
+
+| Dominant Barrier | Primary Creative Strategy | What Will NOT Work |
+|-----------------|--------------------------|-------------------|
+| Psychological Capability | Education, clarity, simplification | Emotional campaigns if they still don't understand |
+| Physical Opportunity | Access programs, friction removal | Any creative that ignores the structural block |
+| Social Opportunity | Normalization, peer voices, permission | Authority/expert-only messaging without peer validation |
+| Reflective Motivation | Reframing, cost-of-inaction, counterargument | Awareness without argument — they already know |
+| Automatic Motivation | Identity, emotion, habit interruption | Rational argument alone — reasoning won't reach it |
+| Physical Capability | Demonstration, skill-building | Any campaign that assumes the ability already exists |
+
+**Common diagnostic failure:** Treating a *Reflective Motivation* barrier with *Psychological Capability* strategy.
+The target knows. They just don't want to. More information will not move them. Reframing their reasoning will.
+
+---
+
+### Framework 2 — Fogg: Identify the Decision Moment
+
+COM-B tells you WHY behavior isn't happening. Fogg tells you WHEN and HOW to intervene.
+
+**The Fogg equation:** Behavior happens when Motivation, Ability, and a Prompt
+converge at the same moment. All three must be present simultaneously.
+
+```
+B = MAP
+    Motivation × Ability × Prompt = Behavior
+```
+
+**The Action Line** — the threshold above which behavior occurs:
+```
+HIGH MOTIVATION
+        │ ← Behavior happens above this line
+        │    when a prompt appears
+        │
+        │   ████ Easy behaviors
+        │ ██████████ Medium behaviors
+        │ ████████████████ Hard behaviors
+        │
+LOW MOTIVATION ─────────────────────────────────────────
+                Low Ability          High Ability
+```
+
+**Reading the behavioral grid — and what to do about it:**
+
+```
+QUADRANT 1: High Motivation + High Ability
+The behavior should happen easily. Why isn't it?
+→ Missing prompt: The target is ready but no trigger fires
+→ Intervention: The right cue at the right moment — timing is everything
+→ Media implication: The channel IS the strategy. Find where the decision lives.
+→ Creative implication: Minimal friction. Simple, clear, one-step action.
+
+QUADRANT 2: High Motivation + Low Ability
+The target WANTS to do it but can't easily execute.
+→ Missing ability: The path to behavior is too complex or requires too much effort
+→ Intervention: Simplify the path. Remove steps. Make it effortless.
+→ Media implication: Mobile-first, in-context. Meet them where they already are.
+→ Creative implication: "Here's exactly how" — step-by-step, no ambiguity.
+→ Don't mistake this for lack of motivation and try to inspire them harder.
+
+QUADRANT 3: Low Motivation + High Ability
+The target CAN do it but doesn't want to enough.
+→ Missing motivation: They don't feel it matters to them
+→ Intervention: Make the behavior feel personally meaningful and identity-relevant.
+→ Media implication: Awareness channels first, then convert. Don't shortcut to CTA.
+→ Creative implication: Meaning over mechanics. Why it matters, not how it works.
+→ This is where most campaigns live. It's also the hardest to solve quickly.
+
+QUADRANT 4: Low Motivation + Low Ability
+Double barrier. Don't try to solve both at once.
+→ Rule: Pick one barrier to address first. Motivation usually comes first.
+→ If you try to educate AND inspire simultaneously, you do neither well.
+→ Intervention: Phase 1 builds motivation. Phase 2 builds ability.
+→ Media implication: Two-phase campaign. Sequence the messages.
+→ Creative implication: Phase 1 = emotional. Phase 2 = practical.
+```
+
+**The Fogg Prompt types — pick the right trigger:**
+
+```
+SPARK (when motivation is low):
+A prompt that motivates simultaneously with triggering.
+It reminds the target WHY they should act, not just THAT they should.
+Example: "Your hashrate is down 8%. Here's what the miners who stayed did."
+Use when: Quadrant 3 or 4 — motivation needs to be rebuilt at the moment of trigger.
+
+FACILITATOR (when ability is low):
+A prompt that makes the behavior easier while triggering it.
+It removes friction in the act of triggering.
+Example: "Book your next refill — one tap from here."
+Use when: Quadrant 2 — they want to, they just need it made easy.
+
+SIGNAL (when both motivation and ability are present):
+A pure reminder that the behavior opportunity exists right now.
+No motivation or ability work needed — just the cue.
+Example: "Your renewal window is open."
+Use when: Quadrant 1 — everything is in place, just needs the trigger.
+```
+
+---
+
+### Framework 3 — Cialdini: Select the Influence Lever
+
+Each lever has specific conditions where it's powerful — and specific conditions
+where it backfires. Naming the lever is not enough. Name WHY it fits this target,
+this context, and this barrier type.
+
+```
+RECIPROCITY
+Mechanism: When someone gives us something of value, we feel obligated to return it.
+Not a transactional exchange — a genuine gift creates genuine obligation.
+Best for: Early-stage relationship building. Cold audiences who don't know the brand yet.
+        Building trust before asking for behavior change.
+When it backfires: When the gift feels calculated or manipulative. When the "gift"
+                  is obviously a sales tool. When used with audiences who already trust you.
+Execution pattern: Lead with value. Teach, inform, or entertain FIRST. Ask later.
+                  Content marketing, free tools, educational resources, honest advice.
+Pharma note: Providing genuinely useful clinical information (not branded) builds
+             reciprocity with HCPs faster than product-forward detail aids.
+
+COMMITMENT & CONSISTENCY
+Mechanism: Once people have committed to a position, they feel compelled to act
+           consistently with that commitment. Small yeses lead to bigger yeses.
+Best for: Changing behavior in steps. Getting a foot in the door.
+        Reinforcing choices already made (post-decision reassurance).
+When it backfires: When the initial commitment feels coercive or like a trap.
+                  When too many micro-commitments feel manipulative.
+Execution pattern: Get agreement on principles before asking for action.
+                  "Do you believe miners who stay the course ultimately win?" →
+                  "Then here's what staying the course looks like."
+Caution: This lever creates stickiness. It can work against you if the commitment
+         is to a competitor — you must first break the prior commitment.
+
+SOCIAL PROOF
+Mechanism: When uncertain, people look to what others like them are doing.
+           "If people like me are doing it, it must be right."
+Best for: New behaviors, uncertain markets, products with unfamiliar proof.
+        Normalizing what might feel risky or unconventional.
+When it backfires: When the "social" group doesn't match the target's identity.
+                  When the numbers are small or implausible.
+                  When the behavior is supposed to be exclusive (social proof = everyone does it → not special).
+Execution pattern: Match the social group to the target identity EXACTLY.
+                  "23 million patients" doesn't work as well as "the cardiologist three blocks from your office."
+                  Peer voices beat authority voices for this lever.
+                  Named, specific, similar-to-me proof beats aggregate statistics.
+Note: Social proof and scarcity can contradict each other. Don't use both simultaneously.
+
+AUTHORITY
+Mechanism: We defer to credible experts when we lack confidence in our own judgment.
+           "If the expert says so, I can trust it."
+Best for: Categories where expertise is valued. Early in a product's lifecycle.
+        HCP audiences who are trained to evaluate evidence.
+        Countering misinformation or overcoming skepticism.
+When it backfires: When authority is seen as bought (pharma is especially vulnerable here).
+                  When the target is an expert themselves and resents condescension.
+                  When the expert's credential is in the wrong domain.
+Execution pattern: Lead with data before opinion. Let the authority interpret, not sell.
+                  Third-party authority (independent KOLs, peer-reviewed studies) outperforms
+                  company-sponsored authority for skeptical audiences.
+Pharma note: HCPs distrust authority they perceive as manufactured. Authentic, peer-led
+             advocacy from KOLs who chose to speak (not who were paid to speak) is the only
+             form of authority that consistently moves prescribing behavior.
+
+LIKING
+Mechanism: We are more easily influenced by people we like and feel like us.
+           Warmth, similarity, and genuine interest create persuasion.
+Best for: Consumer audiences. Patient-facing communications.
+        Any situation where the brand needs to feel human, not institutional.
+When it backfires: When it feels fake. When the warmth is performed, not genuine.
+                  When the target is in a clinical/rational mindset and wants data, not charm.
+Execution pattern: Real stories. Authentic voices. Brands that take positions
+                  rather than playing safe. Vulnerability over polish.
+                  The Modern Mining brand voice IS a liking mechanic —
+                  "we're in this too" creates genuine identification.
+
+SCARCITY
+Mechanism: We value things more when they are rare or threatened with unavailability.
+           Loss aversion is more powerful than equivalent gain.
+Best for: Conversion moments. Driving urgency when audience is already warm.
+        Highlighting a competitive window before it closes.
+When it backfires: When scarcity is manufactured and obvious (Groupon fatigue).
+                  When used too early (cold audiences don't care about losing something
+                  they never wanted in the first place).
+                  When used with social proof simultaneously (creates mixed signals).
+Execution pattern: Make the scarcity real or at least believable.
+                  Time-windows, competitive dynamics, limited access all work.
+                  Pair with loss framing: "If you don't act now, you lose X" beats "Act now to gain X."
+Caution: This is the easiest lever to abuse. Use sparingly and only when
+         the scarcity claim is genuine. False scarcity destroys trust permanently.
+
+UNITY
+Mechanism: We are most powerfully influenced by people who are part of our identity group.
+           "We are the same kind of person" is stronger than all other levers combined
+           when the identity connection is real.
+Best for: Tight communities with strong shared identity.
+        Brands that want to be part of the culture, not just sell to it.
+        Long-term brand building over transactional conversion.
+When it backfires: When the brand tries to claim shared identity it hasn't earned.
+                  When the community can tell the brand is using the identity rather than being it.
+                  Appropriation vs. belonging — the community will know the difference immediately.
+Execution pattern: The brand must DEMONSTRATE belonging, not just assert it.
+                  For Modern Mining: "We're still here too" is unity.
+                  "We understand miners" is a claim. Show it.
+                  Unity builds over time — it cannot be shortcut with a single campaign.
+```
+
+**Lever selection criteria — use this to pick:**
+
+| Audience state | Best lever(s) | Why |
+|---------------|--------------|-----|
+| Cold — doesn't know or trust the brand yet | Reciprocity, Liking | Earn trust before asking |
+| Aware but skeptical | Authority, Social Proof | Evidence over persuasion |
+| Considering but hesitating | Commitment, Social Proof | Reduce perceived risk |
+| Ready but not acting | Scarcity, Prompt (Fogg Signal) | Remove inertia |
+| Loyal but not advocating | Unity, Reciprocity | Deepen identity connection |
+| Habitual (competitor loyal) | Unity, Liking | Break prior commitment |
+
+**Never combine scarcity + social proof** (contradicts: "everyone has it" vs. "almost none left")
+**Never combine authority + unity** in the same execution (authority says "experts say"; unity says "people like us say")
+
+---
+
+### The Behavioral Architecture Decision
+
+After applying all three frameworks, make two decisions:
+
+**Decision 1: What is the dominant barrier?** (COM-B)
+This determines the *type of creative work* needed.
+
+**Decision 2: Which lever addresses it most directly?** (Cialdini + Fogg)
+This determines *how the creative work should move the target*.
+
+```
+EXAMPLE — Modern Mining:
+
+COM-B: Reflective Motivation (miners are CONSCIOUSLY questioning whether to continue.
+       They know the numbers. They're weighing it. This is not lack of information.)
+
+Fogg: Quadrant 3 — Low Motivation + High Ability
+      They know how to mine. They just don't feel it's worth it anymore.
+      Creative must rebuild MOTIVATION, not teach ability.
+      Prompt type: Spark (remind them WHY at the moment of doubt)
+
+Cialdini: Unity (primary) + Social Proof (secondary)
+      Unity: "We're still here too. You're not alone in this decision."
+      Social Proof: "The miners who stayed through the last halving are the ones
+                    who own their rigs outright today."
+
+Brief implication: This is NOT an educational campaign. This is a conviction campaign.
+      Every post, every piece of copy, every channel choice must speak to the miner
+      who is ALREADY THINKING about quitting — not to one who has never heard of mining.
+```
+
+---
+
+**Output of Step 2:** `behavior-architecture.md`
+
+Not a paragraph. A structured document. This is the reasoning layer behind every
+choice in the brief. Creative reads this to understand WHY the brief is written
+the way it is — not just what it says.
+
+```markdown
+# Behavior Architecture — [Project Name]
+
+## The Behavior Change
+
+**Current behavior (BEFORE):**
+[What the target does or believes right now]
+
+**Desired behavior (AFTER):**
+[What we want them to do or believe after exposure to this campaign]
+
+**Why the gap exists:**
+[The core reason the desired behavior isn't already happening]
+
+---
+
+## COM-B Diagnosis
+
+**Dominant barrier:** [name the specific sub-component — e.g., Reflective Motivation]
+**Evidence from research:** [what from key-insights.md or research supports this diagnosis]
+**Secondary barriers:** [any supporting barriers — but do not design the brief around these]
+**Barriers ruled out:** [which sub-components are NOT the problem — and why]
+
+**Intervention this barrier requires:**
+[Specific type of creative or messaging intervention — from the mapping table above]
+
+**What will NOT work because of this diagnosis:**
+[The creative approach that seems logical but targets the wrong barrier]
+
+---
+
+## Fogg Analysis
+
+**Motivation level:** [High / Medium / Low — with reasoning]
+**Ability level:** [High / Medium / Low — with reasoning]
+**Quadrant:** [1/2/3/4 — from the grid above]
+
+**Missing element:** [Motivation / Ability / Prompt — which one is the bottleneck]
+
+**Prompt type needed:** [Spark / Facilitator / Signal — with rationale]
+
+**The decision moment:**
+[Where and when is the target at the point where this prompt would work?
+Physical location, emotional state, what they're doing right now.]
+
+**Media implication:**
+[What this means for channel and timing — feeds directly into media-strategy.md]
+
+---
+
+## Cialdini Selection
+
+**Primary lever:** [name + one-sentence rationale specific to this target]
+**How it addresses the COM-B barrier:** [the connection between the barrier and the lever]
+**Execution pattern for this target:** [specific to this project — not generic]
+
+**Secondary lever (if any):** [name + rationale — used to reinforce primary, not compete]
+**Levers explicitly NOT used and why:**
+[Which of the 7 were rejected and what would go wrong if they were used here]
+
+---
+
+## The Brief Implications
+
+These are the strategic decisions that flow from the behavioral architecture above.
+The brief is built on these. If any of these are wrong, the brief will be wrong.
+
+1. **The brief must lead with:** [emotional / rational / identity / evidence / permission]
+   Because: [connection to dominant barrier]
+
+2. **The single-minded proposition must do:** [reframe / educate / normalize / inspire / argue]
+   Because: [connection to COM-B barrier type]
+
+3. **Tone must be:** [specific to what the barrier requires — not generic brand tone]
+   Because: [what tone works for this specific psychological state]
+
+4. **What this brief must NOT do:**
+   [The creative direction that targets the wrong barrier — pre-empt it here]
+```
 
 
 ---
@@ -624,13 +1007,19 @@ The brief does not leave this agent until every gate is checked.
 - [ ] Insight passed all 5 pressure tests (Step 1 filter)
 - [ ] Commodity trap check completed
 - [ ] At least one category assumption actively challenged and either confirmed or inverted
-- [ ] Behavioral target defined — one specific behavior, not a category
-- [ ] COM-B dominant barrier identified
-- [ ] Positioning resolves the barrier via a credible brand truth
+- [ ] `behavior-architecture.md` written and includes ALL of:
+  - [ ] Dominant COM-B sub-component named (not just "motivation" — which specific type)
+  - [ ] Barriers ruled out documented
+  - [ ] Fogg quadrant identified (1/2/3/4) with motivation + ability levels stated
+  - [ ] Prompt type selected (Spark / Facilitator / Signal) with rationale
+  - [ ] Primary Cialdini lever named with specific execution pattern for this target
+  - [ ] Levers explicitly rejected with reasons documented
+  - [ ] 4 brief implications written (what to lead with, what SMP must do, tone, what NOT to do)
+- [ ] Brief's behavioral levers field references behavior-architecture.md — not invented separately
+- [ ] Positioning resolves the dominant COM-B barrier via a credible brand truth
 - [ ] GOST strategies are verb-led, cross-functional, max 4, with impact KPIs
 - [ ] Brief is one page — if longer, cut it
 - [ ] Single-minded proposition is actually single-minded (no "and")
-- [ ] `behavior-architecture.md` written before brief was started
 - [ ] Media strategy has timing intelligence — not generic best-practice posting times
 
 ---
@@ -725,7 +1114,6 @@ This agent does NOT require Michael to say "start the strategy."
 
 ---
 
-## Handoff
 ## Handoff
 
 Before notifying AM Agent, append completed tasks to `task-log.md`:
