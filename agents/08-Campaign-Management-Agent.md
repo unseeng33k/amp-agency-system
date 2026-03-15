@@ -819,13 +819,18 @@ client.inboxes.messages.get_metrics(
 
 ### Monitoring Schedule
 
-| Check | Timing | What to pull | Action threshold |
-|-------|--------|-------------|-----------------|
-| Hour 1 | 60 min post-launch | Live status, pixel firing, no policy flags | Any failure → alert immediately |
-| Hour 24 | 24 hrs post-launch | CTR, engagement rate, email open rate | >50% below benchmark → flag |
-| Hour 48 | 48 hrs post-launch | Full performance pulse vs. KPI targets | Determine optimization actions |
-| Weekly | Every 7 days | Cumulative KPI progress, pacing | Budget / creative / targeting adjustments |
-| End of campaign | Final day | Complete performance vs. all KPIs | Write learning log entry |
+| Check | Timing | What to pull | Analytics Agent trigger |
+|-------|--------|-------------|------------------------|
+| Baseline | Immediately before launch | GSC impressions, clicks, avg position | "Pull pre-launch baseline" |
+| Hour 1 | 60 min post-launch | Live status, pixel firing, no policy flags | No trigger — Campaign Mgmt handles |
+| Hour 24 | 24 hrs post-launch | CTR, engagement rate, email open rate | No trigger — Campaign Mgmt handles |
+| Hour 48 | 48 hrs post-launch | Full performance pulse vs. KPI targets | "Run 48-hour check" |
+| Week 1 | 7 days post-launch | Cumulative KPI progress + GSC vs. baseline | "Run Week 1 check" → Weekly Pulse Report |
+| Month 1 | 30 days post-launch | Full channel breakdown + organic signals | "Run Month 1 check" → Monthly Campaign Report |
+| Campaign Close | Final day | Complete performance vs. all KPIs | "Campaign closed — run final report" → End-of-Campaign Report |
+
+**Trigger language matters.** Use the exact phrases above when messaging the Analytics Agent.
+Each phrase maps to a specific report type in the Analytics Agent's monitoring protocol.
 
 ### Performance Alert System
 
