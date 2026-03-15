@@ -50,6 +50,23 @@ Don't build from scratch what a skill already provides.
 
 ---
 
+### Personal Skills (vault only — not in repo)
+
+These skills contain proprietary methodology or institutional knowledge.
+They live in the vault, not in the AMP Agency System repo.
+They are available on machines where `[VAULT_ROOT]` is configured.
+If a skill file is missing, the agent falls back to its generic protocol.
+
+| Skill | Path | Use When |
+|-------|------|----------|
+| `pharma-research` | `[VAULT_ROOT]/skills/pharma-research/SKILL.md` | Research for any pharma/biotech/regulated healthcare client |
+| `sanofi` | `[VAULT_ROOT]/skills/sanofi/SKILL.md` | Sanofi-specific context, org structure, brand portfolio |
+
+**These skills do not travel with the repo.** They must be present in your personal vault.
+If you share this system with a collaborator, they will need to build equivalent skills for their own institutional knowledge.
+
+---
+
 ## Remote Skills — Install on Demand
 
 Browse: https://skills.sh — 318+ skills available.

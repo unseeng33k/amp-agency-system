@@ -30,8 +30,10 @@ IF industry contains any of:
 THEN:
   Invoke pharma-research skill BEFORE any domain research
   Path: [VAULT_ROOT]/skills/pharma-research/SKILL.md
-
-  This skill adds:
+  Note: This is a personal skill file — not included in the repo.
+        Only available on machines where the vault is configured.
+        If the file doesn't exist, proceed with standard research
+        and flag: "Pharma skill not found — running generic research protocol."
   - HCP vs. patient audience segmentation
   - Asset evaluation (what can actually be claimed)
   - Label/indication research pattern
