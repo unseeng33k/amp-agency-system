@@ -149,7 +149,40 @@ TACTICS:   Weekly text-only X posts, conviction register
 **Creative brief written.** (see creative-brief.md)
 **Media strategy:** X/Twitter organic only. 3-5x per week. Text-only. No links. 9-11pm ET posting window. No paid track.
 
-**Gate:** Strategy package presented to Michael. "Looks good. Go."
+**Gate 1 — Strategy:** Brief presented to Michael. "Looks good. Go."
+
+---
+
+## PHASE 2b — Channel Review (Campaign Management Agent)
+
+**Trigger:** Strategy approval triggers Campaign Management Agent to run channel review.
+
+**Inputs read:**
+- `campaign-activation-plan.md` (Strategy's channel proposal)
+- `audience-platform-intelligence.md` (Research's evidence)
+
+**Channel: X/Twitter — validation:**
+- Audience evidence: STRONG — r/BitcoinMining, community monitoring confirms miners
+  active on X, text-first engagement, late-evening activity windows documented
+- Current platform performance: Text-only posts with strong POV outperform images
+  for conviction-register content. Links suppress reach. No hashtags needed.
+- Format fit: CONFIRMED — conviction text posts ≤280 chars match what performs
+- Cadence: ACHIEVABLE — 3-5x/week is realistic for solo operator with approval workflow
+- Verdict: ✅ FULLY CONFIRMED
+
+**Channels not proposed (from audience-platform-intelligence.md):**
+- LinkedIn: Community is present but X is where identity-level conviction content lands.
+  LinkedIn skews professional/analytical. Not wrong to skip for Phase 1.
+- Reddit (r/BitcoinMining): High community activity but brand posting is awkward.
+  Better as monitoring/research channel than content deployment.
+
+**Summary verdict: FULLY CONFIRMED — proceed to Activation Checkpoint.**
+
+**channel-review.md written.**
+
+**Gate 2 — Activation:** AM Agent presents activation plan + channel review to Michael.
+  Channel: X/Twitter confirmed. Asset list: 10 posts + 2 threads confirmed.
+  Weekly commitment: ~1 hour review. Michael: "Go."
 
 ---
 
@@ -210,14 +243,18 @@ The brand as witness to its own persistence. Not testimony — presence. The con
 Running this project through the full system revealed the following:
 
 **Working correctly:**
-1. The pharma detection gate (fired, found non-pharma, skipped skill, proceeded normally)
-2. The organic-only campaign mode detection (no paid budget → organic sequence activated)
-3. The COM-B diagnosis producing a brief that argues rather than inspires
-4. The Fogg Quadrant 3 diagnosis producing Spark prompt logic (content IS the motivation)
-5. The Unity lever producing content that speaks from inside rather than about
-6. The "don't make the economic argument" rule holding through every piece of copy
-7. The category default audit identifying the frame to break
-8. The "most dangerous What If?" process producing the thread concept
+1. Pharma detection gate: fired, found non-pharma, skipped skill, proceeded normally
+2. Organic-only campaign mode detection: no paid budget → organic sequence activated
+3. COM-B diagnosis: Reflective Motivation → brief argues rather than inspires
+4. Fogg Quadrant 3 diagnosis: Spark prompt logic (content IS the motivation)
+5. Cialdini Unity lever: content speaks from inside the experience, not about it
+6. "Don't make the economic argument" rule held through every piece of copy
+7. Category default audit: economic frame identified as the default to break
+8. "Most dangerous What If?" process produced the thread concept
+9. Channel review: Campaign Management Agent validated X/Twitter against audience
+   evidence from audience-platform-intelligence.md. Verdict: FULLY CONFIRMED.
+   LinkedIn and Reddit documented as options left on the table with rationale.
+10. Four-checkpoint flow: Strategy → Activation → Creative → Launch gates all present
 
 **What a future run would add:**
 - Production phase: content calendar built, Google Calendar events created

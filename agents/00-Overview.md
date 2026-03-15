@@ -30,69 +30,85 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
                     │   MARKET RESEARCH           │
                     │   Domains 1-6               │
                     │   key-insights.md           │
+                    │   audience-platform-intel.md│
                     └──────────────┬──────────────┘
-                                   │ passes insights
-           │            ┌──────────────────────┐          │
-           │            │     STRATEGY         │ ← ✅ CHECKPOINT
-           │            │   creative-brief.md  │
-           │            │   media-strategy.md  │
-           │            └──────────┬───────────┘
-           │                       │
-           │           ┌───────────┴─────────────┐
-           │           │ media-strategy.md forks  │
-           │           ▼                          ▼
-           │  ┌──────────────────┐    (held until creative
-           │  │    CREATIVE      │     approval, then sent
-           │  │  2 concepts min  │     to CAMPAIGN MANAGEMENT)
-           │  │  per channel     │
-           │  └────────┬─────────┘ ← ✅ CHECKPOINT
-           │           │ approved concept
-           │           │
-           │    ┌──────┴──────────────────┐
-           │    │  runs simultaneously    │
-           │    ▼                         ▼
-           │  ┌──────────────┐   ┌──────────────────┐
-           │  │  PRODUCTION  │   │    ANALYTICS     │
-           │  │  assets built│   │  UTMs + KPIs     │
-           │  │  copy locked │   │  tracking-ready  │
-           │  └──────┬───────┘   └────────┬─────────┘
-           │         │                    │
-           │         └────────┬───────────┘
-           │                  │ both complete
-           │                  ▼
-           │       ┌──────────────────────┐
-           │       │  CAMPAIGN MANAGEMENT │ ← ✅ CHECKPOINT
-           │       │  organic track       │
-           │       │  paid track (if any) │
-           │       │  launch-log.md       │
-           │       └──────────┬───────────┘
-           │                  │ post-launch data
-           │                  ▼
-           │       ┌──────────────────────┐
-           └──────▶│  LEARNING LOG        │
-                   │  client-profile.md   │
-                   │  Section 8 updated   │
-                   └──────────────────────┘
+                                   │ passes insights + platform intel
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │   STRATEGY                   │ ← ✅ CHECKPOINT 1 (Brief)
+                    │   behavior-architecture.md   │
+                    │   creative-brief.md          │
+                    │   media-strategy.md          │
+                    │   campaign-activation-plan.md│
+                    │   (PROPOSAL — needs CM review)│
+                    └──────────────┬───────────────┘
+                                   │ spawns immediately
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │   CAMPAIGN MANAGEMENT        │ ← ✅ CHECKPOINT 2 (Activation)
+                    │   (Channel Review role)      │
+                    │   channel-review.md          │
+                    │   Validates: audience evidence│
+                    │   + current platform data    │
+                    └──────────────┬───────────────┘
+                                   │ verdict + activation plan presented to Michael
+                                   │
+                    ┌──────────────▼──────────────┐
+                    │    CREATIVE                  │ ← ✅ CHECKPOINT 3 (Concept)
+                    │  What If? ideation           │
+                    │  Organic-native or ad copy   │
+                    │  Platform-native assets      │
+                    └──────────────┬───────────────┘
+                                   │ approved concept
+                    ┌──────────────┴──────────────┐
+                    │   runs simultaneously        │
+                    ▼                              ▼
+          ┌──────────────────┐        ┌──────────────────┐
+          │   PRODUCTION     │        │    ANALYTICS     │
+          │   assets built   │        │  UTMs + KPIs     │
+          │   copy locked    │        │  tracking setup  │
+          └────────┬─────────┘        └────────┬─────────┘
+                   │                            │
+                   └────────────┬───────────────┘
+                                │ both complete
+                                ▼
+                    ┌──────────────────────────────┐
+                    │   CAMPAIGN MANAGEMENT        │ ← ✅ CHECKPOINT 4 (Launch)
+                    │   organic or paid+organic    │
+                    │   launch-log.md              │
+                    └──────────────┬───────────────┘
+                                   │ post-launch data
+                                   ▼
+                    ┌──────────────────────────────┐
+                    │   LEARNING LOG               │
+                    │   client-profile.md          │
+                    │   Section 8 updated          │
+                    └──────────────────────────────┘
 ```
 
 ---
 
 ## Parallel Tracks
 
-Two things run simultaneously after creative approval:
-
-**Production + Analytics** — run in parallel after creative approval.
+**Production + Analytics** — run simultaneously after creative approval.
 Production builds assets. Analytics builds UTM/tracking. Neither waits for the other.
 Campaign Management cannot start until both are complete.
 
-**media-strategy.md fork** — produced by Strategy, consumed by two agents:
-- Creative Agent reads it for channel constraints before concepting
-- Campaign Management Agent receives it at launch for channel execution plan
+**Campaign Management — two distinct roles:**
+1. *Channel Review* (Activation Checkpoint) — validates Strategy's channel proposal
+   against audience platform intelligence and current platform data. Produces `channel-review.md`.
+2. *Launch Execution* (Campaign Management Checkpoint) — runs the organic or paid+organic
+   execution sequence after Production and Analytics are complete.
+
+**media-strategy.md + campaign-activation-plan.md fork:**
+Both are produced by Strategy Agent and consumed by multiple agents:
+- Creative reads activation plan for asset list and platform specs
+- Campaign Management reads activation plan to execute the launch sequence
+- Analytics reads media strategy for channel context when building UTM taxonomy
 
 **Project management is built into the Account Management Agent** — not a separate role.
 AM Agent generates `project-plan.md` at project start, logs tasks at each handoff,
 tracks blockers in `blocker-log.md`, and surfaces health on demand or at each checkpoint.
-No background daemon. No separate agent. Same orchestration work — properly logged.
 
 ---
 
@@ -145,16 +161,22 @@ Every campaign closes by making the next campaign smarter.
 
 ## Checkpoints
 
-Three phases require **explicit Michael approval** before the pipeline advances:
+Four phases require **explicit Michael approval** before the pipeline advances:
 
 | Checkpoint | What's approved | What triggers it |
 |------------|----------------|-----------------|
-| **Strategy** | creative-brief.md + media-strategy.md | Strategy Agent completes both |
+| **Strategy** | creative-brief.md | Strategy Agent completes brief |
+| **Activation** | campaign-activation-plan.md + channel-review.md | Campaign Management validates channels |
 | **Creative** | Winning concept package | Michael selects concept |
 | **Campaign Management** | Final assets + launch plan | Production + Analytics both complete |
 
 No agent advances past a checkpoint without a "Go" in the chat.
 "Looks good" counts. Silence does not.
+
+**Why four checkpoints:** The brief tells Creative what to say. The activation plan tells Creative
+what to build. Without explicit channel and format approval, Creative defaults to comfortable
+formats — which are rarely the most effective ones. The activation checkpoint costs 5 minutes.
+Getting it wrong costs a week of rework.
 
 ---
 
@@ -179,14 +201,15 @@ after every campaign closes.
 
 | Order | Agent | Purpose | Auto-start? | Checkpoint |
 |-------|-------|---------|-------------|------------|
-| 0 | Client Onboarding | New client setup, folder structure, API connections | On "new client" mention | — |
+| 0 | Client Onboarding | New client setup, folder structure, API connections, brand intelligence | On "new client" mention | — |
 | 1 | Account Management | Intake, orchestration, PM built-in (plan, blockers, health) | On brief receipt | — |
-| 2 | Market Research | 6-domain research, insight excavation | After intake | — |
-| 3 | Strategy | Brief + positioning + media strategy | After insight selected | **YES** |
-| 4 | Creative | 2+ concepts, channel-constrained | After strategy approval | **YES** |
-| 5a | Production | Assets built, copy hard-locked | After creative approval | Optional |
-| 5b | Analytics | UTMs + KPI framework | After creative approval | — |
-| 6 | Campaign Management | Launch — organic + paid tracks | After 5a + 5b complete | **YES** |
+| 2 | Market Research | 6-domain research, insight excavation, audience platform intelligence | After intake | — |
+| 3 | Strategy | Brief + behavioral architecture + media strategy + activation plan (PROPOSAL) | After insight selected | **YES — Brief** |
+| 3b | Campaign Management | Channel review — validates Strategy's channel proposal against evidence | After Strategy completes | **YES — Activation** |
+| 4 | Creative | Concepts + copy + platform-native assets | After activation approval | **YES** |
+| 5a | Production | Assets built, copy hard-locked, platform-agnostic deployment | After creative approval | Optional |
+| 5b | Analytics | UTMs + KPI framework + post-launch monitoring setup | After creative approval | — |
+| 6 | Campaign Management | Launch — organic or paid+organic execution path | After 5a + 5b complete | **YES** |
 | — | Learning Log | Client profile updated | After deployment | — |
 
 ---
@@ -239,8 +262,8 @@ last_updated_at: 2026-03-14
 | `03-Market-Research-Agent.md` | `agents/` | 6-domain research, insight excavation, content audit |
 | `04-Strategy-Agent.md` | `agents/` | Brief + positioning + media strategy (paid/organic split) |
 | `05-Creative-Agent.md` | `agents/` | Concept development — What If? ideation, channel-constrained |
-| `06-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time |
-| `07-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, platform tracking |
-| `08-Campaign-Management-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
+| `06-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time, platform-agnostic deployment |
+| `07-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, post-launch monitoring, draft reports |
+| `08-Campaign-Management-Agent.md` | `agents/` | Channel review (Activation) + launch execution (organic/paid) + learning log |
 | `api-keys.md` | `resources/` | **Your keys — never committed. See SKILL-DISCOVERY-PROTOCOL.** |
 | `00-Overview.md` | `agents/` | This file |
