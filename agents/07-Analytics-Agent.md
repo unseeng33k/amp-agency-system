@@ -433,16 +433,94 @@ Campaign Close
 
 ### monitoring-log.md structure
 
+The monitoring log is not just a metrics table. At each checkpoint beyond 48h,
+it includes a **Content Performance Scoring** section that interprets the data
+and produces signals for content replenishment decisions.
+
+Raw metrics tell you what happened. Content performance scoring tells you what to do about it.
+
 ```markdown
 ## [Campaign Name] — Monitoring Log
 
-| Check | Date | GSC Impressions | GSC Clicks | Notes | Status |
-|-------|------|----------------|------------|-------|--------|
-| Baseline | [date] | [X] | [X] | Pre-launch | ✅ |
-| 48-hour | [date] | [X] | [X] | [any flags] | 🟢/🟡/🔴 |
-| Week 1 | [date] | [X] | [X] | [summary] | 🟢/🟡/🔴 |
-| Month 1 | [date] | [X] | [X] | [summary] | 🟢/🟡/🔴 |
-| Campaign Close | [date] | [X] | [X] | Final | ✅ |
+---
+
+### Performance Summary Table
+
+| Check | Date | Platform Impressions | Engagements | Eng. Rate | vs. Benchmark | Status |
+|-------|------|---------------------|-------------|-----------|---------------|--------|
+| Baseline | [date] | — | — | — | — | ✅ |
+| 48-hour | [date] | [X] | [X] | [X]% | [+/-X%] | 🟢/🟡/🔴 |
+| Week 1 | [date] | [X] | [X] | [X]% | [+/-X%] | 🟢/🟡/🔴 |
+| Month 1 | [date] | [X] | [X] | [X]% | [+/-X%] | 🟢/🟡/🔴 |
+| Campaign Close | [date] | [X] | [X] | [X]% | [+/-X%] | ✅ |
+
+---
+
+### Content Performance Scoring (write at Week 1 and beyond)
+
+For each post or content type that has been live for ≥7 days, score it:
+
+```
+POST SCORING — [Check Date]
+
+| Post ID | Post Type | Pillar | Impressions | Eng. Rate | vs. Benchmark | Score |
+|---------|-----------|--------|-------------|-----------|---------------|-------|
+| [ID] | [conviction/thread/reactive] | [pillar] | [X] | [X]% | [+/-X%] | ⭐⭐⭐/⭐⭐/⭐ |
+```
+
+Score key:
+  ⭐⭐⭐ Lean into — significantly above benchmark
+  ⭐⭐   On track — at or near benchmark
+  ⭐     Kill or evolve — below benchmark after sufficient exposure
+  —     Too early — insufficient data (< 7 days or < 100 impressions)
+
+---
+
+### Content Intelligence Signals (write at Week 1 and beyond)
+
+**LEAN INTO (what's overperforming):**
+[List specific post types, topics, registers, or formats that are beating benchmarks]
+[Include the hypothesis: WHY is this working? What human truth is it touching?]
+Example: "Short declarative posts (≤100 chars) are outperforming longer posts by 2.3x.
+Hypothesis: The compression itself signals conviction — long posts read as justification."
+
+**KILL (what's consistently underperforming):**
+[List specific post types or topics that have had ≥7 days exposure and are below benchmark]
+[Include the diagnosis: WHY is it underperforming? Wrong barrier? Wrong register?]
+Example: "Posts that reference competitor exits are underperforming.
+Diagnosis: Audience has moved past that — they've already decided. This reads as re-litigating a closed question."
+
+**EVOLVE (what the community is telling us we didn't anticipate):**
+[Look at: replies, quote tweets, shares, comment threads, DMs if accessible]
+[What topics or angles are the audience extending beyond what was written?]
+[What are they responding WITH, not just TO?]
+Example: "Multiple replies referencing specific halving dates. Audience wants historical specificity,
+not just general conviction. Next batch should include concrete timeline posts."
+
+---
+
+### Content Replenishment Signal
+
+Based on the scoring above, produce ONE of three verdicts:
+
+**STAY THE COURSE** — Overall performance at or above benchmark.
+  Existing content architecture is working.
+  Continue current pillar mix and cadence.
+  No Creative Agent input required.
+
+**RECALIBRATE** — Mixed performance. Some pillars working, some not.
+  Specific changes recommended. Creative Agent to produce adjusted batch.
+  → Trigger: Campaign Management Agent to produce content-brief-update.md
+  Changes needed: [specific — which pillars to expand, which to reduce or drop]
+
+**ESCALATE** — Systemic underperformance. The content architecture is wrong.
+  Not a copy or format problem — the insight or channel needs review.
+  → Trigger: AM Agent to review insight + activation plan before any new content
+  → Do NOT produce a content-brief-update.md — go back further in the pipeline
+
+**If GSC is connected:** Include organic search signal delta in the verdict.
+Organic lift alongside engagement performance = insight is holding.
+Organic flat despite engagement = community resonance without discovery reach.
 ```
 
 **If GSC is not connected:** Log what's available from client-provided platform data.

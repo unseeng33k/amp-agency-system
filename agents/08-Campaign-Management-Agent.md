@@ -1386,6 +1386,179 @@ timestamp and severity. Flag to Michael at next session open:
 
 ---
 
+## Content Performance Review — Replenishment Intelligence Loop
+
+This is the mid-flight intelligence cycle. It runs at Week 1 and Month 1.
+It answers three questions before any new content is created:
+
+1. **LEAN INTO:** What's overperforming? What should we make more of?
+2. **KILL:** What's consistently underperforming? What should we stop?
+3. **EVOLVE:** What is the community telling us we didn't anticipate?
+
+The output is not another report. It is a decision: stay course, recalibrate, or escalate.
+If recalibrate — it produces a `content-brief-update.md` that spawns a new Creative Agent run.
+
+---
+
+### When it runs
+
+```
+Week 1 monitoring check complete (Analytics Agent)
+  └─▶ Analytics Agent includes Content Intelligence Signals in monitoring-log.md
+  └─▶ Campaign Management Agent reads signals → runs Content Performance Review
+  └─▶ Produces verdict + content-brief-update.md if needed
+
+Month 1 monitoring check complete (Analytics Agent)
+  └─▶ Same sequence — deeper data, more confident verdict
+  └─▶ Monthly report includes replenishment recommendation
+```
+
+### How to run the Content Performance Review
+
+```
+INPUT: monitoring-log.md (Content Intelligence Signals section)
+
+STEP 1 — Read the three signals from Analytics Agent:
+  LEAN INTO list: [overperforming post types, topics, registers]
+  KILL list: [underperforming content — 7+ days, below benchmark]
+  EVOLVE list: [community signals pointing to unanticipated territory]
+
+STEP 2 — Cross-reference against the activation plan:
+  Read campaign-activation-plan.md → Content Architecture section
+  Which pillars are producing the LEAN INTO signals?
+  Which pillars are producing the KILL signals?
+  Is the EVOLVE signal pointing to a pillar we don't have yet?
+
+STEP 3 — Determine verdict:
+
+  STAY THE COURSE conditions:
+  - All content pillars at or above benchmark
+  - No consistent underperformers (or < 2 posts per pillar — too early to judge)
+  - No strong EVOLVE signals pointing to unanticipated territory
+  → No Creative Agent action needed. Continue current calendar.
+  → Log verdict in monitoring-log.md.
+
+  RECALIBRATE conditions:
+  - At least one pillar consistently underperforming (3+ posts, all below benchmark)
+  - OR strong LEAN INTO signal on one format/topic — warrant leaning in harder
+  - OR clear EVOLVE signal — community pointing somewhere the brief didn't anticipate
+  → Produce content-brief-update.md (see template below)
+  → Spawn Creative Agent with content-brief-update.md as input
+  → No full strategy revision needed — just adjusted content batch
+
+  ESCALATE conditions:
+  - Systemic underperformance — all or most content below benchmark
+  - AND/OR the community is not responding to the insight at all
+  - AND/OR the EVOLVE signal suggests the insight itself is wrong
+  → Do NOT produce content-brief-update.md
+  → Notify AM Agent: "Content performance review — escalation needed"
+  → AM Agent reviews: is this a content problem or a strategy problem?
+  → May trigger insight revision + new strategy phase before new creative
+```
+
+### content-brief-update.md template
+
+```markdown
+# Content Brief Update — [Campaign Name]
+> Campaign Management Agent | [date]
+> Generated from: monitoring-log.md Week [N] Content Intelligence Signals
+> For: Creative Agent — recalibrated content batch
+
+---
+
+## Context
+
+This is NOT a new campaign brief. It is a recalibration of the existing content
+architecture based on [N] weeks of performance data.
+
+The original brief and behavioral architecture remain in effect.
+The insight has not changed: "[verbatim insight from creative-brief.md]"
+
+What has changed: which content types, topics, and formats we prioritize.
+
+---
+
+## What the Data Is Showing
+
+**What's working (LEAN INTO):**
+[From Analytics Agent's LEAN INTO signals]
+[Include engagement rate, impressions, and the hypothesis for WHY it's working]
+Example: Short declarative posts (≤100 chars) are 2.3x benchmark.
+Hypothesis: compression signals conviction — long posts read as justification.
+
+**What's not working (KILL):**
+[From Analytics Agent's KILL signals]
+[Include the diagnosis: wrong barrier? wrong register? wrong timing?]
+Example: Posts referencing competitor exits → audience has moved past this frame.
+
+**What the community is asking for (EVOLVE):**
+[From Analytics Agent's EVOLVE signals]
+[The unanticipated territory the audience is pointing toward]
+Example: Replies requesting specific halving history → audience wants concrete timeline, not general conviction.
+
+---
+
+## Content Architecture Update
+
+**Keep (performing at or above benchmark):**
+[List pillars / post types to continue as-is]
+
+**Expand (lean into what's working):**
+[List pillar or format to increase — with new volume target]
+Example: Short declarative conviction posts → increase from 2/week to 4/week
+
+**Kill (consistently underperforming after sufficient exposure):**
+[List pillar or post type to stop producing]
+Example: Competitor-exit reference posts → remove from rotation
+
+**Add (new territory based on EVOLVE signal):**
+[New pillar or post type not in original activation plan — with rationale]
+Example: Historical timeline posts ("We were running when [specific event] happened")
+Rationale: Community is asking for specificity — this answers it without losing conviction register
+
+---
+
+## What to Build
+
+[Complete asset list for this recalibrated batch]
+[Derived from above — specific post types, quantities, platform specs]
+
+Example for Modern Mining Week 1 recalibration:
+  • 4x short declarative conviction posts (≤100 chars, no hashtags)
+  • 2x historical timeline posts (new pillar — conviction + specific dates)
+  • 1x thread (argument format — earned by 1 week of posts establishing authority)
+  • Remove: competitor-exit reference posts (kill signal)
+
+---
+
+## Constraints (unchanged from original brief)
+
+[Copy relevant constraints verbatim from creative-brief.md]
+Voice, tone, platform format rules — these don't change with recalibration.
+```
+
+### After content-brief-update.md is produced
+
+```
+AM Agent notified: "Content performance review complete — recalibration needed"
+AM Agent presents to Michael:
+  - Verdict: RECALIBRATE
+  - What's working, what's not, what the community is asking for
+  - What the updated content batch will contain
+  - Estimated time to produce new content
+
+Michael: "Go" → Creative Agent spawned with content-brief-update.md
+Creative Agent produces recalibrated batch → same approval flow (Michael approves)
+Approved posts added to content calendar → production continues
+
+NOTE: This is NOT a full strategy revision.
+The insight, positioning, behavioral architecture, and channel selection are unchanged.
+Only the content mix is recalibrated based on performance evidence.
+A full strategy revision requires ESCALATE verdict → AM Agent review.
+```
+
+---
+
 ## Optimization Protocol
 
 When performance signals arrive, the agent applies a structured decision framework

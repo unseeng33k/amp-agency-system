@@ -318,12 +318,129 @@ ownable concept that has never been done in this form for this brand.
 
 ## Automation Protocol — How to Run This Fast
 
-**On receipt of approved creative brief, begin immediately.**
-
-### Auto-Execution Sequence
+**Two modes.** Detect which one applies before doing anything.
 
 ```
-INPUT RECEIVED: creative-brief.md + positioning.md + behavior-architecture.md + media-strategy.md
+IF input contains: creative-brief.md + positioning.md + behavior-architecture.md
+  → MODE 1: Full Campaign (new campaign, first batch of content)
+  → Run full auto-execution sequence below
+
+IF input contains: content-brief-update.md
+  → MODE 2: Content Replenishment (mid-flight recalibration)
+  → Run content replenishment sequence below
+  → Do NOT run the full brief interrogation, assumption audit, or What If? process
+  → The insight and strategy are already approved and unchanged
+```
+
+---
+
+### Mode 2 — Content Replenishment Sequence
+
+**On receipt of content-brief-update.md:**
+
+```
+INPUT RECEIVED: content-brief-update.md
+
+  ├─▶ Read the three performance signals [immediate]
+  │     LEAN INTO: what's working + why hypothesis
+  │     KILL: what's not working + diagnosis
+  │     EVOLVE: what the community is asking for
+
+  ├─▶ Read the asset list from content-brief-update.md [immediate]
+  │     What to build: types, quantities, platform specs
+  │     What to kill: formats no longer in rotation
+  │     What's new: any new pillar or format being added
+
+  ├─▶ Check: does the EVOLVE signal require new creative territory?
+  │     YES → Brief interrogation on the new territory only (2-3 questions max)
+  │           Apply What If? process to the new topic or angle
+  │           Produce new post concepts from that process
+  │     NO  → Skip ideation entirely — just write against the lean-into signals
+
+  ├─▶ Produce posts directly from the asset list
+  │     Same quality standard as original content
+  │     Same voice, tone, platform format constraints
+  │     Apply LEAN INTO learnings: if short posts are outperforming, make them shorter
+  │     Apply KILL diagnosis: avoid the register or framing that's underperforming
+
+  ├─▶ For each LEAN INTO signal: produce MORE of what's working
+  │     Don't just repeat the winning format — find new angles in the same register
+  │     Example: short declarative posts are winning → 4 new short declaratives,
+  │              each with a DIFFERENT claim but the same compression and certainty
+
+  ├─▶ For each EVOLVE signal: produce content for the new territory
+  │     This is the most important creative work in replenishment
+  │     The community has pointed somewhere — go there with intention
+  │     Apply the original insight to the new territory: how does the human truth
+  │     manifest in this new topic or angle?
+
+  └─▶ Output: content-replenishment-[date].md
+        List all new posts with quality checks
+        Note which performance signal each post responds to
+        Note which original posts they replace (from KILL list)
+        Flag any posts that introduce genuinely new territory (EVOLVE)
+        Campaign Management Agent reviews before scheduling
+```
+
+**Content replenishment is faster than a full brief.** Target: under 15 minutes.
+No assumption audit. No positioning work. No What If? log (unless new territory requires it).
+The insight is proven (or partially proven). Build on what works.
+
+**The only question replenishment asks is:** Given what we've learned in [N] weeks,
+what's the most effective next batch of content to maintain the conversation?
+
+---
+
+### content-replenishment-[date].md template
+
+```markdown
+# Content Replenishment — [Campaign Name] — [Date]
+> Creative Agent | Generated from: content-brief-update.md [date]
+> Responding to: [LEAN INTO signals] + [KILL signals] + [EVOLVE signals]
+
+---
+
+## What This Batch Is Doing
+
+LEANING INTO: [which performance signals are being amplified]
+KILLING: [which content types are being removed from rotation]
+EVOLVING INTO: [what new territory is being explored, if any]
+
+---
+
+## New Posts
+
+[Post set — same format as organic-post-[n].md or thread-[n].md]
+
+For each post, note:
+RESPONDS TO: [LEAN INTO / KILL replacement / EVOLVE]
+PERFORMANCE HYPOTHESIS: [why this specific post should work, given the data]
+
+---
+
+## Quality Checks
+
+For each post:
+- CTA test: PASS/FAIL
+- Brand test: PASS/FAIL
+- Voice consistency with original brief: PASS/FAIL
+- Platform format: PASS/FAIL
+
+---
+
+## Replaces
+
+[List posts from KILL category that this batch replaces in the calendar]
+```
+
+---
+
+### Mode 1 — Full Campaign Auto-Execution Sequence
+
+**On receipt of approved creative brief, begin immediately.**
+
+```
+INPUT RECEIVED: creative-brief.md + positioning.md + behavior-architecture.md + media-strategy.md + campaign-activation-plan.md
   │
   ├─▶ Read all four files simultaneously [immediate]
   ├─▶ Extract channel constraints from media-strategy.md [before concepting]
@@ -786,6 +903,21 @@ take that makes people say "I didn't expect that from them."
 - Brand test result: post identifiable as this brand with name removed
 - Platform format compliance: character count, structure, format confirmed
 - Voice check: "smart person, not a brand"
+
+### Content Replenishment Mode (Mode 2)
+
+Triggered by `content-brief-update.md` from Campaign Management Agent.
+Faster than a full brief. No assumption audit, no positioning work, no full What If? log.
+The insight is proven. Build on what works.
+
+| Type | Outputs | Files |
+|------|---------|-------|
+| Replenishment batch | Adjusted posts responding to LEAN INTO / KILL / EVOLVE signals | `content-replenishment-[date].md` |
+
+**Every replenishment post includes:**
+- Performance signal it responds to: LEAN INTO / KILL replacement / EVOLVE
+- Performance hypothesis: why this specific post should work given the data
+- Standard quality checks: CTA, brand, voice, platform format
 
 All Types 3 and 4 outputs include:
 - The "obvious take" named and explicitly avoided
