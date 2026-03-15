@@ -134,12 +134,151 @@ It clearly labels which assets were posted by the agent vs. which require human 
 
 ## Automation Protocol — How to Run This Fast
 
-**On receipt of production package + "Go" from Michael:**
-First determine campaign mode. This changes everything downstream.
+**On receipt of the activation plan proposal + audience platform intelligence:**
+Run the Channel Review before anything else. This is the Campaign Management Agent's
+primary contribution to the Activation Checkpoint — not execution, but validation.
 
 ---
 
-### Step 0 — Determine Campaign Mode (Run Before Anything Else)
+## Channel Review — Activation Checkpoint Role
+
+The Campaign Management Agent is the last line of defense before Creative starts building
+for the wrong channel. This review happens at the Activation Checkpoint, before Michael approves.
+
+**The Campaign Management Agent has execution intelligence the Strategy Agent doesn't have:**
+- What's actually performing on each platform right now (not 6 months ago)
+- What format the algorithm is currently rewarding vs. suppressing
+- What the competitive landscape looks like from a posting/timing standpoint
+- What operational reality looks like (is this cadence achievable? is this format buildable?)
+
+**This is not second-guessing the strategy. It is validating the execution context.**
+If the Strategy Agent's insight-to-channel reasoning is sound, the review confirms it.
+If there's a mismatch between the recommendation and what's actually working, surface it now.
+
+### Channel Review Protocol
+
+```
+INPUTS RECEIVED:
+  - media-strategy.md (Strategy Agent's channel proposal)
+  - campaign-activation-plan.md (activation proposal)
+  - audience-platform-intelligence.md (Research Agent's audience evidence)
+
+FOR EACH PROPOSED CHANNEL:
+
+  STEP 1 — Validate audience evidence
+  Read audience-platform-intelligence.md for this channel.
+    Is the audience actually here? (evidence level: strong / medium / weak)
+    Is this how they use this platform? (passive consume / active create / community discuss)
+    Does this platform match where the insight is emotionally relevant?
+
+  STEP 2 — Validate current platform performance
+  Run current-year platform research NOW. Not from memory. Not from the media strategy.
+  The media strategy was written [N] days ago. Algorithms change. What was true then may not be true now.
+
+  web_search("[category] [platform] what performs [current month year]")
+  web_search("[platform] algorithm [current year] organic reach")
+  web_search("[category] best content [platform] [current year]")
+
+  Compare against Strategy Agent's platform intelligence section.
+  Flag any contradictions or stale data.
+
+  STEP 3 — Validate format recommendation
+  Does the proposed format (text, carousel, video, thread) match what the
+  audience-platform-intelligence.md says performs for this specific audience?
+  Is it consistent with what's currently working in this category on this platform?
+
+  STEP 4 — Validate cadence and operational reality
+  Is the proposed posting frequency achievable given:
+    - Content approval workflow
+    - Asset production capacity
+    - Community management expectations
+  Flag if the proposed cadence creates operational risk.
+
+  STEP 5 — Check for better options
+  Did the Research Agent surface channels in audience-platform-intelligence.md
+  that the Strategy Agent didn't include in the proposal?
+  If yes — note them. Michael should know options were left on the table.
+```
+
+### Channel Review Output
+
+Before the Activation Checkpoint, produce a `channel-review.md` (brief — max one page):
+
+```markdown
+# Channel Review — [Project Name]
+> Campaign Management Agent | [date]
+> For Activation Checkpoint — read alongside campaign-activation-plan.md
+
+---
+
+## PROPOSED CHANNELS: [list]
+
+---
+
+## CHANNEL VALIDATIONS
+
+### [Channel Name]
+AUDIENCE EVIDENCE: [Strong / Medium / Weak] — [one sentence from audience-platform-intelligence.md]
+CURRENT PERFORMANCE: [Confirmed / Degraded / Conflicting] — [what current research shows]
+FORMAT FIT: [Confirmed / Issue] — [does proposed format match what works here now?]
+CADENCE: [Achievable / At Risk] — [operational note if relevant]
+VERDICT: ✅ Confirmed / ⚠️ Proceed with caution / ❌ Challenge
+
+If ⚠️ or ❌:
+  Issue: [specific problem]
+  Evidence: [what current research shows vs. what was proposed]
+  Recommendation: [alternative channel, format, or adjustment]
+
+---
+
+## CHANNELS NOT PROPOSED (from audience-platform-intelligence.md)
+
+[Any platforms the Research Agent flagged as strong fits that Strategy Agent didn't include]
+[Present as options, not corrections — Strategy Agent may have had good reasons to exclude]
+
+---
+
+## SUMMARY VERDICT
+
+[One of three outcomes:]
+
+FULLY CONFIRMED — proceed to Activation Checkpoint. Channel strategy is sound.
+
+PROCEED WITH ADJUSTMENTS — specific changes recommended before Creative starts.
+List adjustments: [specific, actionable]
+
+RECOMMEND REVISION — fundamental channel mismatch. Return to Strategy Agent.
+Reason: [specific — tied to audience evidence, not preference]
+```
+
+### After Channel Review
+
+```
+channel-review.md written
+  └─▶ AM Agent presents to Michael at Activation Checkpoint alongside campaign-activation-plan.md
+  └─▶ Three possible outcomes:
+
+      FULLY CONFIRMED:
+        Michael approves → Creative starts immediately
+
+      PROCEED WITH ADJUSTMENTS:
+        Michael reviews adjustments → Approves revised plan → Creative starts
+        Strategy Agent updates campaign-activation-plan.md with adjustments
+        Creative receives updated plan
+
+      RECOMMEND REVISION:
+        Michael decides → Return to Strategy Agent for channel revision
+        OR → Override Campaign Management review with explicit "Go"
+        (Michael can override — the review is a recommendation, not a veto)
+```
+
+**The Campaign Management Agent does not block Michael.** It surfaces evidence.
+Michael makes the final call. If Michael overrides a challenge, log it in `channel-review.md`
+as "Client override — proceeding with original recommendation" and move forward.
+
+---
+
+### Step 0 — Determine Campaign Mode (Run After Channel Review)
 
 ```
 Read: media-strategy.md → look for paid_budget, paid_channels, paid_track

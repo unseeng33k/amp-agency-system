@@ -280,10 +280,12 @@ Strategy brief complete (creative-brief.md exists)
   └─▶ THEN: Present campaign-activation-plan.md immediately after brief approval
 
 Campaign/Activation Plan complete (campaign-activation-plan.md exists)
-  └─▶ AUTO: Present activation plan to Michael (see Activation Checkpoint format below)
-  └─▶ WAIT: Activation approval — channels, cadence, asset requirements confirmed
+  └─▶ AUTO: Spawn Campaign Management Agent to run Channel Review [immediate]
+  └─▶ WAIT: channel-review.md written by Campaign Management Agent
+  └─▶ AUTO: Present activation plan + channel review to Michael together
+  └─▶ WAIT: Activation approval — channels confirmed, any adjustments noted
   └─▶ SPAWN: Creative Agent [immediately after activation approval]
-            Pass: creative-brief.md + campaign-activation-plan.md + media-strategy.md
+            Pass: creative-brief.md + campaign-activation-plan.md (with any adjustments) + media-strategy.md
 
 Creative concepts complete
   └─▶ AUTO: Present concepts to Michael
@@ -359,9 +361,18 @@ THE BRIEF IS APPROVED. Now let's confirm how we activate it.
 
 ---
 
+CHANNEL REVIEW (Campaign Management Agent):
+[One of three verdicts from channel-review.md:]
+  ✅ FULLY CONFIRMED — channels are supported by audience evidence and current platform data
+  ⚠️ PROCEED WITH ADJUSTMENTS — [specific adjustment recommended + evidence]
+  ❌ RECOMMEND REVISION — [specific issue + alternative recommendation]
+
+---
+
 CHANNELS:
-[List each channel with ONE sentence of rationale tied to the insight — not "high reach"]
+[List each channel with ONE sentence of rationale tied to the insight AND audience evidence]
 Example: X/Twitter — this is where miners are at night when the doubt question surfaces.
+         Confirmed by audience-platform-intelligence.md: active community, text-first engagement.
 
 ---
 
@@ -375,16 +386,11 @@ CONTENT ARCHITECTURE:
 WHAT CREATIVE WILL BUILD:
 [Complete list of asset types, quantities, platforms, and specs]
 [This is what you're approving — if the format or volume is wrong, say so now]
-Example:
-  • 10 X/Twitter text posts (conviction register, ≤280 chars)
-  • 2 X/Twitter threads (5-tweet argument structure)
-  • 0 LinkedIn (out of scope for Phase 1)
 
 ---
 
 YOUR WEEKLY COMMITMENT:
 [Plain-English estimate: N posts to review, estimated time, reactive windows]
-[Be honest — if this requires 3 hours/week, say so]
 
 ---
 
@@ -393,9 +399,10 @@ WHAT THIS IS NOT:
 
 ---
 
-TO PROCEED: Reply "Go" — or adjust any of the above before Creative starts.
-Changing channels or asset types after Creative begins is a scope revision.
-Better to catch it here.
+TO PROCEED:
+  "Go" — approve as-is, Creative starts immediately
+  "Go with [adjustment]" — approve with noted change, Creative starts with updated plan
+  "Revise channels" — return to Strategy Agent before Creative starts
 ```
 
 **Why this checkpoint exists:** The brief tells Creative what to say.

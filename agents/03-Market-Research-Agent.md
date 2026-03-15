@@ -752,8 +752,99 @@ This file is consumed directly by the Strategy Agent when building the media str
 and by the Campaign Management Agent when scheduling content. If it doesn't exist,
 both agents will use generic defaults instead of competitive intelligence.
 
+---
+
+### 9. `audience-platform-intelligence.md` ← Required for Channel Recommendation
+
+This artifact is the evidence base for channel selection.
+Without it, the Strategy Agent is guessing which channels the audience uses.
+Without it, the Campaign Management Agent cannot validate the channel recommendation.
+
+The Strategy Agent CANNOT recommend channels without this document.
+The Campaign Management Agent WILL challenge any channel recommendation not backed by it.
+
+**What to populate:**
+
+```markdown
+# Audience Platform Intelligence — [Client Name] — [Date]
 
 ---
+
+## Where This Audience Actually Lives
+
+For each platform relevant to this category and audience:
+
+### [Platform Name]
+
+**Evidence the audience is here:**
+[Specific signals — community size, engagement volume, active discussions found]
+[Source: actual searches + web_fetch results — not assumptions]
+
+**What they do on this platform:**
+[Consume / create / discuss / seek validation / vent / celebrate / learn]
+[How the platform fits into their relationship with this category]
+
+**What content they engage with:**
+[Format: text / image / video / thread / live]
+[Emotional register: conviction / humor / education / controversy / community]
+[Top post types with actual engagement numbers if available]
+
+**What they DON'T engage with:**
+[Content types that consistently underperform in this category/audience]
+[What the algorithm penalizes for this audience type]
+
+**Brand presence quality:**
+[Are brands talking AT them or WITH them on this platform?]
+[Is the brand space crowded, empty, or poorly executed?]
+[White space available?]
+
+**Best use case for this campaign:**
+[What specifically would this audience respond to here, given this insight?]
+[Not generic — tied to the specific human truth we're trying to activate]
+
+---
+
+## Platform Recommendation Summary
+
+Based on the evidence above, rank platforms for this specific campaign:
+
+| Platform | Audience Presence | Content Fit | Competitive Space | Recommendation |
+|----------|------------------|-------------|-------------------|----------------|
+| [Platform] | [Strong/Medium/Weak] | [High/Medium/Low] | [Open/Contested/Crowded] | [Primary/Secondary/Skip] |
+
+**Primary channel:** [Name] — [one sentence of evidence-based rationale]
+**Secondary channel (if any):** [Name] — [rationale]
+**Channels to skip:** [Name] — [specific reason based on audience data]
+
+---
+
+## Key Evidence Sources
+
+| Finding | Source | Date |
+|---------|--------|------|
+| [Specific data point] | [URL or search query] | [date] |
+
+---
+
+## Confidence Level
+
+**High confidence (multiple sources agree):** [which platform conclusions are solid]
+**Low confidence (limited data):** [which conclusions need Campaign Management Agent to verify]
+**Unknown:** [what couldn't be determined from available data]
+```
+
+**How to populate this document:**
+
+Domain 2 (Customer Research) tells you what the audience does and feels.
+Domain 5 (Social Media & Platform Intelligence) tells you where they do and feel it.
+Cross-reference both. The audience platform intelligence document is the synthesis.
+
+Look for: Where are they *most honest*? Where do they talk when brands aren't listening?
+That platform — not the one with the highest reach — is often the right channel.
+
+This document is passed directly to the Campaign Management Agent at the Activation Checkpoint.
+The Campaign Management Agent reads it alongside the Strategy Agent's channel proposal and
+validates whether the recommendation matches what the evidence shows.
 
 ## Quality Gates — You Must Pass These Before Handing Off
 
@@ -975,7 +1066,7 @@ Before passing to Strategy Agent, append completed tasks to `task-log.md`:
 | [date] | Research | Competitive content audit complete | Research Agent | ✅ Done |
 ```
 Passes to: **Strategy Agent**
-Primary deliverable: `key-insights.md` + `competitive-content-audit.md` + `anomaly-log.md` + `timing-intelligence.md`
+Primary deliverable: `key-insights.md` + `competitive-content-audit.md` + `anomaly-log.md` + `timing-intelligence.md` + `audience-platform-intelligence.md`
 Handoff summary: 3-sentence brief covering: (1) the key insight, (2) what the competition misses, (3) the cultural moment that makes this urgent right now
 Auto-trigger: AM Agent is notified immediately when key-insights.md is written
 Checkpoint: Strategy Agent must confirm insight quality before building strategy
@@ -985,3 +1076,4 @@ Checkpoint: Strategy Agent must confirm insight quality before building strategy
 - You described competitor positioning without looking at their actual content
 - You missed the current cultural moment — what's happening right now that changes everything
 - You have data but no tension — information without human truth
+- **`audience-platform-intelligence.md` is missing** — the Strategy Agent cannot make a defensible channel recommendation without it
