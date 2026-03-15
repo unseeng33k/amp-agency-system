@@ -27,8 +27,10 @@ CHECK IN ORDER:
   6. LinkedIn API (direct)       → posts, comments, reactions available
   7. Composio (Instagram/TikTok) → social posting via OAuth available
   7. AgentMail                   → programmatic email available
-  8. Alert System (optional)     → push alerts for urgent signals
-     Options: BlueBubbles (iMessage/Mac), Slack webhook, email via AgentMail, SMS via Twilio
+  8. Alert System                → see Surfacing & Notification Architecture section
+     Level 1 (immediate): BlueBubbles iMessage → AgentMail email → Gmail URGENT draft
+     Level 2 (decision): Gmail draft
+     Level 3 (digest): Gmail draft + Google Calendar event
   9. Playwright / Puppeteer      → headless browser available
 ```
 
@@ -961,52 +963,287 @@ Each phrase maps to a specific report type in the Analytics Agent's monitoring p
 
 ### Performance Alert System
 
-When a signal crosses a threshold, alert immediately — don't wait for the next check.
+## Surfacing & Notification Architecture
 
-**Alert via push notification (choose one based on what you have):**
+Everything the system surfaces to Michael goes through one of three channels,
+chosen by urgency. This is not "pick an option" — it is a decision tree.
+The system tries the best option first and falls back automatically if it fails.
+
+---
+
+### The Three Levels
+
+```
+🔴 LEVEL 1 — IMMEDIATE (interrupt now)
+   Campaign failure, platform rejection, pixel dead, traction spike closing fast.
+   Michael needs to know in the next 5 minutes.
+   Try: iMessage → AgentMail email → Gmail URGENT draft
+
+🟡 LEVEL 2 — DECISION PROMPT (today, when you have a moment)
+   Optimization recommendation, A/B winner, approval needed, reactive opportunity.
+   Michael should see it today but it's not an emergency.
+   Use: Gmail draft with subject line that does the work
+
+🟢 LEVEL 3 — SCHEDULED DIGEST (at the right time, not right now)
+   Weekly pulse, monthly report, upcoming content calendar gaps, milestone alerts.
+   Michael reviews it when he chooses to.
+   Use: Gmail draft (formal reports) + Google Calendar event (reminders)
+```
+
+---
+
+### Level 1 — Immediate Alert with Fallback Chain
 
 ```python
-# Option A — BlueBubbles (iMessage, Mac only)
-# Requires BlueBubbles server running locally — see [API_KEYS_PATH] for server URL
 import requests
-bluebubbles_url = "[read BLUEBUBBLES_SERVER from api-keys.md]"
-requests.post(f"{bluebubbles_url}/api/v1/message",
-    json={"chatGuid": "[your chat GUID]", "message": f"⚠️ {alert_message}"}
-)
+import re
 
-# Option B — Slack webhook (any platform)
-# Add SLACK_WEBHOOK_URL to api-keys.md
-requests.post("[SLACK_WEBHOOK_URL from api-keys.md]",
-    json={"text": f"⚠️ Campaign alert: {alert_message}"}
-)
+def read_key(pattern, keys_text):
+    """Extract a value from api-keys.md by pattern."""
+    match = re.search(pattern, keys_text, re.IGNORECASE)
+    return match.group(1).strip() if match else None
 
-# Option C — Email via AgentMail (any platform)
-# Uses existing AgentMail setup
-client.inboxes.messages.send(
-    inbox_id="[configured inbox]",
-    to="[your email]",
-    subject=f"⚠️ Campaign Alert",
-    text=alert_message
-)
-```
+def send_immediate_alert(alert_message, project_name, gmail_mcp=None):
+    """
+    Send an immediate alert via the best available channel.
+    Falls back automatically if a channel fails.
+    Returns the channel that succeeded.
+    """
+    keys = open('[API_KEYS_PATH]').read()
+
+    # Format the alert consistently regardless of channel
+    subject = f"⚠️ {project_name} — ACTION NEEDED"
+    body = f"""{alert_message}
+
+Project: {project_name}
+Time: {datetime.now().strftime('%Y-%m-%d %H:%M %Z')}
+---
+Reply to this message or open the project folder to act.
+"""
+
+    # TRY 1: iMessage via BlueBubbles
+    # Only works if BlueBubbles server is running locally on Mac
+    try:
+        bb_url = read_key(r'BlueBubbles[:\s]+([^\n]+)', keys)
+        bb_guid = read_key(r'BlueBubbles.*?chatGuid[:\s]+([^\n]+)', keys)
+        if bb_url and bb_guid:
+            r = requests.post(
+                f"{bb_url.rstrip('/')}/api/v1/message",
+                json={"chatGuid": bb_guid, "message": f"⚠️ {project_name}\n{alert_message}"},
+                timeout=5
+            )
+            if r.status_code == 200:
+                return "iMessage (BlueBubbles)"
+    except Exception:
+        pass  # BlueBubbles failed — try next
+
+    # TRY 2: Email via AgentMail
+    # Works from any machine as long as the API key is valid
+    try:
+        from agentmail import AgentMail
+        am_key = read_key(r'AgentMail[:\s]+([^\n]+)', keys)
+        am_inbox = read_key(r'AgentMail Inbox[:\s]+([^\n]+)', keys)
+        your_email = read_key(r'Your email[:\s]+([^\n]+)', keys)
+        if am_key and am_inbox and your_email:
+            client = AgentMail(api_key=am_key)
+            client.inboxes.messages.send(
+                inbox_id=am_inbox,
+                to=your_email,
+                subject=subject,
+                text=body
+            )
+            return "AgentMail email"
+    except Exception:
+        pass  # AgentMail failed — try next
+
+    # TRY 3: Gmail draft marked URGENT (nuclear fallback — always available)
+    # Requires Gmail MCP active in this session
+    if gmail_mcp:
+        try:
+            gmail_mcp.gmail_create_draft(
+                to="[your email from api-keys.md]",
+                subject=f"🚨 URGENT — {subject}",
+                body=body
+            )
+            return "Gmail draft (URGENT — check drafts folder)"
+        except Exception:
+            pass
+
+    return "FAILED — all channels unavailable. Log to launch-log.md and flag manually."
 ```
 
-**Alert triggers (send immediately, don't batch):**
-- Any ad disapproved by platform
-- Email bounce rate > 5%
-- Landing page returning non-200 status
-- Pixel not firing (conversion events = 0 after 4+ hours of traffic)
-- Organic post engagement > 3x benchmark (opportunity signal — act on it)
-- Any post receiving significant negative engagement (hide/report rate spike)
+**When to call this:**
 
-**Alert format:**
+```python
+# Campaign failures (fire immediately, no batching)
+IMMEDIATE_TRIGGERS = [
+    "ad disapproved by platform",
+    "email bounce rate > 5%",
+    "landing page non-200 status",
+    "pixel not firing after 4+ hours of traffic",
+    "post policy violation / taken down",
+    "organic post reaching traction signal (>3x benchmark)",  # opportunity, not failure
+    "reactive opportunity window < 2 hours remaining",
+]
+
+for trigger in check_campaign_signals():
+    if trigger.severity == "IMMEDIATE":
+        channel = send_immediate_alert(
+            alert_message=trigger.message,
+            project_name=project_name,
+            gmail_mcp=gmail_mcp_if_active
+        )
+        log_to_launch_log(f"Alert sent via {channel}: {trigger.message}")
 ```
-⚠️ [PROJECT NAME] — [PLATFORM] ALERT
-Issue: [specific problem]
-Asset: [asset name]
-Action needed: [what to do]
-Time: [HH:MM TZ]
+
+**Standard alert body format:**
 ```
+⚠️ [PROJECT NAME] — [PLATFORM]
+Issue: [specific problem in one line]
+Asset: [asset name or URL if applicable]
+Action needed: [exactly what to do — one sentence]
+Time sensitivity: [act now / act today / informational]
+```
+
+---
+
+### Level 2 — Decision Prompt via Gmail Draft
+
+For anything that needs Michael's attention today but isn't on fire.
+
+```python
+def send_decision_prompt(subject_line, body, project_name, gmail_mcp):
+    """
+    Creates a Gmail draft for decisions that need Michael's attention today.
+    Subject line carries the urgency — body carries the context.
+    """
+    # Subject line conventions:
+    # "✅ APPROVE: [project] — [what needs approval]"
+    # "📊 DECISION: [project] — [what's the choice]"
+    # "🔥 OPPORTUNITY: [project] — [what's the moment]"
+    # "🔄 OPTIMIZE: [project] — [what to change]"
+
+    gmail_mcp.gmail_create_draft(
+        to="[your email]",
+        subject=subject_line,
+        body=body
+    )
+```
+
+**Decision prompt triggers:**
+- A/B test winner identified → `✅ APPROVE: [project] — [variant] is winning, promote to full budget?`
+- Optimization recommendation ready → `🔄 OPTIMIZE: [project] — [specific change recommended]`
+- Reactive content opportunity (non-urgent) → `🔥 OPPORTUNITY: [project] — [moment + draft post]`
+- Approval needed for scheduled post → `✅ APPROVE: [project] — [post name] ready to schedule`
+- Weekly pulse drafted → `📊 REVIEW: [project] — Week [N] pulse ready (reply Send or edit)`
+
+**Decision prompt body format:**
+```
+CONTEXT: [one sentence — what's happening]
+
+RECOMMENDATION: [what the system recommends doing]
+
+OPTIONS:
+A) [option A — what it means]
+B) [option B — what it means]
+
+DATA: [the specific metric or signal that triggered this]
+
+TO PROCEED: Reply "[A/B/Go/Pass]" or open the project folder.
+```
+
+---
+
+### Level 3 — Scheduled Digest via Gmail + Calendar
+
+For regular reports and forward-looking reminders. Nothing urgent.
+
+```python
+def schedule_digest(report_type, project_name, content, due_date, gmail_mcp, gcal_mcp):
+    """
+    Creates a Gmail draft for the report AND a Calendar reminder.
+    Michael sees the calendar event first, then opens the draft when ready.
+    """
+
+    # Gmail draft: the actual report
+    subject_map = {
+        "weekly_pulse":     f"📈 Week [N] Pulse — {project_name}",
+        "monthly_report":   f"📋 [Month] Campaign Report — {project_name}",
+        "end_of_campaign":  f"🏁 Final Report — {project_name}",
+        "content_gap":      f"📅 Content Calendar Gap — {project_name} — action needed",
+    }
+    gmail_mcp.gmail_create_draft(
+        to="[your email]",
+        subject=subject_map[report_type],
+        body=content
+    )
+
+    # Calendar event: the reminder to review it
+    gcal_mcp.gcal_create_event(
+        summary=f"[AMP] Review: {subject_map[report_type]}",
+        start={"dateTime": f"{due_date}T09:00:00"},
+        end={"dateTime": f"{due_date}T09:30:00"},
+        description=f"Gmail draft is ready to review and send.\nProject: {project_name}\nReport: {report_type}",
+        colorId="9"  # Blueberry — reserved for AMP campaign events
+    )
+```
+
+**Scheduled digest triggers:**
+
+| Report | Trigger | Gmail subject prefix | Calendar color |
+|--------|---------|---------------------|----------------|
+| Weekly Pulse | Every 7 days post-launch | 📈 | Blueberry (9) |
+| Monthly Campaign Report | 30 days post-launch | 📋 | Blueberry (9) |
+| End-of-Campaign Report | Campaign close | 🏁 | Blueberry (9) |
+| Content Calendar Gap | 3 days before gap | 📅 | Tangerine (6) |
+| Upcoming milestone | 48h before | 🔔 | Banana (5) |
+
+---
+
+### Channel Setup Check (run at session start)
+
+```python
+def check_notification_channels(keys_text):
+    """
+    Checks which notification channels are available.
+    Reports at session start so Michael knows what's working.
+    """
+    channels = {}
+
+    # iMessage
+    bb_url = read_key(r'BlueBubbles[:\s]+([^\n]+)', keys_text)
+    channels['iMessage'] = '🟢 Available' if bb_url else '🔴 Not configured (add BlueBubbles URL to api-keys.md)'
+
+    # AgentMail
+    am_key = read_key(r'AgentMail[:\s]+([^\n]+)', keys_text)
+    channels['AgentMail'] = '🟢 Available' if am_key else '🔴 Not configured (add AgentMail key to api-keys.md)'
+
+    # Gmail
+    channels['Gmail'] = '🟢 Available (Gmail MCP)' if gmail_mcp_active else '🔴 Gmail MCP not connected'
+
+    # Google Calendar
+    channels['Calendar'] = '🟢 Available (Google Calendar MCP)' if gcal_mcp_active else '🔴 Calendar MCP not connected'
+
+    return channels
+```
+
+**Report at session start:**
+```
+NOTIFICATION CHANNELS:
+  iMessage (BlueBubbles): [🟢 Available / 🔴 Not configured]
+  AgentMail email:        [🟢 Available / 🔴 Not configured]
+  Gmail drafts:           [🟢 Available / 🔴 MCP not connected]
+  Google Calendar:        [🟢 Available / 🔴 MCP not connected]
+
+Minimum viable: Gmail drafts must be available. iMessage + AgentMail are preferred for Level 1.
+```
+
+**If only Gmail is available:** All Level 1 alerts become URGENT Gmail drafts.
+System still works. Urgency is communicated via subject line prefix 🚨.
+
+**If Gmail is also unavailable:** All alerts are logged to `launch-log.md` with
+timestamp and severity. Flag to Michael at next session open:
+`"[N] alerts were logged while notification channels were unavailable. Review launch-log.md."`
 
 ---
 
@@ -1074,45 +1311,24 @@ Data:
 
 ## Automated Reporting
 
-The agent produces reports automatically — Michael does not need to request them.
+All reports are drafted and surfaced via the Surfacing & Notification Architecture above.
 
-### Weekly Pulse Report (auto-generated every 7 days)
+**Weekly Pulse → Level 3 scheduled digest**
+Draft via Gmail MCP + Calendar reminder.
+Subject: `📈 Week [N] Pulse — [Project Name]`
+Content: pulled from monitoring-log.md + Analytics Agent weekly check output.
+Notify Michael in chat: "Week [N] pulse drafted in Gmail. Reply 'Send' to send or 'Review' to edit."
 
-**Format:** Drafted in Gmail as a draft — Michael reviews and sends, or sends automatically if he's approved auto-send.
+**Monthly Campaign Report → Level 3 scheduled digest**
+Draft via Gmail MCP + Calendar reminder at 30-day mark.
+Subject: `📋 [Month] Campaign Report — [Project Name]`
+Content: Analytics Agent Monthly Campaign Report output.
 
-```markdown
-Subject: [Project Name] — Week [N] Campaign Pulse
-
-**Campaign:** [name] | **Week:** [N of N] | **Date:** [YYYY-MM-DD]
-
----
-
-**STATUS:** 🟢 On Track / 🟡 At Risk / 🔴 Needs Attention
-
-**This week's numbers:**
-| Channel | Metric | Target | Actual | Delta |
-|---------|--------|--------|--------|-------|
-| [channel] | [KPI] | [target] | [actual] | [+/-] |
-
-**What's working:**
-[1-2 specific observations from performance data]
-
-**What needs attention:**
-[Any flags, with recommended action]
-
-**Next week:**
-[Scheduled posts / planned optimizations / upcoming milestones]
-```
-
-**Draft it:** `gmail_create_draft(to=[client email], subject=..., body=...)`
-**Notify Michael:** "Week [N] pulse report drafted in Gmail. Reply 'Send' to send or 'Review' to edit first."
-
-### End-of-Campaign Report (auto-generated on campaign close date)
-
-Pulls from: `monitoring-log.md`, `launch-log.md`, `utm-master-sheet.md`, platform APIs.
-
-Builds a complete performance summary comparing actual vs. all KPI targets from `kpi-framework.md`.
-Exports as a PDF via Desktop Commander `write_pdf`.
+**End-of-Campaign Report → Level 3 scheduled digest**
+Draft via Gmail MCP at campaign close.
+Subject: `🏁 Final Report — [Project Name]`
+Also export as PDF via Desktop Commander `write_pdf` and attach to draft.
+Content: Analytics Agent End-of-Campaign Report output.
 Drafts a client-ready email with the PDF attached via Gmail MCP.
 
 ---
