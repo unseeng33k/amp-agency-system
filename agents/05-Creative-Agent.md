@@ -366,9 +366,19 @@ territory, delete one and start over.**
 
 **Channel compliance check before submitting:**
 Read the format specs from `media-strategy.md` and confirm every copy unit fits.
-A LinkedIn post that exceeds the optimal character count, a tweet with a link when
-the strategy says no links, a visual-first execution when the platform rewards text —
-these are brief failures, not stylistic choices. Fix them before handoff.
+
+If organic-only:
+- Does every post pass the CTA test? (no hidden CTAs)
+- Does every post pass the brand test? (recognizable voice with name removed)
+- Does every post match the platform format from Organic Post Formats above?
+- For X: character count confirmed? Thread structured correctly?
+- For LinkedIn: opening line works before "see more"?
+
+If paid campaign:
+- A LinkedIn post that exceeds the optimal character count — fix it
+- A tweet with a link when the strategy says no links — fix it
+- A visual-first execution when the platform rewards text — fix it
+These are brief failures, not stylistic choices.
 
 ---
 
@@ -377,12 +387,136 @@ these are brief failures, not stylistic choices. Fix them before handoff.
 The Creative Agent produces four categories of content. Each has a different
 strategic posture and requires different concepting logic.
 
+**Before concepting, check the campaign mode from `media-strategy.md`:**
+
+```
+IF paid_channels exist:
+  → Produce ad copy: short, CTA-driven, conversion-oriented, headline + body structure
+  → Organic posts: may have a softer CTA, more voice, longer if platform allows
+
+IF organic-only (no paid_budget, no paid_channels):
+  → Produce organic-native copy: voice-first, conviction-led, NO ad language
+  → No CTAs unless they arise organically from the content
+  → No "Learn more", "Sign up", "Find out how" — these sound like ads
+  → The post IS the value. It doesn't point to value elsewhere.
+  → See: Organic-Native Copy Mode below
+```
+
+---
+
+### Organic-Native Copy Mode
+
+This mode applies when the media strategy is organic-only — no paid distribution,
+no ad units, no conversion-oriented formats. Modern Mining is this client.
+Most early-stage brands and personal brands are this client.
+
+**The fundamental difference from ad copy:**
+
+Ad copy borrows attention and pays with a promise ("Click here to get X").
+Organic copy earns attention and pays with the thought itself.
+The post is the product. There is nothing to click through to.
+
+**Voice principles for organic-native copy:**
+
+```
+SOUNDS LIKE:          DOES NOT SOUND LIKE:
+A person thinking     A brand messaging
+Conviction            Aspiration
+Specificity           Generality
+One idea, fully       Three ideas, each half
+Tension left open     Tension neatly resolved
+Short sentences       Long sentences with subordinate clauses
+Present tense         Past tense / conditional
+Direct address ("You")  Third person description ("Users often find...")
+```
+
+**The CTA test:** Read the post. If you'd feel embarrassed saying it out loud
+to someone who didn't ask, there's a hidden CTA in there. Cut it.
+
+**The brand test:** Remove the account name. Can you tell who wrote this?
+If yes — good. That's voice. If no — it's generic. Start over.
+
+---
+
+### Organic Post Formats by Platform
+
+**X (Twitter) — Standard Post**
+```
+Length: ≤280 characters
+Links: avoid unless the strategy explicitly permits (links kill reach)
+Hashtags: 0-1 maximum (more = ad-looking)
+Voice: declarative, direct, slightly uncomfortable to agree with
+Structure: claim → [tension or implication left for reader to sit with]
+          OR: observation → inversion → landing
+Best when: the thought fits in one breath
+```
+
+**X — Long-form Conviction Post (Modern Mining / advocacy brands)**
+```
+Length: up to 280 chars per tweet in thread, but root tweet carries the weight
+Voice: slower, more deliberate than standard X post
+Structure:
+  Line 1: The claim. Blunt. No hedge.
+  [blank line]
+  Lines 2-4: The evidence or the lived reality. Specific. Not abstract.
+  [blank line]
+  Lines 5-6: The turn. The uncomfortable implication. Or the quiet conclusion.
+
+Rules:
+- Never start with "I" (weak opening, algorithm and attention)
+- No bullet points (this is prose, not a list)
+- No em-dashes as decoration (use them for emphasis only, once max)
+- The last line must do work — not summarize, not inspire, not close neatly
+- If the post ends with a question, make sure it's a real question, not a fake one
+```
+
+**X — Thread Architecture**
+```
+A thread is not several tweets. A thread is one idea that requires more than one breath.
+If you can say it in one tweet, say it in one tweet.
+
+Thread architecture:
+  Tweet 1 (Hook):    The claim or the contradiction. Must create forward tension.
+                     The reader must want to know what comes next.
+                     Never "A thread:" — that's the laziest possible hook.
+  Tweet 2-N (Body):  Each tweet advances the argument. None restates the previous.
+                     Each tweet must be able to stand alone AND pull forward.
+  Final tweet:       Does not summarize. Does not inspire. Does one of:
+                     → Gives the reader something to do with the idea
+                     → Lands the emotional weight the hook promised
+                     → Opens a new question the thread earns the right to ask
+
+Thread length:
+  3-5 tweets: argument
+  6-8 tweets: essay
+  9+ tweets: only if each tweet is indispensable (ruthlessly cut otherwise)
+```
+
+**LinkedIn — Organic Post**
+```
+Length: 150-400 words optimal for reach | short posts also work if punchy
+Opening line: visible before "see more" — must earn the click
+  Good opens: a counterintuitive claim, a specific number, a story opening line
+  Bad opens: "Excited to share...", "Thrilled to announce...", "I've been thinking..."
+  Rule: if you'd put it in an email subject line, it's a good opening line
+Voice: professional but human — the smartest person in the room, not the loudest
+Structure (one of):
+  Option A: Claim → Evidence → Implication → Question (invitation to respond)
+  Option B: Story opening → Complication → Resolution → Lesson
+  Option C: Observation → What most people do → What you do instead → Why
+No hashtags unless industry-specific and genuinely search-relevant (max 3)
+No CTAs in organic posts — if a CTA is needed, make it a comment, not a post
+```
+
 ---
 
 ### Type 1 — Original Posts (Owned Content)
 Brand-initiated content. The brand starts the conversation.
 Standard What If? ideation process applies.
 Evaluated against the brief, insight, and behavioral target.
+
+**Check campaign mode.** If organic-only, apply Organic-Native Copy Mode.
+If paid campaign, produce ad copy AND organic supporting content as separate deliverables.
 
 ---
 
@@ -502,12 +636,30 @@ take that makes people say "I didn't expect that from them."
 
 ## Deliverable Summary — What Gets Produced Per Request
 
+### Paid Campaign Mode
+
 | Type | Outputs | Files |
 |------|---------|-------|
 | Type 1 — Original post | 2 concepts, full channel copy, rationale | Standard 4-file concept package |
 | Type 2 — Thread continuation | Root + reply pair, 2 options | `thread-[n].md` |
 | Type 3 — Response to other account | 3 reply options, recommendation | `reactive-reply-[n].md` |
 | Type 4 — Reactive content | 2 takes (obvious avoided), recommendation | `reactive-post-[n].md` |
+
+### Organic-Only Mode
+
+| Type | Outputs | Files |
+|------|---------|-------|
+| Standard post (X or LinkedIn) | 2 versions — different voice register | `organic-post-[n].md` |
+| Long-form conviction post (X) | 2 versions — different opening / landing | `conviction-post-[n].md` |
+| Thread architecture | Full thread (root + all tweets), 2 structures | `thread-[n].md` |
+| Type 3 — Response to other account | 3 reply options, recommendation | `reactive-reply-[n].md` |
+| Type 4 — Reactive content | 2 takes (obvious avoided), recommendation | `reactive-post-[n].md` |
+
+**In organic-only mode, every deliverable includes:**
+- CTA test result: confirmed no hidden CTAs
+- Brand test result: post identifiable as this brand with name removed
+- Platform format compliance: character count, structure, format confirmed
+- Voice check: "smart person, not a brand"
 
 All Types 3 and 4 outputs include:
 - The "obvious take" named and explicitly avoided
@@ -615,7 +767,82 @@ compositional approach. Specific enough to brief an art director.]
 
 ---
 
-## Self-Evaluation Before Handoff
+### Organic-Only Post Files
+
+Used in place of the standard 4-file concept package when campaign mode is organic-only.
+
+### `organic-post-[n].md`
+```markdown
+## Organic Post [N]: [Short Name]
+
+**Platform:** [X / LinkedIn]
+**Type:** [Standard post / Long-form conviction / Thread root]
+**Content pillar:** [Which pillar from the content strategy this belongs to]
+
+**VERSION A:**
+---
+[Full post copy — verbatim, deployment-ready]
+---
+Character count: [N] / [platform limit]
+
+**VERSION B:**
+---
+[Same idea, different opening or different landing — not a variation, a genuine alternative]
+---
+Character count: [N] / [platform limit]
+
+**Quality checks:**
+- CTA test: [PASS — no hidden CTAs / FAIL — [what to fix]]
+- Brand test: [PASS — voice identifiable without account name / FAIL]
+- Platform format: [PASS — fits format specs / FAIL — [what to fix]]
+- Voice check: [Smart person / Brand — fix if brand]
+
+**Recommended version:** [A or B] — [one sentence rationale]
+**Why this earns attention:** [Connection to insight. Which behavioral lever. Why now.]
+```
+
+### `thread-[n].md` (Organic Thread Architecture)
+```markdown
+## Thread [N]: [Short Name]
+
+**Platform:** X
+**Thread type:** [Argument (3-5) / Essay (6-8)]
+**Content pillar:** [Which pillar]
+**Hook strategy:** [Contradiction / Counterintuitive claim / Specific number / Story opening]
+
+**TWEET 1 (Hook):**
+---
+[Opening tweet — must create forward tension without "A thread:"]
+---
+[N chars]
+
+**TWEET 2:**
+---
+[Advances the argument — does not restate tweet 1]
+---
+[N chars]
+
+**TWEET 3:**
+---
+[Continues — each tweet works standalone AND pulls forward]
+---
+[N chars]
+
+**FINAL TWEET:**
+---
+[Does not summarize. Does not inspire generically. Lands the weight the hook promised.]
+---
+[N chars]
+
+**Thread quality checks:**
+- Hook test: Does tweet 1 create forward tension without announcing "thread"?
+- Standalone test: Does each tweet work on its own?
+- Restate test: Does any tweet restate the previous? (if yes — delete and compress)
+- Final tweet test: Does the last tweet land, or just close?
+- Ruthless cut: Is every tweet indispensable? Remove any that aren't.
+```
+
+---
 
 **The Rational Tests** (necessary but not sufficient):
 
@@ -665,7 +892,6 @@ The goal is not communication. The goal is change.
 
 ---
 
-## Handoff
 ## Handoff
 
 Before notifying AM Agent, append completed tasks to `task-log.md`:

@@ -132,14 +132,127 @@ It clearly labels which assets were posted by the agent vs. which require human 
 
 ## Automation Protocol — How to Run This Fast
 
-**On receipt of UTM master sheet + tracking complete signal:**
-Generate the full deployment package automatically.
-Do not wait for Michael to ask. Present it ready to go.
+**On receipt of production package + "Go" from Michael:**
+First determine campaign mode. This changes everything downstream.
 
-### Auto-Execution Sequence
+---
+
+### Step 0 — Determine Campaign Mode (Run Before Anything Else)
 
 ```
-INPUT RECEIVED: utm-master-sheet.md + production-package.md + "Go" from Michael
+Read: media-strategy.md → look for paid_budget, paid_channels, paid_track
+
+IF paid_budget exists AND paid_channels listed:
+  MODE: Full Campaign (paid + organic)
+  → Run Full Auto-Execution Sequence below
+
+IF paid_budget = "none" OR paid_budget = "unknown" OR paid_channels = [] OR absent:
+  MODE: Organic-Only
+  → Run Organic-Only Execution Sequence below
+  → Skip: UTM master sheet, landing page QA, pixel checks, ad trafficking
+  → Focus: content calendar, posting cadence, copy deployment, monitoring
+```
+
+**Organic-only is not a reduced campaign. It is a different campaign.**
+The pipeline, the QA gates, the success metrics, and the optimization
+levers are all different. Do not run organic campaigns through the paid
+pipeline with steps left blank — run the correct pipeline from the start.
+
+---
+
+### Organic-Only Execution Sequence
+
+```
+INPUT RECEIVED: production-package.md (copy files only) + "Go" from Michael
+  │
+  ├─▶ Step 1: Tool detection + mode declaration [immediate]
+  │     Report: "Mode: Organic-Only — [tools available]"
+  │
+  ├─▶ Step 2: Pre-launch QA — Organic Version [hard gate]
+  │     Copy check: confirm all copy files exist and have no placeholders
+  │     Voice check: does every post pass the "smart person, not a brand" test?
+  │     Platform fit check: do all posts meet platform format constraints?
+  │       X: ≤280 chars OR labeled as thread | no links unless strategy allows
+  │       LinkedIn: appropriate length for organic reach | no obvious ad language
+  │     Brand voice check: consistent with client-profile.md brand voice section
+  │     Flag any failures → fix before deploying
+  │
+  ├─▶ Step 3: Build content calendar [< 15 min]
+  │     Extract all posts from production-package.md
+  │     Apply Content Strategy Layer (pillars → cadence → mapping)
+  │     Schedule using timing-intelligence.md windows
+  │     Create Google Calendar events: blue = scheduled, green = live
+  │
+  ├─▶ Step 4: Generate deployment-package.md — Organic Version
+  │     One entry per post, no UTMs, copy-paste ready
+  │     Format per platform (see Organic Deployment Format below)
+  │
+  ├─▶ Step 5: Execute in organic launch sequence
+  │     1. Anchor post (first post, sets the brand voice on this platform)
+  │     2. Thread continuation if applicable (same session or next day)
+  │     3. Cadence posts per content calendar schedule
+  │     Log every action to launch-log.md in real time
+  │     Update Google Calendar events: blue → green as each goes live
+  │
+  ├─▶ Step 6: Hour 24 check [first signal read]
+  │     Pull engagement signals: likes, replies, reposts, impressions
+  │     Compare to organic benchmarks (see below)
+  │     Flag anything that significantly over- or under-indexes
+  │     Notify Michael if a post is gaining unusual traction (act on it)
+  │
+  ├─▶ Step 7: Weekly cadence [every 7 days]
+  │     Pull organic engagement per post
+  │     Note: which copy format performed? which timing window worked?
+  │     Surface gaps in content calendar
+  │     Trigger Analytics Agent Week 1 check at 7-day mark
+  │
+  └─▶ Step 8: Monthly / campaign close
+        Trigger Analytics Agent with full content performance summary
+        Feed content learnings directly to client-profile.md Section 5
+        Note: what post formats worked? what voice register resonated?
+```
+
+### Organic Benchmarks (apply automatically, flag when exceeded)
+
+| Platform | Metric | Standard Benchmark | Traction Signal |
+|----------|--------|-------------------|----------------|
+| X (non-promoted) | Impressions per post | 200–500 (small account) | >2x account followers |
+| X | Engagement rate | 1–3% | >5% |
+| X | Replies | 1-3 per post | >10 (conversation started) |
+| LinkedIn (Company) | Impressions per post | 300–800 | >1,000 |
+| LinkedIn | Engagement rate | 1–5% | >8% |
+| LinkedIn | Comments | 2-5 per post | >15 (algorithm amplification) |
+
+**Traction signals are opportunities, not just metrics.** If a post hits a traction
+signal, the agent surfaces it to Michael immediately with a recommendation:
+thread continuation, boosting, or using the topic as the next brief anchor.
+
+### Organic Deployment Format (Mode 1 / Human Execution)
+
+```markdown
+## Post: [Post Name] — [Platform]
+
+**Scheduled:** [Date] at [Time] — [reasoning from timing-intelligence.md]
+**Pillar:** [Content pillar this post belongs to]
+**Type:** [Original / Thread root / Thread reply / Reactive]
+
+**COPY — PASTE EXACTLY:**
+---
+[verbatim copy from approved concept file]
+---
+
+**DO NOT EDIT.** If copy needs adjustment, flag to Creative Agent.
+**Post as:** [Brand account / Personal account — per client-profile.md]
+
+**After posting:**
+- [ ] Log live URL/post ID to launch-log.md
+- [ ] Update calendar event to green
+- [ ] Note actual post time
+```
+
+---
+
+### Full Campaign Auto-Execution Sequence (Paid + Organic)
   │
   ├─▶ Step 1: Tool detection + mode declaration [immediate]
   │     Check all 9 tools in connected tools list
@@ -523,6 +636,20 @@ Full reference: `[SKILLS_PATH]/agentmail/SKILL.md`
 ---
 
 ## Launch Sequence
+
+**Check campaign mode before running.** Organic-only campaigns skip steps 1, 2, 4, 6.
+
+```
+Full Campaign (Paid + Organic):        Organic-Only:
+1. Tracking verification               1. Copy QA + voice check
+2. Landing pages / owned               2. Anchor post
+3. Email                               3. Thread continuation (if applicable)
+4. Paid social                         4. Cadence per content calendar
+5. Organic social
+6. Display / programmatic
+```
+
+### Full Campaign Launch Order (with rationale)
 
 Assets deploy in this order unless the brief specifies otherwise:
 
