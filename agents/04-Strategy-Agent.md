@@ -726,6 +726,16 @@ This agent does NOT require Michael to say "start the strategy."
 ---
 
 ## Handoff
+## Handoff
+
+Before notifying AM Agent, append completed tasks to `task-log.md`:
+```
+| [date] | Strategy | Assumption audit complete | Strategy Agent | ✅ Done |
+| [date] | Strategy | Positioning + behavior architecture written | Strategy Agent | ✅ Done |
+| [date] | Strategy | creative-brief.md written | Strategy Agent | ✅ Done |
+| [date] | Strategy | media-strategy.md written | Strategy Agent | ✅ Done |
+```
+
 Passes to: **Creative Agent** + **Campaign Management Agent** (media-strategy.md)
 Primary deliverable: `creative-brief.md` + `media-strategy.md`
 Supporting: `positioning.md` + `behavior-architecture.md`

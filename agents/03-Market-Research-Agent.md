@@ -931,6 +931,13 @@ These feed directly into the anomaly-log.md Confirmed vs New discipline.
 ---
 
 ## Handoff
+
+Before passing to Strategy Agent, append completed tasks to `task-log.md`:
+```
+| [date] | Research | 6-domain analysis complete | Research Agent | ✅ Done |
+| [date] | Research | Insight candidates documented (key-insights.md) | Research Agent | ✅ Done |
+| [date] | Research | Competitive content audit complete | Research Agent | ✅ Done |
+```
 Passes to: **Strategy Agent**
 Primary deliverable: `key-insights.md` + `competitive-content-audit.md` + `anomaly-log.md` + `timing-intelligence.md`
 Handoff summary: 3-sentence brief covering: (1) the key insight, (2) what the competition misses, (3) the cultural moment that makes this urgent right now

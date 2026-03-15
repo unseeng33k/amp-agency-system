@@ -21,19 +21,17 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
                     ┌──────────────▼──────────────┐
                     │    ACCOUNT MANAGEMENT       │  ← Orchestrator
                     │    Check client-profile.md  │    Single point of contact
-                    │    Create project-state.md  │    Owns all handoffs
+                    │    Create project-plan.md   │    Owns all handoffs
+                    │    Track blockers + health  │    PM built-in
                     └──────────────┬──────────────┘
                                    │ spawns immediately
-           ┌───────────────────────┼──────────────────────┐
-           │                       │                      │
-           ▼                       ▼                      │
-  ┌─────────────────┐   ┌──────────────────────┐         │
-  │  PROJECT MGMT   │   │   MARKET RESEARCH    │         │
-  │  (always on,    │   │   Domains 1-6        │         │
-  │   background)   │   │   key-insights.md    │         │
-  └────────┬────────┘   └──────────┬───────────┘         │
-           │ monitors                │ passes insights     │
-           │ all phases              ▼                     │
+                                   │
+                    ┌──────────────▼──────────────┐
+                    │   MARKET RESEARCH           │
+                    │   Domains 1-6               │
+                    │   key-insights.md           │
+                    └──────────────┬──────────────┘
+                                   │ passes insights
            │            ┌──────────────────────┐          │
            │            │     STRATEGY         │ ← ✅ CHECKPOINT
            │            │   creative-brief.md  │
@@ -63,7 +61,7 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
            │                  │ both complete
            │                  ▼
            │       ┌──────────────────────┐
-           │       │     CAMPAIGN MANAGEMENT       │ ← ✅ CHECKPOINT
+           │       │  CAMPAIGN MANAGEMENT │ ← ✅ CHECKPOINT
            │       │  organic track       │
            │       │  paid track (if any) │
            │       │  launch-log.md       │
@@ -81,18 +79,20 @@ Parallel where it can be. The diagram below reflects the actual flow — not the
 
 ## Parallel Tracks
 
-Two things run simultaneously and must not be confused with sequential phases:
+Two things run simultaneously after creative approval:
 
-**Project Management Agent** — always on from project creation to close.
-Monitors all phases. Surfaces blockers. Tracks SLAs. Never produces creative work.
-
-**Production + Analytics** — run simultaneously after creative approval.
+**Production + Analytics** — run in parallel after creative approval.
 Production builds assets. Analytics builds UTM/tracking. Neither waits for the other.
 Campaign Management cannot start until both are complete.
 
 **media-strategy.md fork** — produced by Strategy, consumed by two agents:
 - Creative Agent reads it for channel constraints before concepting
 - Campaign Management Agent receives it at launch for channel execution plan
+
+**Project management is built into the Account Management Agent** — not a separate role.
+AM Agent generates `project-plan.md` at project start, logs tasks at each handoff,
+tracks blockers in `blocker-log.md`, and surfaces health on demand or at each checkpoint.
+No background daemon. No separate agent. Same orchestration work — properly logged.
 
 ---
 
@@ -180,8 +180,7 @@ after every campaign closes.
 | Order | Agent | Purpose | Auto-start? | Checkpoint |
 |-------|-------|---------|-------------|------------|
 | 0 | Client Onboarding | New client setup, folder structure, API connections | On "new client" mention | — |
-| 1 | Account Management | Intake, client profile check, orchestration | On brief receipt | — |
-| ∥ | Project Management | Timeline + blockers, always running | On project create | — |
+| 1 | Account Management | Intake, orchestration, PM built-in (plan, blockers, health) | On brief receipt | — |
 | 2 | Market Research | 6-domain research, insight excavation | After intake | — |
 | 3 | Strategy | Brief + positioning + media strategy | After insight selected | **YES** |
 | 4 | Creative | 2+ concepts, channel-constrained | After strategy approval | **YES** |
@@ -243,6 +242,5 @@ last_updated_at: 2026-03-14
 | `06-Production-Agent.md` | `agents/` | Asset production — copy hard-locked, QA at build time |
 | `07-Analytics-Agent.md` | `agents/` | UTM architecture, KPI framework, platform tracking |
 | `08-Campaign-Management-Agent.md` | `agents/` | Launch execution — organic + paid tracks, learning log trigger |
-| `09-Project-Management-Agent.md` | `agents/` | Timeline, blockers, SLA monitoring — always on |
 | `api-keys.md` | `resources/` | **Your keys — never committed. See SKILL-DISCOVERY-PROTOCOL.** |
 | `00-Overview.md` | `agents/` | This file |

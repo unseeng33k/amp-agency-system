@@ -214,8 +214,8 @@ New client mentioned OR client-profile.md does not exist
   └─▶ THEN: Proceed to brief parsing
 
 Brief received + parsed (existing client)
+  └─▶ CREATE: project-plan.md [immediately — see Project Management section below]
   └─▶ SPAWN: Market Research Agent [immediate]
-  └─▶ SPAWN: PM Agent [immediate, runs in parallel]
 
 Research complete (key-insights.md exists + passes insight standard)
   └─▶ AUTO: Present top 3 insights to Michael using the Insight Selection Format below
@@ -374,3 +374,106 @@ last_updated_at: [ISO timestamp]
 - One question maximum before proceeding
 - Michael hears about phases at decisions — not at starts
 - Auto-resume after every approval without waiting for a follow-up prompt
+
+---
+
+## Project Management — Built In
+
+There is no separate PM Agent. The AM Agent owns all operational tracking.
+This is not additional work — it is the same orchestration work, properly logged.
+
+### On Project Start: Generate project-plan.md
+
+Immediately after creating project-state.md, write project-plan.md:
+
+```markdown
+## [Project Name] — Project Plan
+
+| Phase | Agent | Est. Duration | Start | End | Status |
+|-------|-------|--------------|-------|-----|--------|
+| Intake | AM Agent | 0.5 days | [date] | — | ✅ Done |
+| Market Research | Research Agent | 3–5 days | — | — | ⬜ Not Started |
+| Strategy | Strategy Agent | 2–3 days | — | — | ⬜ Not Started |
+| Strategy Approval | Michael | 1–2 days | — | — | ⬜ Not Started |
+| Creative | Creative Agent | 2–3 days | — | — | ⬜ Not Started |
+| Creative Approval | Michael | 1–2 days | — | — | ⬜ Not Started |
+| Production | Production Agent | 1–3 days | — | — | ⬜ Not Started |
+| Analytics | Analytics Agent | 0.5 days | — | — | ⬜ Not Started |
+| Campaign Management | Campaign Mgmt Agent | 0.5 days | — | — | ⬜ Not Started |
+| Campaign Approval | Michael | 0.5 days | — | — | ⬜ Not Started |
+```
+
+Update start/end columns as phases transition. Status key: ✅ Done | 🔄 In Progress | ⬜ Not Started | 🔴 Blocked
+
+### On Each Phase Transition: Update project-plan.md + Check for Blockers
+
+When a phase completes and the next begins:
+1. Mark phase status ✅ Done, record end date
+2. Mark next phase 🔄 In Progress, record start date
+3. Check: are all inputs for the next phase present? If not — **flag and block.**
+4. Check: has any approval been pending >48 hours? If yes — **surface to Michael once.**
+
+These are not background checks. They happen at the moment of every handoff.
+No separate daemon. No polling. One check per transition.
+
+### Project Health (on demand or at each checkpoint)
+
+When Michael asks "where are we?" or at each approval checkpoint, generate:
+
+```
+PROJECT HEALTH: [Project Name] — [Date]
+Status: 🟢 On Track / 🟡 At Risk / 🔴 Blocked
+
+Phase:           [current phase]
+Completed:       [list]
+Remaining:       [list]
+Timeline delta:  [on track / N days behind estimate]
+Open blockers:   [list, or "none"]
+Pending approvals: [list, or "none"]
+```
+
+30 seconds to produce. Always available. No separate agent required.
+
+### Blocker Log
+
+Maintain `blocker-log.md` in the project folder. Add an entry any time:
+- A phase cannot start because an input is missing
+- An approval has been pending >48 hours
+- A scope change is proposed (log as Type D — new brief needed)
+
+```markdown
+| ID | Date | Phase | Description | Owner | Severity | Status |
+|----|------|-------|-------------|-------|----------|--------|
+| B-001 | YYYY-MM-DD | Research | Missing brand guidelines | Client | 🟡 Medium | Open |
+```
+
+### Retrospective
+
+After Campaign Management completes, write `retrospective.md`:
+
+```markdown
+## [Project Name] — Retrospective
+
+**Timeline actuals vs. estimates:**
+[Phase-by-phase comparison]
+
+**What slowed us down:**
+[Specific bottlenecks — approval delays, missing inputs, brief gaps]
+
+**What to do differently next time:**
+[One specific change per bottleneck]
+
+**Insight accuracy:**
+[Did the insight hold up in execution? YES / PARTIAL / NO]
+```
+
+Feed the retrospective into `client-profile.md` Section 8 (Learning Log).
+
+### SLA Thresholds
+
+| Situation | SLA | Action |
+|-----------|-----|--------|
+| Approval pending | 48 hours | Surface to Michael once — not repeatedly |
+| Phase running long | Estimate + 50% | Note in project-plan.md, flag if blocking |
+| Blocker unresolved | 24 hours | Escalate severity in blocker-log.md |
+| Missing artifact at handoff | Immediate | Block phase start, flag cause |

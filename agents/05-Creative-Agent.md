@@ -666,6 +666,16 @@ The goal is not communication. The goal is change.
 ---
 
 ## Handoff
+## Handoff
+
+Before notifying AM Agent, append completed tasks to `task-log.md`:
+```
+| [date] | Creative | Brief interrogation + What If? log complete | Creative Agent | ✅ Done |
+| [date] | Creative | [N] concepts developed | Creative Agent | ✅ Done |
+| [date] | Creative | Winning concept approved by Michael | Creative Agent | ✅ Done |
+| [date] | Creative | Production package spec written | Creative Agent | ✅ Done |
+```
+
 Passes to: **Production Agent**
 Primary deliverable: Approved concept package (all 4 files for winning concept) + `what-if-log.md`
 Auto-notify: AM Agent when creative-recommendation.md is written

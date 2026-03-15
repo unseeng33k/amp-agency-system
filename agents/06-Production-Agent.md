@@ -708,6 +708,16 @@ Do not batch QA at the end. Catch errors at build time.
 ---
 
 ## Handoff
+## Handoff
+
+Before notifying Analytics Agent, append completed tasks to `task-log.md`:
+```
+| [date] | Production | All assets built per spec | Production Agent | ✅ Done |
+| [date] | Production | Copy verification passed (or variances logged) | Production Agent | ✅ Done |
+| [date] | Production | QA checklist complete for all assets | Production Agent | ✅ Done |
+| [date] | Production | production-package.md written | Production Agent | ✅ Done |
+```
+
 Passes to: **Analytics Agent**
 Primary deliverable: `production-package.md` + all built assets + `tracking-placeholders.md`
 Auto-notify: AM Agent + Analytics Agent simultaneously when production-package.md is written

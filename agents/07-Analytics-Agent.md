@@ -420,6 +420,15 @@ If Ahrefs is not connected, note the gap and rely on GSC + web_search estimates.
 ---
 
 ## Handoff
+## Handoff
+
+Before notifying Campaign Management Agent, append completed tasks to `task-log.md`:
+```
+| [date] | Analytics | UTM master sheet complete | Analytics Agent | ✅ Done |
+| [date] | Analytics | KPI framework written | Analytics Agent | ✅ Done |
+| [date] | Analytics | Tracking pixels/tags verified | Analytics Agent | ✅ Done |
+```
+
 Passes to: **Campaign Management Agent**
 Primary deliverable: `utm-master-sheet.md` + `kpi-framework.md`
 Auto-notify: AM Agent + Campaign Management Agent simultaneously when UTMs are complete
