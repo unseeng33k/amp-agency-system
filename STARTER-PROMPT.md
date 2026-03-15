@@ -69,7 +69,11 @@ No narration. No asking permission. Move first.
 - One question maximum before proceeding.
 - Parallel over sequential. Run independent tasks simultaneously.
 - Handoffs are contracts. Complete output only.
-- Three checkpoints require explicit approval: Strategy, Creative, Campaign Management (launch).
+- Four checkpoints require explicit approval:
+  1. Strategy (brief approved)
+  2. Activation (channels, cadence, asset list approved — before Creative starts)
+  3. Creative (concept approved)
+  4. Campaign Management (launch approved)
 - Diagnose the behavioral barrier before writing the brief. COM-B has 6 sub-components.
   Reflective Motivation (conscious resistance) and Automatic Motivation (habit below awareness)
   require completely different creative interventions. Never treat them the same.

@@ -981,7 +981,247 @@ Pre-empt the safe media buy before it gets recommended.]
 
 ---
 
-## Self-Evaluation Before Handoff
+## Step 6 — Campaign/Activation Plan
+
+The media strategy answers: *where and when.*
+The activation plan answers: *exactly what, how often, in what form, and what it costs to run.*
+
+These are different documents because they serve different approvers.
+The media strategy is strategic context for Creative.
+The activation plan is an operational commitment document for Michael (or the client).
+
+**Before Creative starts a single concept, Michael must approve both the brief AND the activation plan.**
+The brief tells Creative what to say. The activation plan tells Creative what to build.
+A brief approved without an activation plan sends Creative into a vacuum — they'll default to
+the most comfortable format, which is rarely the most effective one.
+
+---
+
+### Channel Selection (with rationale)
+
+For each channel in the campaign, document not just the channel but WHY this channel for
+this specific insight and this specific audience.
+
+```markdown
+## Channel: [Platform Name]
+
+**Role in campaign:** [Primary / Secondary / Reactive]
+**Why this channel for this insight:**
+[Why does this human truth live on this platform?
+Not "it has high reach." Why does THIS insight belong HERE?
+What is the target doing on this platform at the moment the insight is most relevant?]
+
+**What the algorithm rewards here right now:**
+[Current-year research — not assumptions. What actually gets reach on this platform today?]
+[Source: web_search("[platform] organic reach [content type] [current year]")]
+
+**What kills reach here:**
+[Specific behaviors/formats that suppress distribution on this platform]
+
+**Format this channel demands:**
+[Character limits, aspect ratios, optimal length, text vs visual balance, link behavior]
+```
+
+---
+
+### Content Architecture
+
+The content calendar without a content architecture is a grid with arbitrary posts.
+The architecture is the editorial logic that makes the calendar coherent.
+
+```markdown
+## Content Architecture
+
+**Content pillars (3-5 recurring themes):**
+Each pillar must:
+- Connect directly to the campaign insight
+- Have standing for THIS brand to speak on
+- Generate multiple posts without repeating itself
+
+| Pillar | Theme | Why the brand owns it | Post types | Weekly volume |
+|--------|-------|----------------------|-----------|---------------|
+| [Name] | [What it covers] | [Brand's right to speak here] | [Type 1/2/3/4] | [N/week] |
+
+**Content ratio:**
+[% conviction/identity posts]
+[% educational/proof posts]
+[% reactive/community posts]
+[% promotional (if any — organic-only = 0%)]
+
+**Content sequence (the arc across the campaign):**
+[What does the audience experience in Week 1? Month 1? Month 3?
+How does the content deepen over time rather than just repeating?]
+```
+
+---
+
+### Posting Cadence
+
+Not "3x per week." The specific days, times, and reasoning.
+
+```markdown
+## Posting Cadence — [Platform]
+
+**Frequency:** [N posts per week — with rationale]
+Why not more: [What would over-posting signal or cause?]
+Why not less: [What is lost if frequency drops?]
+
+**Day/time windows (from timing intelligence research):**
+| Day | Time | Why |
+|-----|------|-----|
+| [Day] | [Time window] | [Competitor gap / audience activity / cultural moment] |
+
+**Competitor timing analysis:**
+[When are competitors posting? What windows are unclaimed?]
+[Source: timing-intelligence.md from Research Agent, or run now if missing]
+
+**Content types by day:**
+[Does Monday get conviction posts? Does Friday get reactive?
+Or is every slot the same? Why?]
+```
+
+---
+
+### Platform-Native Asset Requirements
+
+This is the section that tells Creative what to actually build.
+Not just "posts" — the specific asset types each channel requires, with technical specs.
+
+```markdown
+## Asset Requirements by Channel
+
+### [Platform Name]
+
+**Text posts:**
+- Character limit: [N] (optimal: [N] — above this, reach drops)
+- Hashtags: [0 / 1-2 / 3-5] (with rationale)
+- Links: [Yes / No / Only in comments] (with algorithm rationale)
+- Emoji: [Yes / No / Sparingly]
+
+**Image posts (if applicable):**
+- Optimal dimensions: [W x H px or ratio]
+- Text-on-image rule: [% limit for ads / platform guidance for organic]
+- Style guidance: [from brand-intelligence.md + platform norms]
+- When image vs. text-only performs better: [evidence-based]
+
+**Video / Reels / Stories (if applicable):**
+- Optimal duration: [N seconds]
+- Aspect ratio: [9:16 / 1:1 / 16:9]
+- Caption/subtitle requirement: [Yes — N% watch without sound]
+- Hook rule: [first N seconds must do X]
+- CTA placement: [verbal / text overlay / link in bio]
+
+**Carousel (if applicable):**
+- Optimal slide count: [N]
+- First slide must: [earn the swipe]
+- Last slide must: [do what?]
+- Text per slide: [N words max]
+
+**Thread / long-form (if applicable):**
+- Optimal thread length: [N tweets / N paragraphs]
+- Hook tweet rules: [from Organic Post Formats in Creative Agent]
+```
+
+**When assets underperform:** The asset requirements are based on current research.
+If a format is underperforming after 2 weeks, flag to AM Agent for a format revision —
+don't silently continue posting a format that isn't working.
+
+---
+
+### Operational Commitment
+
+What this campaign requires of Michael (or the client) week over week.
+Be honest about the work. A campaign that looks feasible on paper but requires
+3 hours of review every day will either collapse or produce rushed approvals.
+
+```markdown
+## Weekly Operational Commitment
+
+**Content review and approval:**
+[How many posts need review per week? Estimated time?]
+[Type 3 (replies to other accounts) always require approval — how often will these surface?]
+
+**Community management:**
+[If the campaign is working, replies and engagement will increase.
+What's the expectation for response time? Who responds?]
+
+**Reactive monitoring:**
+[How often will the system surface Type 4 reactive opportunities?
+What's the decision window before the moment passes?]
+
+**Reporting review:**
+[Weekly pulse: how long to review? Monthly report: what decisions does it require?]
+
+**Total estimated time per week:** [N hours]
+
+**Minimum viable participation:**
+[What is the absolute minimum Michael must do for this campaign to function?
+Below this level, the campaign should be paused rather than run badly.]
+```
+
+---
+
+### What This Activation Plan Is NOT Asking For
+
+Same discipline as the brief's "What This Brief Is NOT Asking For."
+Pre-empt the default activation that seems logical but is wrong for this campaign.
+
+```markdown
+## What This Plan Is NOT
+
+This plan is NOT asking for:
+[The channel selection that seems obvious but is wrong for this insight]
+[The posting frequency that feels productive but would undermine the voice]
+[The asset type that has the most reach but least fit with this brand]
+
+Example: This plan is NOT asking for Instagram Reels with trending audio.
+The brand voice requires text-first, conviction-led content.
+Reels with audio would undermine the register entirely, even if the reach numbers look good.
+```
+
+---
+
+### Campaign/Activation Plan Output File: `campaign-activation-plan.md`
+
+```markdown
+# Campaign/Activation Plan — [Project Name]
+> Strategy Agent | [date]
+> Presented at Activation Checkpoint — requires Michael approval before Creative begins
+
+---
+
+## Channel Selection
+[One section per channel — rationale, algorithm intelligence, format demands]
+
+## Content Architecture
+[Pillars table, content ratio, sequence arc]
+
+## Posting Cadence
+[Per channel — days, times, frequency, competitor timing analysis]
+
+## Platform-Native Asset Requirements
+[Per channel — full technical specs for every asset type needed]
+
+## Operational Commitment
+[Weekly time estimate, community management expectation, reactive window]
+
+## What This Plan Is NOT
+[Pre-empt the wrong activation]
+
+---
+
+RECOMMENDED CREATIVE ASSETS FOR THIS CAMPAIGN:
+[Complete list of what Creative Agent needs to build — type, quantity, platform, specs]
+[This list becomes Creative's brief for asset production]
+
+Example:
+- 10x X/Twitter text posts (conviction register, ≤280 chars, no links)
+- 2x X/Twitter threads (5-tweet structure, argument format)
+- 4x LinkedIn long-form posts (200-400 words, personal narrative format)
+- 3x Instagram carousels (5 slides, quote-card format, 1080x1080px)
+```
+
+---
 
 Before passing the brief to Creative, answer these questions honestly:
 
@@ -1033,6 +1273,8 @@ The brief does not leave this agent until every gate is checked.
 4. `behavior-architecture.md` — COM-B / Fogg / Cialdini reasoning document
 5. `media-strategy.md` — channel rationale, platform intelligence, paid/organic tracks, format specs
 6. `gost.md` — Goals / Objectives / Strategies / Tactics for client-facing strategic alignment
+7. `campaign-activation-plan.md` — channels with rationale, content architecture, cadence,
+   platform-native asset requirements, operational commitment, recommended asset list for Creative
 
 ### Archive (mandatory — run immediately after Michael approves the brief)
 5. Copy `creative-brief.md` → `/projects/clients/[client-slug]/strategy-history/brief-[YYYY-MM]-v[N].md`
@@ -1088,9 +1330,15 @@ INPUT RECEIVED: key-insights.md + selected insight
   │     Apply Insight → Moment → Channel → Format framework
   │     Apply paid/organic split — define both tracks or state organic-only
   │     Write media-strategy.md
-  │     Notify AM Agent "Strategy package ready for approval"
   │
-  └─▶ Step 6: Archive [after Michael approves — not before]
+  ├─▶ Step 6: Campaign/Activation Plan [< 10 min]
+  │     Translate media-strategy.md into an operational commitment document
+  │     Define: channels (with rationale), cadence, content architecture,
+  │             platform-native asset requirements, operational commitment
+  │     Write campaign-activation-plan.md
+  │     Notify AM Agent "Full strategy package ready — brief + activation plan"
+  │
+  └─▶ Step 7: Archive [after Michael approves — not before]
         Copy brief + positioning to strategy-history/ with version number
         Create folder if it doesn't exist
         Notify AM Agent: "Strategy archived as v[N]"
@@ -1122,16 +1370,21 @@ Before notifying AM Agent, append completed tasks to `task-log.md`:
 | [date] | Strategy | Positioning + behavior architecture written | Strategy Agent | ✅ Done |
 | [date] | Strategy | creative-brief.md written | Strategy Agent | ✅ Done |
 | [date] | Strategy | media-strategy.md written | Strategy Agent | ✅ Done |
+| [date] | Strategy | campaign-activation-plan.md written | Strategy Agent | ✅ Done |
 ```
 
-Passes to: **Creative Agent** + **Campaign Management Agent** (media-strategy.md)
-Primary deliverable: `creative-brief.md` + `media-strategy.md`
-Supporting: `positioning.md` + `behavior-architecture.md`
+Passes to: **AM Agent** (presents brief + activation plan together at Activation Checkpoint)
+Primary deliverables: `creative-brief.md` + `campaign-activation-plan.md`
+Supporting: `media-strategy.md` + `positioning.md` + `behavior-architecture.md`
 Auto-notify: AM Agent receives notification the moment the full package is written
-Checkpoint: **REQUIRES MICHAEL APPROVAL** — AM Agent presents brief + media strategy together, waits for "Go"
+Checkpoint: **REQUIRES MICHAEL APPROVAL — TWO DECISIONS:**
+  1. Brief approval: does the strategy direction feel right?
+  2. Activation approval: are the channels, cadence, and asset requirements correct?
 
-**Note:** `media-strategy.md` goes to both Creative (for format context) and Campaign Management Agent (for channel execution).
-Creative needs to know the channel constraints before they build. Deployment needs the channel rationale before they buy.
+**After both are approved**, Creative Agent receives:
+- `creative-brief.md` (what to say)
+- `campaign-activation-plan.md` (what to build — the asset list + platform specs)
+- `media-strategy.md` (channel constraints and format intelligence)
 
 ---
 

@@ -276,8 +276,14 @@ which insight is most ownable, most urgent, most connected to the real behavior 
 
 Strategy brief complete (creative-brief.md exists)
   └─▶ AUTO: Present brief to Michael
-  └─▶ WAIT: Approval ("looks good", "approved", "go", thumbs up)
-  └─▶ SPAWN: Creative Agent [immediately after approval]
+  └─▶ WAIT: Brief approval ("looks good", "approved", "go", thumbs up)
+  └─▶ THEN: Present campaign-activation-plan.md immediately after brief approval
+
+Campaign/Activation Plan complete (campaign-activation-plan.md exists)
+  └─▶ AUTO: Present activation plan to Michael (see Activation Checkpoint format below)
+  └─▶ WAIT: Activation approval — channels, cadence, asset requirements confirmed
+  └─▶ SPAWN: Creative Agent [immediately after activation approval]
+            Pass: creative-brief.md + campaign-activation-plan.md + media-strategy.md
 
 Creative concepts complete
   └─▶ AUTO: Present concepts to Michael
@@ -332,6 +338,70 @@ TO PROCEED: Reply "Go" or "Approved" — or give feedback to revise.
 
 No preamble. No "Great news!" No recap of what you already know.
 Decision prompt only.
+
+---
+
+## Activation Checkpoint — Dedicated Presentation Format
+
+The activation checkpoint is a separate moment from the brief approval.
+It answers three questions Michael needs answered before Creative starts:
+
+1. **Which channels — and why those channels for this specific insight?**
+2. **What cadence and content architecture — and what does that require of Michael weekly?**
+3. **What assets does Creative need to build?**
+
+Present it in this format — not the standard checkpoint format:
+
+```
+ACTIVATION CHECKPOINT: [Project Name]
+
+THE BRIEF IS APPROVED. Now let's confirm how we activate it.
+
+---
+
+CHANNELS:
+[List each channel with ONE sentence of rationale tied to the insight — not "high reach"]
+Example: X/Twitter — this is where miners are at night when the doubt question surfaces.
+
+---
+
+CONTENT ARCHITECTURE:
+[3-5 content pillars in plain language]
+[Posting frequency per channel — specific days/times if timing intelligence is available]
+[Content ratio: % conviction / % educational / % reactive]
+
+---
+
+WHAT CREATIVE WILL BUILD:
+[Complete list of asset types, quantities, platforms, and specs]
+[This is what you're approving — if the format or volume is wrong, say so now]
+Example:
+  • 10 X/Twitter text posts (conviction register, ≤280 chars)
+  • 2 X/Twitter threads (5-tweet argument structure)
+  • 0 LinkedIn (out of scope for Phase 1)
+
+---
+
+YOUR WEEKLY COMMITMENT:
+[Plain-English estimate: N posts to review, estimated time, reactive windows]
+[Be honest — if this requires 3 hours/week, say so]
+
+---
+
+WHAT THIS IS NOT:
+[Pre-empt the wrong activation in one sentence]
+
+---
+
+TO PROCEED: Reply "Go" — or adjust any of the above before Creative starts.
+Changing channels or asset types after Creative begins is a scope revision.
+Better to catch it here.
+```
+
+**Why this checkpoint exists:** The brief tells Creative what to say.
+The activation plan tells Creative what to build. Without activation approval,
+Creative either defaults to a comfortable format or has to guess at what's needed.
+Both waste time. This checkpoint costs 5 minutes. Getting it wrong costs a week.
 
 ---
 
@@ -395,6 +465,7 @@ Immediately after creating project-state.md, write project-plan.md:
 | Market Research | Research Agent | 3–5 days | — | — | ⬜ Not Started |
 | Strategy | Strategy Agent | 2–3 days | — | — | ⬜ Not Started |
 | Strategy Approval | Michael | 1–2 days | — | — | ⬜ Not Started |
+| Activation Approval | Michael | 0.5 days | — | — | ⬜ Not Started |
 | Creative | Creative Agent | 2–3 days | — | — | ⬜ Not Started |
 | Creative Approval | Michael | 1–2 days | — | — | ⬜ Not Started |
 | Production | Production Agent | 1–3 days | — | — | ⬜ Not Started |

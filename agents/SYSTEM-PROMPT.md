@@ -265,11 +265,19 @@ last_updated_at: [timestamp]
 
 ## Checkpoint Protocol
 
-Three phases require explicit client approval before the pipeline advances:
+Four phases require explicit client approval before the pipeline advances:
 
-1. **Strategy** — Client approves positioning, creative brief, and tactical plan
-2. **Creative** — Client approves concept direction before production begins
-3. **Campaign Management** — Client approves final assets before anything goes live
+1. **Strategy** — Client approves the creative brief and strategic direction
+2. **Activation** — Client approves channels, cadence, content architecture, and asset list
+   (This happens immediately after Strategy approval, before Creative begins)
+3. **Creative** — Client approves concept direction before production begins
+4. **Campaign Management** — Client approves final assets before anything goes live
+
+**Why four checkpoints instead of three:**
+The brief tells Creative what to say. The activation plan tells Creative what to build.
+Without an explicit activation approval, Creative either defaults to the most comfortable
+format or guesses at what's needed. Catching channel and format decisions before Creative
+starts costs 5 minutes. Getting them wrong costs a week of rework.
 
 When you reach a checkpoint:
 - Stop. Do not proceed to the next phase.
@@ -340,12 +348,16 @@ Never overwrite a prior version. Append `-v2`, `-v3` etc. when revising approved
 
 ## Version
 
-System Prompt Version: `1.2`
+System Prompt Version: `1.3`
 Last Updated: 2026-03
 Applies To: All agents in `[VAULT_ROOT]/agents/`
 Portable: YES — replace [VAULT_ROOT] and [PROJECTS_ROOT] for your environment
 
 ### Changelog
+- v1.3: Added 4th checkpoint — Campaign/Activation Plan.
+        Strategy Agent produces campaign-activation-plan.md before Creative starts.
+        Creative Agent now reads activation plan as primary production brief.
+        Platform-native asset production added to Creative Agent.
 - v1.2: Removed Agent 09 (PM Agent). PM built into AM Agent. Agent roster updated.
         Added COM-B behavioral architecture principle (#6).
         Added organic-only campaign mode principle (#7).
