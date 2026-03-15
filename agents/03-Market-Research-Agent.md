@@ -1077,3 +1077,235 @@ Checkpoint: Strategy Agent must confirm insight quality before building strategy
 - You missed the current cultural moment — what's happening right now that changes everything
 - You have data but no tension — information without human truth
 - **`audience-platform-intelligence.md` is missing** — the Strategy Agent cannot make a defensible channel recommendation without it
+
+---
+
+## Continuous Watch Mode
+
+**This mode is separate from the full 6-domain research run.**
+It does not replace deep research. It supplements it.
+
+The Continuous Watch Mode is a lightweight monthly signal sweep that monitors
+three domains — Category, Customer, Culture — for meaningful shifts that have
+occurred since the last research run. It runs faster than a full research phase
+(target: 30 minutes vs. 3-5 days) because it is looking for change, not depth.
+
+**Trigger:** Monthly calendar reminder (set at project kickoff by AM Agent)
+            OR when Michael asks: "What's changed in [category]?"
+            OR when Campaign Management Agent flags a performance anomaly that
+            may indicate an external category shift (not just execution issue)
+
+**The key question:** Has anything changed in the category, customer, or culture
+since the last brief was written that would compromise the current strategy?
+
+If nothing significant has changed: log it, confirm currency, move on.
+If something has changed: classify it and route it to the right agent.
+
+---
+
+### Continuous Watch — Three Domains
+
+**Domain A: Category Watch**
+
+Look for: Competitive moves, new entrants, repositioning, campaign launches,
+exits, pricing changes, distribution shifts, regulatory changes.
+
+```
+web_search("[category] news [current month] [current year]")
+web_search("[top competitor] announcement OR launch OR campaign [current month] [current year]")
+web_search("[category] new entrant OR new player [current year]")
+web_search("[category] repositioning OR rebrand [current year]")
+web_fetch([competitor X profile page]) — check for new pinned posts or profile changes
+```
+
+**Signal threshold:** Only flag if the competitive landscape has materially changed.
+A competitor posting more frequently is noise. A competitor launching a new product
+line, entering a new segment, or abandoning a positioning territory is a signal.
+
+**What to look for specifically:**
+- Has a competitor entered emotional/identity territory we were planning to own?
+- Has a competitor exited a territory — opening white space?
+- Is a new competitor doing what we're doing but better or first?
+- Has industry consolidation or disruption changed the reference frame?
+
+---
+
+**Domain B: Customer Watch**
+
+Look for: Shifts in audience sentiment, new language, new concerns, new behavior
+patterns, changes in what the audience is talking about or how they're talking.
+
+```
+web_search("site:reddit.com [audience descriptor] [current month] [current year]")
+insight_mine(subreddit="[primary community]", query="[current category topic]")
+web_search("[audience] sentiment [current year]")
+web_search("[category] customer complaint OR frustration [current month]")
+web_fetch("https://x.com/search?q=[audience_hashtag]&f=live") — most recent discourse
+```
+
+**Signal threshold:** Flag if the audience's language, concerns, or primary
+conversation topic has meaningfully shifted from what was documented in the
+original research. Minor fluctuation is noise. A sustained change in what
+people are saying — or a new topic that has entered the conversation — is a signal.
+
+**What to look for specifically:**
+- Is the audience using new language or metaphors we haven't heard before?
+- Has a new concern, fear, or frustration emerged that didn't exist at brief time?
+- Has something the audience was angry/skeptical about been resolved?
+- Is there a new community consensus forming around something relevant?
+
+---
+
+**Domain C: Culture Watch**
+
+Look for: Broader cultural events, narratives, or moments that have reframed
+how the target audience thinks about the category or their identity within it.
+
+```
+web_search("[category] cultural moment OR trend [current month] [current year]")
+web_search("[audience descriptor] identity [current year] shift OR change")
+web_search("[relevant cultural topic] news [current month]")
+web_search("[category] media coverage [current month] — how is press framing this?")
+```
+
+**Signal threshold:** Only flag if the cultural context has shifted in a way
+that directly affects the emotional register of the campaign. A news story that
+mentions the category in passing is noise. An event that reframes how the
+audience sees themselves or their relationship to the category is a signal.
+
+**What to look for specifically:**
+- Has a major public event changed the emotional valence of the category?
+  (e.g., a scandal that makes the category feel toxic, or a validation that elevates it)
+- Has something made our insight feel dated or tone-deaf?
+- Has something made our insight feel MORE urgent and resonant?
+- Has a cultural narrative emerged that we should be part of or should avoid?
+
+---
+
+### Signal Classification Framework
+
+Not everything found is worth acting on. Apply this filter before routing anything.
+
+```
+FOR EACH signal detected:
+
+  NOISE (do not route, log only):
+  - Known/expected competitive activity
+  - Minor fluctuations in audience sentiment
+  - Tangential cultural events
+  - Category news that doesn't affect audience psychology or competitive position
+  → Log to category-watch-log.md with date and brief note. No action.
+
+  WEAK SIGNAL (mention in monthly check-in, no immediate action):
+  - Emerging trend that could become significant in 2-3 months
+  - Audience language shift that is early-stage, not yet dominant
+  - Competitor movement that bears watching but doesn't require response
+  → Log to category-watch-log.md. Surface in next Strategic Check-In.
+
+  STRONG SIGNAL (route to AM Agent for classification and recommendation):
+  - Competitive move that directly threatens the positioning or insight territory
+  - Audience sentiment shift that challenges a core assumption in the brief
+  - Cultural event that reframes the emotional context of the campaign
+  → Produce category-intelligence-alert.md (see below). Surface immediately.
+```
+
+**The test for STRONG SIGNAL:** Would the Strategy Agent write the brief
+differently today if this had been in the original research? If yes — strong signal.
+If no — noise or weak signal.
+
+---
+
+### category-intelligence-alert.md template
+
+```markdown
+# Category Intelligence Alert — [Client Name]
+> Research Agent | [date] | Continuous Watch — [Month Year]
+> Domain: [Category / Customer / Culture]
+> Classification: STRONG SIGNAL
+
+---
+
+## What Changed
+
+[2-3 sentences. What specifically was found? What is the source?
+Be concrete — name the competitor, the event, the community, the article.]
+
+**Evidence:**
+[Link or search query that surfaced this]
+[Date of occurrence — when did this happen?]
+
+---
+
+## Why It Matters for This Campaign
+
+[How does this affect the current strategy?]
+
+[Specifically — which element of the current brief or activation plan is affected?]
+[The insight? The positioning? The channel? The content architecture? The tone?]
+
+---
+
+## The Strategic Risk
+
+[If this signal is ignored, what could happen?]
+[Does this invalidate the insight? Compromise the positioning?
+Make the content feel tone-deaf? Open a competitive gap we're not filling?]
+
+---
+
+## Recommended Action
+
+One of three:
+
+**TACTICAL ADJUSTMENT:**
+[The campaign can continue unchanged. Recommend a specific reactive content
+piece or timing adjustment. No brief revision needed.]
+→ Route to: Creative Agent (content-brief-update.md or reactive post brief)
+→ Time sensitivity: [now / this week / this month]
+
+**CREATIVE REFRESH:**
+[The insight and positioning hold. The content architecture or register needs updating
+to account for what's changed.]
+→ Route to: Creative Agent (content-brief-update.md with specific changes)
+→ Time sensitivity: [now / this week / this month]
+
+**STRATEGIC REVIEW:**
+[The insight or positioning may be compromised. A full review is needed before
+any new content is produced.]
+→ Route to: AM Agent → Strategy Agent review
+→ Pause new content until strategy review is complete
+→ Time sensitivity: [urgent — pause content / can wait for next session]
+
+---
+
+## Supporting Evidence
+
+[Any additional sources or data that reinforce the signal]
+```
+
+---
+
+### Continuous Watch Output Artifacts
+
+```
+category-watch-log.md       — running log of all signals (noise + weak + strong)
+                              Updated monthly. Lives at:
+                              /projects/clients/[client-slug]/research/category-watch-log.md
+
+category-intelligence-alert.md — produced ONLY for strong signals
+                              Each alert is a separate file with date stamp:
+                              category-intelligence-alert-[YYYY-MM-DD].md
+                              Lives at same path as watch log.
+```
+
+---
+
+### Continuous Watch — What It Is NOT
+
+- It is NOT a full research run. It does not replace the 6-domain deep research.
+- It does NOT produce new insights. It monitors whether existing insights still hold.
+- It does NOT trigger a full strategy revision automatically. That requires AM Agent review.
+- It does NOT flag every piece of category news. Only signals that clear the threshold.
+
+**The purpose is to answer one question:** Is what we knew when we wrote the brief
+still true? If yes — keep running. If no — here's exactly what changed and what to do about it.

@@ -680,46 +680,169 @@ def build_campaign_calendar(project_state, activation_plan, kpi_framework):
         )
 ```
 
-#### Ongoing: Category Intelligence Calendar
+#### Ongoing: Category Intelligence — Signal Routing
 
-Each month, the AM Agent sweeps for external dates worth planning around:
+The Research Agent runs a Continuous Watch monthly sweep and produces either:
+- `category-watch-log.md` (noise/weak signals — logged, no action)
+- `category-intelligence-alert.md` (strong signal — requires AM Agent routing)
+
+When `category-intelligence-alert.md` arrives, the AM Agent classifies and routes it:
 
 ```python
-CATEGORY_INTELLIGENCE_SEARCHES = [
-    # Industry events
-    f"{client_category} conference summit event {current_quarter}",
-    f"{client_category} industry awards {current_year}",
+def route_category_intelligence_alert(alert):
+    """
+    Read category-intelligence-alert.md.
+    Classify the recommended action.
+    Surface to Michael with options.
+    Route to correct downstream agent.
+    """
 
-    # Platform algorithm events
-    f"X Twitter algorithm update {current_month} {current_year}",
-    f"LinkedIn algorithm change {current_quarter}",
+    action_type = alert["recommended_action"]  # TACTICAL / CREATIVE / STRATEGIC
 
-    # Cultural/seasonal moments relevant to category
-    f"{client_category} seasonal moment {upcoming_month}",
-    f"{audience_descriptor} cultural moment {upcoming_month}",
+    if action_type == "TACTICAL":
+        # Campaign continues unchanged
+        # Surface reactive content opportunity
+        notification = {
+            "level": 2,  # Decision prompt
+            "subject": f"🔔 Category Signal: {client_name} — Reactive Opportunity",
+            "body": f"""
+CATEGORY INTELLIGENCE — {client_name}
+Domain: {alert["domain"]} | Date: {alert["date"]}
 
-    # Competitive activity
-    f"{top_competitor} announcement launch {current_month}",
-]
+WHAT CHANGED:
+{alert["what_changed"]}
 
-# For each significant finding, create a calendar advisory event:
+WHY IT MATTERS:
+{alert["why_it_matters"]}
+
+RECOMMENDED ACTION: Tactical — reactive content opportunity
+{alert["specific_recommendation"]}
+
+Time sensitivity: {alert["time_sensitivity"]}
+
+OPTIONS:
+A) Produce the reactive post now — I'll brief Creative Agent immediately
+B) Log it and continue current content calendar
+C) Review the full alert before deciding
+
+Reply A, B, or C.
+            """
+        }
+        # Send via Level 2 notification (Gmail draft)
+
+    elif action_type == "CREATIVE REFRESH":
+        # Insight holds, content architecture needs updating
+        notification = {
+            "level": 2,
+            "subject": f"⚠️ Category Signal: {client_name} — Creative Refresh Recommended",
+            "body": f"""
+CATEGORY INTELLIGENCE — {client_name}
+Domain: {alert["domain"]} | Date: {alert["date"]}
+
+WHAT CHANGED:
+{alert["what_changed"]}
+
+WHY IT MATTERS:
+{alert["why_it_matters"]}
+
+RECOMMENDED ACTION: Creative Refresh
+The insight and positioning are intact.
+The content mix or register needs updating to account for what's changed.
+
+Specifically: {alert["what_needs_updating"]}
+
+OPTIONS:
+A) Proceed — brief Creative Agent for an updated content batch
+B) Review the full alert first, then decide
+C) Disagree — continue current plan
+
+Reply A, B, or C.
+            """
+        }
+
+    elif action_type == "STRATEGIC REVIEW":
+        # The insight or positioning may be compromised
+        # This is the most serious classification
+        notification = {
+            "level": 1,  # Immediate — this may affect paid spend
+            "subject": f"🚨 Category Alert: {client_name} — Strategic Review Needed",
+            "body": f"""
+CATEGORY INTELLIGENCE — {client_name}
+Domain: {alert["domain"]} | Date: {alert["date"]}
+
+WHAT CHANGED:
+{alert["what_changed"]}
+
+THE RISK:
+{alert["strategic_risk"]}
+
+RECOMMENDED ACTION: Strategic Review
+The current insight or positioning may be compromised by this shift.
+Recommend pausing new content until strategy is reviewed.
+
+This does NOT mean starting over. It means reviewing whether
+the brief written on {original_brief_date} is still valid today.
+
+OPTIONS:
+A) Pause new content — review strategy before next creative batch
+   (I'll schedule a Research → Strategy review session)
+B) Proceed with caution — continue current plan, flag in next check-in
+C) Disagree — I believe the current strategy still holds. Continue.
+
+Reply A, B, or C.
+            """
+        }
+        # Always Level 1 for strategic review recommendations
+
+    # Send notification
+    send_notification(notification)
+    # Create Calendar event for the review
+    gcal_mcp.gcal_create_event(
+        summary=f"[AMP] 🔔 Category Signal Review — {client_name}",
+        start={"date": today},
+        description=f"Category intelligence alert requires review. Check Gmail.",
+        colorId="11"  # Tomato — urgent
+    )
+```
+
+**Routing decision table:**
+
+| Alert type | Campaign status | Action | Pause content? |
+|-----------|----------------|--------|---------------|
+| Tactical | Active | Surface reactive post option | No |
+| Creative Refresh | Active | Brief Creative Agent for updated batch | No |
+| Creative Refresh | Between campaigns | Note for next campaign brief | No |
+| Strategic Review | Active | Recommend pause pending review | Yes — recommend |
+| Strategic Review | Between campaigns | Run Research → Strategy before next brief | N/A |
+
+**Michael always has the final word.** Option C (disagree/continue) is always available.
+The system recommends. Michael decides.
+
+#### Continuous Watch — Calendar Events
+
+At project kickoff and on the first of each month, create:
+
+```python
 gcal_mcp.gcal_create_event(
-    summary=f"[AMP] 📅 Advisory: {event_name} — {client_name}",
-    start={"date": event_date},
-    end={"date": event_date},
-    description=f"""
-Category Intelligence Advisory
+    summary=f"[AMP] 🔍 Category Watch — {client_name}",
+    start={"date": first_of_next_month},
+    end={"date": first_of_next_month},
+    description=f"""Monthly category intelligence sweep.
 
-Event: {event_name}
-Date: {event_date}
-Relevance: {why_this_matters_for_client}
+Command: 'Run category watch for {client_slug}'
+→ Research Agent runs Continuous Watch Mode (30 min)
+→ Checks: Category shifts, customer sentiment, cultural context
+→ Produces: category-watch-log.md update
+→ If strong signal: category-intelligence-alert.md → AM Agent routes
 
-Recommended action: {specific_recommendation}
-Lead time needed: {N} days
-
-Consider: {strategic_question_to_explore}
+Category: {client_category}
+Competitors to monitor: {top_competitors}
+Community to watch: {primary_community}
     """,
     colorId="5",  # Banana — advisory/upcoming
+    reminders={"useDefault": False, "overrides": [
+        {"method": "email", "minutes": 1440}  # 24h email reminder
+    ]}
 )
 ```
 
@@ -752,7 +875,8 @@ LOW PRIORITY — mention in check-in, don't calendar:
 ```
 Project kickoff:
   └─▶ Build full campaign calendar (all milestones + upcoming dates)
-  └─▶ Run category intelligence sweep
+  └─▶ Schedule monthly category watch events (first of each month)
+  └─▶ Run initial category intelligence sweep (baseline)
   └─▶ Produce initial situation brief in Gmail
 
 Campaign active (weekly):
@@ -760,20 +884,35 @@ Campaign active (weekly):
   └─▶ Generate Campaign Pulse → Gmail draft + Calendar event
   └─▶ Flag any decisions needed → Level 2 notification if urgent
 
+Campaign active (monthly):
+  └─▶ Trigger Research Agent: "Run category watch for [client-slug]"
+  └─▶ Research Agent runs Continuous Watch Mode (30 min, 3 domains)
+  └─▶ IF category-intelligence-alert.md produced:
+        → AM Agent reads alert, classifies, surfaces to Michael with options
+        → Routes to Creative Agent OR Strategy Agent per classification
+  └─▶ IF only category-watch-log.md updated (no alert):
+        → Note in next Campaign Pulse: "Category watch — no material changes"
+
 Campaign close:
   └─▶ Final pulse summarizing full campaign arc
   └─▶ Learning log update completed
   └─▶ Strategic Check-In scheduled for 7 days post-close
+  └─▶ Final category watch run — snapshot of category state at close
+      (baseline for next campaign)
 
 Between campaigns (monthly):
+  └─▶ Category Watch still runs monthly (even without active campaign)
   └─▶ Strategic Check-In → Gmail draft
-  └─▶ Category intelligence sweep → add important dates to calendar
   └─▶ "What's the next move?" recommendation
+  └─▶ If strong signal arrives between campaigns:
+        → Brief Michael with recommended next campaign focus
+        → "This shift in [category/customer/culture] creates an opening.
+           Here's what I'd recommend for the next brief."
 
-Michael asks "what should I be thinking about?":
-  └─▶ Pull client-profile.md + project-state.md + calendar upcoming events
-  └─▶ Produce situation brief: what's active, what's coming, what needs a decision
-  └─▶ Deliver in chat immediately — no waiting for scheduled pulse
+Michael asks "what's changed?":
+  └─▶ Research Agent: "Run category watch for [client-slug]" immediately
+  └─▶ Produce category-watch-log.md update
+  └─▶ Surface findings in chat immediately with classification
 ```
 
 ---

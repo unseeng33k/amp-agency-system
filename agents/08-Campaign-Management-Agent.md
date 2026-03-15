@@ -1600,11 +1600,58 @@ SIGNAL RECEIVED: [metric] is [X]% [above/below] benchmark
   │           Does NOT require approval for organic scheduling changes.
   │           DOES require approval for any new copy that hasn't been through creative approval.
   │
+  ├─▶ Is this SYSTEMIC underperformance (all content below benchmark, not just one post)?
+  │     YES → Before optimizing execution, ask: is this an external cause?
+  │           Run the External Signal Check below.
+  │
   └─▶ Is this overperformance?
         YES → Capture it. Document what's working.
               If organic: consider boosting the post (flag to Michael with recommendation).
               If paid: flag opportunity to increase budget allocation.
 ```
+
+### External Signal Check — When to Trigger Category Watch
+
+When performance is systemically underperforming (not a single post, not a technical
+issue, but a broad pattern across multiple posts or channels), the cause may be
+external — a category shift, a cultural moment, or an audience sentiment change —
+not an execution problem.
+
+**Ask before optimizing execution:**
+
+```
+SYSTEMIC UNDERPERFORMANCE DETECTED
+[N] consecutive posts below benchmark / [X]% below KPI target across campaign
+
+Before adjusting content, check: Is this a category/culture signal?
+
+ASK:
+1. Has anything significant happened in the category recently?
+   → web_search("[category] news [current month]")
+   → Compare against category-watch-log.md (last entry date)
+
+2. Has audience sentiment shifted since the brief was written?
+   → web_search("[audience] sentiment [current month] [current year]")
+   → Quick scan of primary community (Reddit/X)
+
+3. Has anything cultural reframed how the audience sees this topic?
+   → web_search("[cultural context] [current month]")
+
+IF YES — strong external signal found:
+  → Pause further execution optimization
+  → Flag to AM Agent: "Systemic underperformance — possible external cause"
+  → AM Agent triggers Research Agent Continuous Watch Mode
+  → Hold new content until category-intelligence-alert.md is reviewed
+
+IF NO — no external signal found:
+  → Proceed with execution optimization (content, timing, format)
+  → Log the check in optimization-log.md: "External signal check [date] — no material shifts"
+```
+
+**The principle:** Optimizing execution for an externally broken strategy is
+expensive and pointless. A content that says the right thing in the wrong
+cultural moment will underperform no matter how many times you A/B test the headline.
+Catch external causes before investing in execution fixes.
 
 ### A/B Variant Tracking
 
