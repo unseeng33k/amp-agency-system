@@ -77,10 +77,30 @@ Save to: `/projects/clients/[client-slug]/client-profile.md`
 
 ---
 
-## Phase 3b — Brand Intelligence Extraction
+## Phase 3b — Brand Intelligence Extraction (Invoke When Needed)
 
-This step runs immediately after Phase 3, in parallel with Phase 4.
-Do not skip it. Do not defer it to the first project.
+**This phase is NOT automatic.** Run it only when one of these conditions is true:
+
+```
+RUN Phase 3b IF:
+  A) Michael explicitly says "extract brand intelligence" or "analyze their content"
+  B) The client has substantial existing content (established brand, 6+ months active)
+  C) The Creative Agent or AM Agent requests brand intelligence before first brief
+  D) Onboarding is for a rebrand / repositioning (prior brand voice must be documented)
+
+SKIP Phase 3b IF:
+  A) Client is a new brand / pre-launch (no content to analyze)
+  B) Michael says "just set up the folder structure" or similar
+  C) First project is starting immediately and time is critical
+  D) Michael will be providing brand guidelines directly
+```
+
+When skipped, note in `client-profile.md` Section 4:
+`"Brand intelligence not yet extracted. Run Phase 3b when brief arrives or request guidelines from client."`
+
+---
+
+**When invoked, run the following:**
 
 The goal: extract brand voice signals from the client's existing content
 before any brief is written. Every downstream agent — especially Creative —
@@ -594,9 +614,9 @@ amp report --client [client-slug] --output connections.html
 Before declaring onboarding complete:
 
 - [ ] Folder structure created (including assets/ subfolder)
-- [ ] client-profile.md pre-populated (Sections 1-4, with Section 4 flagged "verify with client")
-- [ ] **brand-intelligence.md written** (voice profile, tone, vocabulary, visual signals)
-- [ ] **Brand intelligence gaps surfaced to Michael** (high priority gaps flagged)
+- [ ] client-profile.md pre-populated (Sections 1-3)
+- [ ] Section 4 status noted (extracted / not yet extracted / guidelines provided)
+- [ ] **brand-intelligence.md** (optional — run if invoked, skip if new brand or time-critical)
 - [ ] Platform Access Survey completed
 - [ ] api-connections.md created with all platforms listed
 - [ ] At least ONE platform connected (minimum viable)

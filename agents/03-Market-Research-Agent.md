@@ -18,6 +18,35 @@ behavior. Take the time to go deep. The quality of everything downstream depends
 
 ## Step 0 — Before You Search Anything: Read the Learning Log
 
+**Pharma/regulated category check — run first:**
+```
+Read client-profile.md → Section 1: Industry
+
+IF industry contains any of:
+  pharma / biotech / biopharma / medtech / diagnostics /
+  medical device / specialty pharma / rare disease / vaccines /
+  any regulated healthcare category
+
+THEN:
+  Invoke pharma-research skill BEFORE any domain research
+  Path: [VAULT_ROOT]/skills/pharma-research/SKILL.md
+
+  This skill adds:
+  - HCP vs. patient audience segmentation
+  - Asset evaluation (what can actually be claimed)
+  - Label/indication research pattern
+  - MLR regulatory flagging on insight candidates
+  - Clinical evidence mining
+  - Pharma-specific competitive intelligence
+
+  The standard 6-domain framework still runs.
+  The pharma skill adds depth to Domains 1-4 and two pre-research steps.
+  Do not run domain research for a pharma client without reading this skill first.
+
+ELSE:
+  Proceed with standard 6-domain research below.
+```
+
 **For returning clients, this step is mandatory and non-skippable.**
 
 Check: `/projects/clients/[client-slug]/client-profile.md` — Section 5 and Section 8.
