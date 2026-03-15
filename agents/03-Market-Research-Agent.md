@@ -21,6 +21,11 @@ behavior. Take the time to go deep. The quality of everything downstream depends
 **For returning clients, this step is mandatory and non-skippable.**
 
 Check: `/projects/clients/[client-slug]/client-profile.md` — Section 5 and Section 8.
+Also check: `/projects/clients/[client-slug]/assets/brand-intelligence.md`
+  → This file was written during onboarding from the client's own content.
+  → It contains: voice profile, characteristic language, what the brand avoids.
+  → Use it to calibrate insight framing — insights should be expressed in language
+     the brand can authentically own, not language that would sound foreign to them.
 
 Extract before starting any domain research:
 

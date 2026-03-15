@@ -28,6 +28,13 @@ From Strategy Agent:
 - `behavior-architecture.md` — COM-B / Fogg / Cialdini reasoning
 - `media-strategy.md` — **READ THIS FIRST** — channel constraints, platform intelligence, format specs
 
+**Also read before concepting (mandatory):**
+- `client-profile.md` Section 4 — brand voice, tone constraints, what to avoid
+- `assets/brand-intelligence.md` — **full brand intelligence from onboarding**
+  This file contains: voice profile, characteristic language, tone no-nos, visual signals,
+  and verbatim quotes from the client's own content. It is the creative brief's brand constraint layer.
+  If this file doesn't exist → flag to AM Agent before proceeding. Do not infer brand voice from scratch.
+
 **The media strategy is not optional context. It is a hard constraint.**
 Before generating a single concept, extract from `media-strategy.md`:
 - Which channels are in scope

@@ -79,20 +79,29 @@ Use their words, not marketing words. Pull from reviews, forums, community posts
 
 ## Section 4 — Brand
 
+> **Onboarding note:** Fields marked [ONBOARDING] are pre-populated during client onboarding
+> from analysis of the client's existing content. Fields marked [VERIFY] should be confirmed
+> with the client before the first brief. Fields marked [TBD] are unknown until first project.
+> Full brand intelligence detail lives at: `/projects/clients/[client-slug]/assets/brand-intelligence.md`
+
 **Brand positioning (current, if established):**
-[How the brand currently describes itself]
+[How the brand currently describes itself — from website/About page]
 
-**Brand voice:**
-[3-5 words. What it sounds like when it's at its best.]
+**Brand voice (3-5 words):** [ONBOARDING — extracted from existing content]
+[What it sounds like when it's at its best. Inferred from content, not claimed by the brand.]
 
-**What the brand must NEVER sound like:**
-[The voice, tone, or language that is off-limits — explicitly stated or learned from experience]
+**Characteristic language:** [ONBOARDING]
+[Specific words, phrases, or formulations the brand uses repeatedly]
 
-**Visual identity constraints:**
-[Any non-negotiables: colors, logos, imagery style, typography restrictions]
+**What the brand must NEVER sound like:** [ONBOARDING + VERIFY]
+[The voice, tone, or language that is off-limits — extracted from content patterns or stated by client]
+
+**Visual identity constraints:** [ONBOARDING — inferred from website/social | VERIFY before production]
+[Colors, imagery style, typography — note: 'inferred' until brand guidelines are provided]
 
 **Brand assets on file:**
 [List any brand guidelines, logo files, approved imagery — with file paths]
+[Full brand intelligence: `/projects/clients/[client-slug]/assets/brand-intelligence.md`]
 
 ---
 
